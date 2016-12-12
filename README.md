@@ -62,6 +62,11 @@ Or if you want to create the schema and load data for a functional demo you can 
 php artisan migrate:refresh --seed
 ```
 
+Generating a New Application Key
+```
+php artisan key:generate 
+```
+
 You need to run ***bower install***, in order to have all the frontend dependencies in your machine. So, go to your antvel directory using command line, as so:
 
 ```
