@@ -111,4 +111,14 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
     }
+
+    /**
+     * Returns the login message error.
+     *
+     * @return string
+     */
+    public function getFailedLoginMessage()
+    {
+        return trans('user.credentials_do_not_match_our_records');
+    }
 }

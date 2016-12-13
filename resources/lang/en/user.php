@@ -82,6 +82,7 @@ return [
         'disable_account_description'  => 'Disabling your account, your profile will be deleted as well.',
         'enable_account_description'   => 'Enabling your account, your profile will be accessible again from your profile section.',
         'account_disabled_description' => 'This account is disabled. However, if you want to reactivate it, you always can go to your profile section and enable it.',
+        'credentials_do_not_match_our_records' => 'These credentials do not match our records.',
 
         //password
         'password_message'             => [
