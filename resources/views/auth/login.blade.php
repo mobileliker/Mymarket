@@ -46,11 +46,11 @@
 						&nbsp;<input name="newuser" type="radio" value="1" ng-click="setHavePassword(false)">&nbsp;{{ trans('user.password_message.nohave') }}
 					</label>
 				</div>
-
-				<div class="form-group" style="height: 120px">
+				
+				{{--<div class="form-group" style="height: 120px">
 					<h6 class="black_color">{{ trans('user.are_you_human') }}</h6>
 					{!! Recaptcha::render() !!}
-				</div>
+				</div>--}}
 
 				<div class="form-group">
 					<label>
