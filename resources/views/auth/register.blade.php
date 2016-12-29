@@ -65,12 +65,12 @@
 						</div>
 					</div>
 
-					<div class="row">
-						<div class="col-md-12">
-							<label>{{ trans('user.are_you_human') }}</label>
-							{!! Recaptcha::render() !!}
-						</div>
+				{{-- <div class="row">
+					<div class="col-md-12">
+						<label>{{ trans('user.are_you_human') }}</label>
+						{!! Recaptcha::render() !!}
 					</div>
+				</div>--}}
 
 					<div class="form-group">
 						<div class="col-md-12">
