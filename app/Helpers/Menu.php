@@ -47,6 +47,7 @@ class Menu
 
             $menu = array_merge($menu, [
                 ['route' => '/products/myProducts', 'text' => trans('user.your_products'), 'icon' => 'glyphicon glyphicon-briefcase', 'cont' => $productsLowStock],
+                ['route' => '/business/myBusiness', 'text' => '您的商铺', 'icon' => 'glyphicon glyphicon-home', 'cont' => ''],
                 ['route' => '/orders/usersOrders', 'text' => trans('user.your_sales'), 'icon' => 'glyphicon glyphicon-piggy-bank', 'cont' => $salesOpen],
             ]);
         }
@@ -111,6 +112,7 @@ class Menu
                 ['route' => '/wpanel/profile',    'text' => trans('company.store_config'),        'icon' => 'glyphicon glyphicon-cog'],
                 ['route' => '/wpanel/categories', 'text' => trans('categories.product_category'), 'icon' => 'glyphicon glyphicon-tasks'],
                 ['route' => '/wpanel/features',   'text' => trans('features.product_features'),   'icon' => 'glyphicon glyphicon-th-list'],
+                ['route' => '/user/set', 'text' => '用户管理' ,'icon' => 'glyphicon glyphicon-cog'],
             ];
         }
 

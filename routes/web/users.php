@@ -16,6 +16,9 @@ Route::resource('user/notices', 'NoticesController');
 
 
 Route::group(['prefix' => 'user', 'roles' => array_keys(trans('globals.roles')), 'middleware' => ['auth', 'roles']], function () {
+
+    Route::resource('set', 'UserSetController');
+
     Route::get('dashboard', 'UserController@dashBoard');
 
     Route::get('/', 'UserController@profile');

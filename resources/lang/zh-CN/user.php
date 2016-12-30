@@ -104,5 +104,6 @@ return [
 
         'account_verified_ok_message'    => '<strong>账号激活结果</strong><br/><br/>恭喜您， [name]！您的账号已成功激活。',
         'account_verified_error_message' => '<strong>出错了！</strong><br/><br/>账号验证令牌不符。<br/><br/>请重试！',
-        'signUp_message'                 => '<strong>谢谢您， :_name！<br>您已成功注册。</strong><br><br>我们刚刚给您发送了一封账号确认邮件，请查收。',
+        //'signUp_message'                 => '<strong>谢谢您， :_name！<br>您已成功注册。</strong><br><br>我们刚刚给您发送了一封账号确认邮件，请查收。',
+        'signUp_message'                 => '<strong>谢谢您， :_name！<br>您已成功注册。',
 ];

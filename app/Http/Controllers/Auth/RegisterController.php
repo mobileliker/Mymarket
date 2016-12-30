@@ -77,8 +77,9 @@ class RegisterController extends Controller
     protected function rules()
     {
         return [
-            'first_name' => 'required|max:20|min:3',
-            'last_name'  => 'required|max:20|min:3',
+            //'first_name' => 'required|max:20|min:3',
+            //'last_name'  => 'required|max:20|min:3',
+            'nickname'  => 'required|max:20|min:3',
             'email'      => 'required|email|max:255|unique:users',
             'password'   => 'required|min:6',
         ];
@@ -95,15 +96,15 @@ class RegisterController extends Controller
     {
         $user = User::create([
             'email'       => $data['email'],
-            'nickname'    => $data['email'],
+            'nickname'    => $data['nickname'],
             'password'    => bcrypt($data['password']),
             'role'        => 'person',
         ]);
 
         Person::create([
             'user_id'    => $user->id,
-            'first_name' => $data['first_name'],
-            'last_name'  => $data['last_name'],
+            //'first_name' => $data['first_name'],
+            //'last_name'  => $data['last_name'],
         ]);
 
         return $user;
@@ -120,7 +121,8 @@ class RegisterController extends Controller
     {
         $title = trans('user.emails.verification_account.subject');
 
-        $name = $data['first_name'].' '.$data['last_name'];
+        //$name = $data['first_name'].' '.$data['last_name'];
+        $name = $data['nickname'];
 
         \Mail::queue('emails.accountVerification', ['data' => $data, 'title' => $title, 'name' => $name], function ($message) use ($data) {
             $message->to($data['email'])->subject(trans('user.emails.verification_account.subject'));

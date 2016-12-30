@@ -22,6 +22,10 @@ Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'HomeController@index');
 });
 
+Route::group(['prefix' => 'business', 'roles' => array_keys(trans('globals.roles')), 'middleware' => ['auth', 'roles']], function () {
+	Route::resource('myBusiness', 'MyBusinessController');
+});
+
 //users routes
 require __DIR__.'/web/users.php';
 
