@@ -38,8 +38,14 @@ class CompanyController extends Controller
             'left'   => ['width' => '2'],
             'center' => ['width' => '10'],
         ];
-        $company = Company::find(1);
 
+        $company = Company::find(1);
+        $lbs = array('','','','','');
+        if ($company->lbpic!='') {
+            $lbs = explode(',', $company->lbpic);
+        }
+        $company->lbs = $lbs;
+        // print_r($company->lbs);die;
         return view('company.index', compact('panel', 'company'));
     }
 
@@ -98,11 +104,67 @@ class CompanyController extends Controller
     {
         $data = $request->except(['created_at', 'deleted_at']);
         $company = Company::find($id);
+
+        $logo = $this->uploadPic($request,'logo');
+        if ($logo!='false') {
+            if (file_exists($company->logo)) {
+                unlink($company->logo);
+            }
+            $data['logo'] = $logo;
+        }
+
+        $lbs = $this->uploadPic($request,'lbphoto');
+
+        if ($lbs!='false') {
+            $lbss = array(0=>'',1=>'',2=>'',3=>'',4=>'');
+            if (!empty($company->lbpic)) {
+                $lbss = explode(',', $company->lbpic);
+            }
+            foreach ($lbs as $key => $value) {
+                if ($value!='') {
+                    if (isset($lbss[$key])) {
+                        if (file_exists($lbss[$key])) {
+                            unlink($lbss[$key]);
+                        }
+                    }
+                   $lbss[$key] = $value;
+                }
+            }
+            $company->lbpic = implode(',',$lbss);
+            //$data['lbpic'] = implode(',',$lbss);
+        }
+        $company->save();
         $company->update($data);
 
         return redirect()->to('wpanel/profile');
     }
 
+    //图片异步上传
+    public function uploadPic(Request $request,$name)
+    {   
+
+        $path = 'upload/web/';
+        $filename = 'WEB_LB'.time().rand(1,10000);
+        $file = $request->file($name);
+
+        if ($request->hasFile($name)) {
+            if ($name =='lbphoto') {
+                foreach($request->file($name) as $k=>$f) {
+                    $Extension = $f->getClientOriginalExtension();
+                    $filename = 'WEB_LB'.time().rand(1,10000);
+                    $f->move($path, $filename.'.'.$Extension);
+                    $arr[$k] = $path.$filename.'.'.$Extension; //原图路径加名
+                }  
+                return $arr;
+            }else{
+                $Extension = $file->getClientOriginalExtension();
+                $file->move($path, $filename.'.'.$Extension);
+                return $path.$filename.'.'.$Extension; //原图路径加名称
+            }
+        }else{
+            return 'false';
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

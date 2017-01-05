@@ -25,7 +25,7 @@
 		            </ul>
 		        </div>
 		    @endif
-				<form class="form-horizontal" role="form" action="business/myBusiness/{{$user->user_id}}" method='POST'>
+				<form class="form-horizontal" role="form" action="business/myBusiness/{{$user->user_id}}" method='POST' enctype="multipart/form-data">
 					<input type="hidden" value="PUT" name="_method">
 					{!! csrf_field() !!}
 					<div class="row">
@@ -118,31 +118,54 @@
 								<div class="col-md-2">
 									<div class="input-group col-md-2">
 							      		<input class='upload-pic' type="file" id="pic0" name="lbphoto[0]" style="display:none">
+							      		@if(!empty($user->lbs[0]))
+							      		<img src="{{$user->lbs[0]}}" alt="点击" class="thumbnail" onclick="$('input[id=pic0]').click();" width="100px" height="100px" style="cursor:pointer">
+							      		@else
 							      		<img src="" alt="点击" class="thumbnail" onclick="$('input[id=pic0]').click();" width="100px" height="100px" style="cursor:pointer">
+							      		@endif
 									</div>
 								</div>
 								<div class="col-md-2">
 									<div class="input-group col-md-2">
 							      		<input class='upload-pic' type="file" id="pic1"  name="lbphoto[1]" style="display:none">
+							      		@if(!empty($user->lbs[1]))
+							      		<img src="{{$user->lbs[1]}}" alt="点击" class="thumbnail" onclick="$('input[id=pic1]').click();" width="100px" height="100px" style="cursor:pointer">
+										@else
 							      		<img src="" alt="点击" class="thumbnail" onclick="$('input[id=pic1]').click();" width="100px" height="100px" style="cursor:pointer">
+										@endif
 									</div>
 								</div>
 								<div class="col-md-2">
 									<div class="input-group col-md-2">
+							      		@if(!empty($user->lbs[2]))
+							      		<input class='upload-pic' type="file" id="pic2" name="lbphoto[2]" value="{{$user->lbs[2]}}" style="display:none">
+							      		<img src="{{$user->lbs[2]}}" alt="点击" class="thumbnail" onclick="$('input[id=pic2]').click();" width="100px" height="100px" style="cursor:pointer">
+										@else
 							      		<input class='upload-pic' type="file" id="pic2" name="lbphoto[2]" style="display:none">
 							      		<img src="" alt="点击" class="thumbnail" onclick="$('input[id=pic2]').click();" width="100px" height="100px" style="cursor:pointer">
+							      		@endif
 									</div>
 								</div>
 								<div class="col-md-2">
 									<div class="input-group col-md-2">
+							      		@if(!empty($user->lbs[3]))
+							      		<input class='upload-pic' type="file" id="pic3" value="{{$user->lbs[3]}}"  name="lbphoto[3]" style="display:none">
+							      		<img src="{{$user->lbs[3]}}" alt="点击" onclick="$('input[id=pic3]').click();" class="thumbnail" width="100px" height="100px" style="cursor:pointer">
+										@else
 							      		<input class='upload-pic' type="file" id="pic3"  name="lbphoto[3]" style="display:none">
 							      		<img src="" alt="点击" onclick="$('input[id=pic3]').click();" class="thumbnail" width="100px" height="100px" style="cursor:pointer">
+							      		@endif
 									</div>
 								</div>
 								<div class="col-md-2">
 									<div class="input-group col-md-2">
-							      		<input class='upload-pic' type="file" id="pic4" name="lbphoto[4]"  style="display:none">
+							      		@if(!empty($user->lbs[4]))
+							      		<input class='upload-pic' type="file" id="pic4" name="lbphoto[4]" value="{{$user->lbs[4]}}" style="display:none">
+							      		<img src="{{$user->lbs[4]}}" alt="点击" onclick="$('input[id=pic4]').click();" class="thumbnail" width="100px" height="100px" style="cursor:pointer">
+										@else
+							      		<input class='upload-pic' type="file" id="pic4" name="lbphoto[4]" style="display:none">
 							      		<img src="" alt="点击" onclick="$('input[id=pic4]').click();" class="thumbnail" width="100px" height="100px" style="cursor:pointer">
+							      		@endif
 									</div>
 								</div>
 							</div>
@@ -178,25 +201,23 @@
     {{-- Javascript --}}
 	@section('scripts')
 		@parent
-		{!! Html::script('/js/vendor/file-upload/angular-file-upload-shim.min.js') !!}
-	    {!! Html::script('/js/vendor/file-upload/angular-file-upload.min.js') !!}
 	    {!! Html::script('/js/vendor/deleted/jquery.min.js') !!}
-
 	    <script>
             //图片上传事件
             $(".upload-pic").change(function () {
             	uploadPic(this.files[0],$(this));
             });
 
-	       function uploadPic(a,b){
+	        function uploadPic(a,b){
                 var reader = new FileReader();
                 reader.readAsDataURL(a);
                 //监听文件读取结束后事件
                 reader.onloadend = function (e) {
    					$(b).next('img').attr('src',e.target.result);
                 };
-	       }
+	        };
 
 	    </script>
 	@stop
 @stop
+@section('before.angular') ngModules.push('angularFileUpload'); @stop

@@ -8,7 +8,7 @@
     @stop
     @section('center_content')
 
-        <div class="page-header"><h5>{{ trans('user.your_products') }}</h5></div>
+        <div class="page-header"><h5><span class="glyphicon glyphicon-briefcase"></span> {{ trans('user.your_products') }}</h5></div>
         
         <div class="row">
            <div class="col-lg-11">
@@ -31,8 +31,8 @@
                 </ul>
                 </div>
             </div>
-            <div class="col-lg-1">
-                <a class="btn btn-primary btn-sm pull-right" href="{{ route('products.create') }}">
+            <div class="col-lg-1" >
+                <a class="btn btn-primary btn-sm pull-right btn-szybg" href="{{ route('products.create') }}" >
                     <span class="glyphicon glyphicon-plus"></span>&nbsp;
                     {{ trans('product.globals.add') }}
                 </a>

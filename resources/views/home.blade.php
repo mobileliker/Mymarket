@@ -29,65 +29,15 @@
                     <div class="carousel-inner" role="listbox">
 
                     <?php $pos = 0; ?>
-                    @foreach ($suggestion['carousel'] as $product)
-
-                        {{-- slide items --}}
+                    @foreach ($banner as $pic)
                         <div class="item @if ($i++==0) active @endif">
-
-                            @if (isset($banner[$pos]))
-                                <img src= "{{ $banner[$pos++] }}" alt="{{ $product['name'] }}">
+                            @if (!empty($pic))
+                                <img src= "{{ $pic }}" alt="">
                             @else
-                                <img src="/img/no-image.jpg" alt="{{ $product['name'] }}">
+                                <img src="/img/no-image.jpg" alt="">
                             @endif
-                            {{-- panel --}}
-                            <div class="jumbotron {{ $jumbotronClasses[mt_rand(0,1)] }} ">
-
-                                <h5>{{ $product['name'] }}</h5>
-
-                                <p class = "description">{{ str_limit($product['description'], 200,'...') }}</p>
-
-                                @if ($product['price'] > 0)
-                                    <p class = "price">
-                                        <strong>{!! \Utility::showPrice($product['price']) !!}</strong>
-                                    </p>
-                                @endif
-
-                                <hr>
-
-                                <div class="btn-group" role="group" aria-label="...">
-
-                                    <a href="{{ route('products.show',[$product['id']]) }}" class="btn btn-default btn-sm">
-                                         <div class = "glyphicon glyphicon-shopping-cart"></div>&nbsp;{{ trans('store.add_to_cart') }}
-                                    </a>
-
-                                    @if(Auth::user())
-
-                                        <a href="{{ route('orders.add_to_order',['wishlist', $product[($product['type']=='freeproduct')?'parent_id':'id']]) }}" class="btn btn-default btn-sm">
-                                            <div class = "glyphicon glyphicon-heart"></div>&nbsp;{{ trans('store.add_to_wish_list') }}
-                                        </a>
-
-                                    @else
-
-                                        <a href="/login" class="btn btn-default btn-sm">
-                                            <div class = "glyphicon glyphicon-heart"></div>&nbsp;{{ trans('store.add_to_wish_list') }}
-                                        </a>
-
-                                    @endif
-
-                                    <a href="{{ route('products.show',[$product['id']]) }}" class="btn btn-default btn-sm">
-
-                                        <div class = "glyphicon glyphicon-eye-open"></div>&nbsp;{{ trans('store.viewDetails') }}
-
-                                    </a>
-
-                                </div>
-
-                            </div>
-
-                        </div> {{-- end item --}}
-
-                    @endforeach
-
+                        </div>
+                    @endforeach             
                     </div> {{-- end carousel-inner --}}
 
                 </div>

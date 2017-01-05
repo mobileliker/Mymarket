@@ -8,14 +8,13 @@
 	<div class="row">
 		<div class="panel panel-default" ng-controller = "ProfileController" >
 			<div class="panel-heading">
-				<h6><span class="glyphicon glyphicon-cog"></span> 用户设置</h6>
+				<h6><span class="glyphicon glyphicon-cog"></span> 用户设置
+				<a href="user/set/create" class="btn btn-default btn-md pull-right btn-szyclass">新 建</a>
+				</h6>
 			</div>
 			<div class="panel-body" style="min-height:500px;">
 				<ul class="nav nav-tabs" >
 				  <li class="active" style="float:left"><a data-toggle="tab" href="#profile">卖家用户</a></li>
-				  <li class="" style="float:right;border:1px solid #ccc;border-bottom:none;width:80px;height:40px;text-align:center;margin-right:30px">
-				  	<a  href="user/set/create">新 建</a>
-				  </li>
 				</ul>
 
 	            <div class="panel-body" style="min-height:500px;">

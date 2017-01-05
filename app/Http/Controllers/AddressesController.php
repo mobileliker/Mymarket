@@ -18,14 +18,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AddressesController extends Controller
 {
     private $form_rules = [
-        'name_contact' => 'required|string|max:60',
-        'line1'        => 'required|max:100',
-        'line2'        => 'max:100',
-        'phone'        => 'required|max:20',
-        'zipcode'      => 'required|numeric|min:3',
-        'city'         => 'required|string',
-        'country'      => 'required',
-        'state'        => 'required|string',
+        // 'name_contact' => 'required|string|max:60',
+        // 'line1'        => 'required|max:100',
+        // 'line2'        => 'max:100',
+        // 'phone'        => 'required|max:20',
+        // 'zipcode'      => 'required|numeric|min:3',
+        // 'city'         => 'required|string',
+        // 'country'      => 'required',
+        // 'state'        => 'required|string',
     ];
 
     //Paneles por defecto Usuarios
@@ -105,14 +105,14 @@ class AddressesController extends Controller
         $this->resetDefault();
 
         $address = new Address();
-        $address->name_contact = $request->get('name_contact');
-        $address->line1 = $request->get('line1');
-        $address->line2 = $request->get('line2');
-        $address->city = $request->get('city');
-        $address->state = $request->get('state');
-        $address->zipcode = $request->get('zipcode');
-        $address->country = $request->get('country');
-        $address->phone = $request->get('phone');
+        $address->name_contact = $request->input('name_contact');
+        $address->line1 = $request->input('line1');
+        // $address->line2 = $request->get('line2');
+        $address->city = $request->input('city');
+        $address->state = $request->input('state');
+        $address->zipcode = $request->input('zipcode');
+        // $address->country = $request->get('country');
+        $address->phone = $request->input('phone');
         $address->user_id = $user->id;
         $address->default = '1';
         $address->save();

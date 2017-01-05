@@ -12,6 +12,7 @@ use App\FreeProduct;
 use App\Helpers\productsHelper;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\Company;
 use App\Product;
 
 class HomeController extends Controller
@@ -73,8 +74,12 @@ class HomeController extends Controller
             '/img/banner/02.png',
             '/img/banner/03.png',
             '/img/banner/04.png',
+            '/img/banner/05.png'
         ];
-
+        $lbpic = Company::select('lbpic')->first();
+        if ($lbpic!='') {
+            $banner = explode(',',$lbpic->lbpic);
+        }
         // $this->createTags();
 
         return view('home', compact('panel', 'suggestion', 'allWishes', 'events', 'tagsCloud', 'jumbotronClasses', 'i', 'banner'));

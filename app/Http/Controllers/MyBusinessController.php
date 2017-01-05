@@ -25,7 +25,13 @@ class MyBusinessController extends Controller
     public function index()
     {
         $user = Business::where('user_id','=',Auth::user()->id)->first();
-        
+        $lbs = $user->lbpic;
+        $lbArr = array();
+        if ($lbs!='') {
+            $lbArr = explode(',', $lbs);
+        }
+        $user->lbs=$lbArr;
+
         return view('user.business.mybusiness', compact('user'));
     }
 
@@ -104,6 +110,44 @@ class MyBusinessController extends Controller
             return redirect()->back()->withErrors($v->errors())->withInput();
         }
 
+        // return $this->upload($request,'logo');
+
+        $logo = $this->upload($request,'logo');
+        if ($logo!='false') {
+            if (file_exists($business->logo)) {
+                unlink($business->logo);
+            }
+            $business->logo = $logo;
+        }
+
+        $dpphoto = $this->upload($request,'dpphoto');
+        if ($dpphoto!='false') {
+            if (file_exists($business->dpphoto)) {
+                unlink($business->dpphoto);
+            }
+            $business->dpphoto = $dpphoto;
+        }
+
+        $lbs = $this->upload($request,'lbphoto');
+
+        if ($lbs !='false') {
+            $lbss = array(0=>'',1=>'',2=>'',3=>'',4=>'');
+            if (!empty($business->lbpic)) {
+                $lbss = explode(',', $business->lbpic);
+            }
+            foreach ($lbs as $key => $value) {
+                if ($value!='') {
+                    if (isset($lbss[$key])) {
+                        if (file_exists($lbss[$key])) {
+                            unlink($lbss[$key]);
+                        }
+                    }
+                   $lbss[$key] = $value;
+                }
+            }
+            $business->lbpic = implode(',',$lbss);
+        }
+
         $business->business_name = $request->input('business_name');
         $business->email = $request->input('email');
         $business->range = $request->input('range');
@@ -117,28 +161,30 @@ class MyBusinessController extends Controller
         $business->delivery = $request->input('delivery');
 
         $business->save();
-
-        return $this->index();
+        return redirect()->action('MyBusinessController@index');
     }
+
     //图片异步上传
-    public function upload(Request $request)
+    public function upload(Request $request,$name)
     {   
+        $path = 'upload/business/';
+        $filename = 'BUSINESS_LB'.time().rand(1,10000);
+        $file = $request->file($name);
 
-        $file = $request->file('path');
-
-        if ($request->hasFile('path')) {
-
-            $path = config('app.image_path').'/grow/';
-            $Extension = $file->getClientOriginalExtension();
-            $filename = 'SZGC_'.time().'.'. $Extension;
-            $check = $file->move($path, $filename);
-            $filePath = $path.$filename; //原图路径加名称
-            $newfilePath = $path.'SZGC_S_'.time().'.'. $Extension;//缩略图路径名称
-            $this->img_create_small($filePath,60,40,$newfilePath);  //生成缩略图
-            $pic=array();
-            $pic['pic']= $filePath;//原图
-            $pic['pic_thumb']= $newfilePath;//缩略图
-            return $pic;//返回原图 缩略图 的路径 数组
+        if ($request->hasFile($name)) {
+            if ($name =='lbphoto') {
+                foreach($request->file($name) as $k=>$f) {
+                    $Extension = $f->getClientOriginalExtension();
+                    $filename = 'BUSINESS_LB'.time().rand(1,10000);
+                    $f->move($path, $filename.'.'.$Extension);
+                    $arr[$k] = $path.$filename.'.'.$Extension; //原图路径加名
+                }  
+                return $arr;
+            }else{
+                $Extension = $file->getClientOriginalExtension();
+                $file->move($path, $filename.'.'.$Extension);
+                return $path.$filename.'.'.$Extension; //原图路径加名称
+            }
         }else{
             return 'false';
         }

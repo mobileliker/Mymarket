@@ -24,7 +24,7 @@ class CreateBusinessesTable extends Migration
             $table->string('person',50);//店铺负责人
             $table->string('range',255)->nullable();//经营范围
             $table->string('dpphoto',255)->nullable();//商标
-            $table->string('dologo',255)->nullable();//logo
+            $table->string('logo',255)->nullable();//logo
             $table->text('lbpic')->nullable();//轮播图
             $table->string('address',255)->nullable();//地址
             $table->string('phone',50)->nullable();//电话

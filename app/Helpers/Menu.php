@@ -47,8 +47,14 @@ class Menu
 
             $menu = array_merge($menu, [
                 ['route' => '/products/myProducts', 'text' => trans('user.your_products'), 'icon' => 'glyphicon glyphicon-briefcase', 'cont' => $productsLowStock],
-                ['route' => '/business/myBusiness', 'text' => '您的商铺', 'icon' => 'glyphicon glyphicon-home', 'cont' => ''],
                 ['route' => '/orders/usersOrders', 'text' => trans('user.your_sales'), 'icon' => 'glyphicon glyphicon-piggy-bank', 'cont' => $salesOpen],
+            ]);
+        }
+
+        //卖家商铺
+        if (\Auth::user()->hasRole(['business', ''])) {
+            $menu = array_merge($menu, [
+                  ['route' => '/business/myBusiness', 'text' => '您的商铺', 'icon' => 'glyphicon glyphicon-home', 'cont' => ''],
             ]);
         }
 
@@ -86,7 +92,7 @@ class Menu
             //-- Web Panel(Only for admim) --
             if (\Auth::check() && \Auth::user()->isAdmin()) {
                 $menu = array_merge($menu, [
-                    ['route' => '/wpanel', 'text' => trans('user.wpanel'), 'icon' => 'glyphicon glyphicon-cog', 'divider' => 1],
+                    ['route' => '/wpanel/profile', 'text' => trans('user.wpanel'), 'icon' => 'glyphicon glyphicon-cog', 'divider' => 1],
                 ]);
             }
         }
@@ -108,7 +114,7 @@ class Menu
         //Menu para empresas
         if (\Auth::user()->hasRole(['business', 'admin'])) {
             $menu = [
-                ['route' => '/wpanel',            'text' => trans('user.dashboard'),              'icon' => 'glyphicon glyphicon-dashboard'],
+                // ['route' => '/wpanel',            'text' => trans('user.dashboard'),              'icon' => 'glyphicon glyphicon-dashboard'],
                 ['route' => '/wpanel/profile',    'text' => trans('company.store_config'),        'icon' => 'glyphicon glyphicon-cog'],
                 ['route' => '/wpanel/categories', 'text' => trans('categories.product_category'), 'icon' => 'glyphicon glyphicon-tasks'],
                 ['route' => '/wpanel/features',   'text' => trans('features.product_features'),   'icon' => 'glyphicon glyphicon-th-list'],
