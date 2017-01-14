@@ -23,6 +23,11 @@ class UserSetController extends Controller
             'password'              => 'required|string|min:6|max:18|',
         ];
 
+    private $panel = [
+        'left'   => ['width' => '2'],
+        'center' => ['width' => '10'],
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +35,7 @@ class UserSetController extends Controller
      */
     public function index()
     {
+        $panel = $this->panel;
         $users = DB::table('users')
                 ->join('businesses','users.id','=','businesses.user_id')
                 ->where('role','=','business')
@@ -37,7 +43,7 @@ class UserSetController extends Controller
                 ->select('users.*','businesses.state','businesses.creation_date')
                 ->paginate(10);
 
-        return view('user.set.index', compact('users'));
+        return view('user.set.index', compact('users','panel'));
     }
 
     /**
