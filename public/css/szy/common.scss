@@ -1,0 +1,65 @@
+$defualtColor: #31C4A8;//默认主色调
+$fontSizeMin: 12px;//字体小号
+$fontSize: 15px;//字体中号
+$fontSizeMax: 20px;//字体大号
+$widthMin: 1200px;//网站框架最小宽度
+$color1:#6A6A6A;//淡灰色
+$color2:#4D4D4D;//深灰色
+$color3:#ccc;//边框灰色
+$color4:#F5F5F5;//淡灰色背景
+$color5:#EDEDED;//灰色
+
+*{margin:0;
+ padding:0; 
+ list-style:none; 
+ font-family:'宋体';
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration:none;
+}
+
+input,select,button,a{
+  outline:none;
+}
+
+.right-fixed{
+  width:46px;
+  height: 100%;
+  position:fixed;
+  right:0px;
+  z-index: 10000;
+  .r-fixed-l{
+    width:40px;
+    height: 100%;
+    float: left;
+    .l-list{
+      width: 100%;
+      height: 200px;
+      position:relative;
+      top: 45%;
+      li{
+        width: 100%;
+        height: 34px;
+        margin-top:3px;
+        background:$defualtColor;
+        a{margin:3px 3px;}
+        img{width:60%;height:60%;margin:6px 6px;}
+      }
+      li:hover{
+        background:#2EAF98;
+      }
+    }
+  }
+  .r-fixed-r{
+    width:6px;
+    height: 100%;
+    background:$defualtColor;
+    float: left;
+  }
+}
