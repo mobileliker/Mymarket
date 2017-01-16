@@ -19,7 +19,7 @@
 	{!! Html::style('/antvel-bower/bootstrap/dist/css/bootstrap.css') !!}
 
 	@section('css')
-		{!! Html::style('/css/szy/index.css') !!}
+		{!! Html::style('/css/szy/product-detail.css') !!}
 	@show
 
 </head>
@@ -30,9 +30,8 @@
 @show
 
 @section('header')
-	@include('szy.layouts.header')
+	@include('szy.layouts.top')
 @show
-
 
 @section('content')
 

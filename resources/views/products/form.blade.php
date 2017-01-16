@@ -49,11 +49,14 @@
 
             @if(!$edit)
                 
-                {!! Form::model(Request::all(),['url'=>'products', 'class'=>'form-horizontal', 'role'=>'form']) !!}
+                {!! Form::model(Request::all(),['url'=>'products', 'class'=>'form-horizontal', 'role'=>'form','enctype'=>'multipart/form-data']) !!}
             @else
                     {{-- {{dd($product)}}            --}}
-                {!! Form::model($product,['route'=>['products.update',$product],'method'=>'PUT','class'=>'form-horizontal','role'=>'form']) !!}
+                {!! Form::model($product,['route'=>['products.update',$product],'method'=>'PUT','class'=>'form-horizontal','role'=>'form','enctype'=>'multipart/form-data']) !!}
             @endif
+            <style type="text/css">
+                .congshu{width:210px;height:30px;border:none;outline:none;}
+            </style>
                 <div  ng-class="defaultClass">
         
                     <div class="form-group" >
@@ -80,9 +83,31 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             {!! Form::label('name',trans('product.inputs_view.name')) !!}:&nbsp;
                             {!! Form::text('name',null,['class'=>'form-control',$disabled=>$disabled,'required']) !!}
+                        </div>
+                        <div class="col-sm-6">
+                            {!! Form::label('name','从属商品') !!}:&nbsp;
+                            <div class='form-control'>
+
+                            <input  type="text" class="congshu">
+                            <select  class="congshu" name="products_group">
+                                <option value="false">不从属</option>
+                                @if(isset($product->name))
+                                    @if($product->id != $product->products_group)
+                                        @foreach($cs as $pt)
+                                        <option value="{{$pt->products_group}}" @if($pt->products_group == $product->products_group) selected=true @endif>{{$pt->name}}</option>
+                                        @endforeach
+                                    @endif
+                                @else
+                                    @foreach($cs as $pt)
+                                    <option value="{{$pt->products_group}}">{{$pt->name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            </div>
+
                         </div>
                     </div>
 
@@ -108,7 +133,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group ng-cloak" ng-show="typeItem=='item'">
+                    <div class="form-group ng-cloak" >
                         <div class="col-sm-4">
                             {!! Form::label('stock',trans('product.globals.stock')) !!}:&nbsp;
                             {!! Form::number('stock',null,['class'=>'form-control','required']) !!}
@@ -117,7 +142,54 @@
                             {!! Form::label('low_stock',trans('product.inputs_view.low_stock')) !!}:&nbsp;
                             {!! Form::number('low_stock',null,['class'=>'form-control','required']) !!}
                         </div>
-                        <div class="col-sm-4">&nbsp;</div>
+                        <div class="col-sm-4">
+                            {!! Form::label('origin','产地') !!}:&nbsp;
+                            @if(isset($product->origin))
+                            {!! Form::text('origin',$product->origin,['class'=>'form-control','required']) !!}
+                            @else 
+                            {!! Form::text('origin',null,['class'=>'form-control','required']) !!}
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group ng-cloak" >
+                        <div class="col-sm-3">
+                            {!! Form::label('plan_date','生产日期') !!}:&nbsp;
+                            @if(isset($product->plan_date))
+                            {!! Form::text('plan_date',$product->plan_date,['class'=>'form-control','required']) !!}
+                            @else 
+                            {!! Form::text('plan_date',null,['class'=>'form-control','required']) !!}
+                            @endif
+                        </div>
+                        <div class="col-sm-3">
+                            {!! Form::label('quality_time','保质期') !!}:&nbsp;
+                            @if(isset($product->quality_time))
+                            {!! Form::number('quality_time',$product->quality_time,['class'=>'form-control','required']) !!}
+                            @else
+                            {!! Form::number('quality_time',90,['class'=>'form-control','required']) !!}
+                            @endif
+                        </div>
+                        <div class="col-sm-3">
+                            {!! Form::label('pack','包装') !!}:&nbsp;
+                            @if(isset($product->pack))
+                            {!! Form::text('pack',$product->pack,['class'=>'form-control','required']) !!}
+                            @else
+                            {!! Form::text('pack',null,['class'=>'form-control','required']) !!}
+                            @endif
+                        </div>
+                        <div class="col-sm-3">
+                            {!! Form::label('import','进口/国产') !!}:&nbsp;
+
+                            <select name="import" class="form-control">
+                            @if(isset($product->pack))
+                                <option value=0 @if($product->pack==0)selected=true @endif>国产</option>
+                                <option value=1 @if($product->pack==1)selected=true @endif>进口</option>
+                            @else
+                                <option value=0>国产</option>
+                                <option value=1>进口</option>
+                            @endif
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-group ng-cloak" ng-show="typeItem=='key'">
@@ -186,7 +258,16 @@
                
                     @include('features.makeInputsToDocumentsPicturesVideos',['force'=>false])
                     @include('features.makeInputs',['force'=>false])
-                   
+                    <div class="col-md-12">
+                        <label class="control-label">溯源二维码:</label>
+                        <input class='upload-pic' type="file" id="pic_code" name="code" style="display:none">
+                        @if(isset($product->code) && !empty($product->code))
+                        <img src="{{$product->code}}" alt="点击" class="thumbnail" onclick="$('input[id=pic_code]').click();" width="140px" height="140px" style="cursor:pointer">
+                        @else
+                        <img src="img/no-img.png" alt="点击" class="thumbnail" onclick="$('input[id=pic_code]').click();" width="140px" height="140px" style="cursor:pointer">
+                        @endif
+                    </div>
+
                 </div>
 
                 <div class="row">
@@ -216,8 +297,22 @@
     @parent
     {!! Html::script('/js/vendor/file-upload/angular-file-upload-shim.min.js') !!}
     {!! Html::script('/js/vendor/file-upload/angular-file-upload.min.js') !!}
-    
+    {!! Html::script('/js/vendor/deleted/jquery.min.js') !!}
     <script>
+    //图片上传事件
+    $(".upload-pic").change(function () {
+        uploadPic(this.files[0],$(this));
+    });
+
+    function uploadPic(a,b){
+        var reader = new FileReader();
+        reader.readAsDataURL(a);
+        //监听文件读取结束后事件
+        reader.onloadend = function (e) {
+            $(b).next('img').attr('src',e.target.result);
+        };
+    };
+
         (function(app){
             app.controller('upload', ['$scope', '$upload', '$timeout','$http', function ($scope, $upload, $timeout, $http) {
                 $scope.$watch('files', function () {

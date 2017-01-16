@@ -63,3 +63,6 @@ require __DIR__.'/web/about.php';
 
 //utilities
 require __DIR__.'/web/utilities.php';
+
+//shop routes
+require __DIR__.'/web/shop.php';

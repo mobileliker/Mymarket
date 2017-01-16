@@ -93,12 +93,11 @@
 				</li>
 				<li>湘ICP备13007512号-1 | Powered By Cnhnb 2.1 | 服务热线 : 400-008-8688</li>
 				<li>互联网药品信息服务资格证书:(粤)-经营性-2014-0005</li>
-				<li>2011-2020 Cnhnb B2B SYSTEM All Rights Resered 
-					<a href=""><img src=""></a>
-					<a href=""><img src=""></a>
-					<a href=""><img src=""></a>
-					<a href=""><img src=""></a>
-					<a href=""><img src=""></a>
+				<li>2011-2020 Cnhnb B2B SYSTEM All Rights Resered
+					<a href="http://www.cyberpolice.cn/wfjb/" target="_blank"><img src="/img/szy/inc/pq1.png">网络警察提醒你</a>
+					<a href="http://www.kxnet.cn/" target="_blank"><img src="/img/szy/inc/pq2.png">可信网站信用评估</a>
+					<a href="http://www.baic.gov.cn/" target="_blank"><img src="/img/szy/inc/pq3.png">经营性网站备案中心</a>
+					{{--<a href="http://www.cecdc.com/" target="_blank"><img src="/img/szy/inc/pq4.png">诚信网站</a>--}}
 				</li>
 			</div>
 		</div>

@@ -26,6 +26,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class ProductsController extends Controller
 {
@@ -240,10 +241,34 @@ class ProductsController extends Controller
         $oldFeatures = ProductDetail::oldFeatures([]);
         $productsDetails = new featuresHelper();
 
-        return view('products.form',
-                compact('product', 'panel', 'features', 'categories', 'condition', 'typeItem', 'typesProduct', 'disabled', 'edit', 'oldFeatures', 'productsDetails'));
+        //查询从属商品后10条 日期排序
+        $cs = Product::whereColumn('id', '=','products_group')
+        ->where('user_id','=',auth()->user()->id)
+        ->orderBy('created_at','desc')
+        ->select('id','name','products_group')
+        ->take(10)
+        ->get(); 
+        
+        return view('products.form',compact('product', 'panel', 'features', 'categories', 'cs',
+            'condition', 'typeItem', 'typesProduct', 'disabled', 'edit', 'oldFeatures', 'productsDetails')
+        );
     }
 
+    //图片异步上传
+    public function uploadPic(Request $request,$name)
+    {   
+        $path = 'upload/code/';
+        $filename = 'Code'.time().rand(1,10000);
+        $file = $request->file($name);
+
+        if ($request->hasFile($name)) {
+            $Extension = $file->getClientOriginalExtension();
+            $file->move($path, $filename.'.'.$Extension);
+            return $path.$filename.'.'.$Extension; //原图路径加名称
+        }else{
+            return 'false';
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -281,6 +306,17 @@ class ProductsController extends Controller
         $product->condition = $request->input('condition');
         $product->features = $features;
         $product->type = $request->input('type');
+        $product->products_group = $request->input('products_group');
+        $product->origin = $request->input('origin');
+        $product->plan_date = $request->input('plan_date');
+        $product->quality_time = $request->input('quality_time');
+        $product->pack = $request->input('pack');
+        $product->import = $request->input('import');
+        $code = $this->uploadPic($request,'code');
+        if ($code !='false') {
+            $product->code = $code;
+        }
+
         if ($request->input('type') == 'item') {
             $product->stock = $request->input('stock');
             $product->low_stock = $request->input('low_stock');
@@ -377,7 +413,8 @@ class ProductsController extends Controller
         $product = Product::select([
             'id', 'category_id', 'user_id', 'name', 'description',
             'price', 'stock', 'features', 'condition', 'rate_val',
-            'rate_count', 'low_stock', 'status', 'type', 'tags', 'products_group', 'brand',
+            'rate_count', 'low_stock', 'status', 'type', 'tags', 'products_group', 'brand','origin',
+            'plan_date','pack','quality_time','import',
         ])->with([
             'group' => function ($query) {
                 $query->select(['id', 'products_group', 'features']);
@@ -433,7 +470,25 @@ class ProductsController extends Controller
                 $product->group = $featuresHelper->group($product->group);
             }
 
-            return view('products.detailProd', compact('product', 'panel', 'allWishes', 'reviews', 'freeproductId', 'features', 'suggestions'));
+            //同类推荐
+            $sells = DB::table('products')
+                // ->join('order_details','products.id','=','order_details.product_id')
+                ->where('category_id','=',$product->category_id)
+                ->where('products.id','!=',$id)
+                ->select(
+                    // DB::raw('count(*) as num'),
+                    // 'order_details.product_id',
+                    'products.id',
+                    'products.name',
+                    'products.description',
+                    'products.price','products.features'
+                    )
+                // ->groupBy('order_details.product_id')
+                // ->orderBy('num','desc')
+                ->limit(10)
+                ->get();
+
+            return view('szy.detailProduct', compact('product', 'panel', 'allWishes', 'reviews', 'freeproductId', 'features', 'suggestions','sells'));
         } else {
             return redirect(route('products'));
         }
@@ -482,7 +537,18 @@ class ProductsController extends Controller
 
         $productsDetails = new featuresHelper();
 
-        return view('products.form', compact('product', 'panel', 'features', 'categories', 'condition', 'typeItem', 'disabled', 'edit', 'oldFeatures', 'productsDetails'));
+        //查询从属商品后10条 日期排序
+        $cs = Product::whereColumn('id', '=','products_group')
+        ->where('products_group','!=',$id)
+        ->orderBy('created_at','desc')
+        ->select('id','name','products_group')
+        ->take(10)
+        ->get(); 
+
+        return view('products.form', 
+            compact('product', 'panel', 'features', 'categories', 'condition', 'typeItem',
+             'disabled', 'edit', 'oldFeatures', 'productsDetails','cs')
+            );
     }
 
     /**
@@ -525,10 +591,23 @@ class ProductsController extends Controller
             $product->condition = $request->input('condition');
         }
         $product->status = $request->input('status');
+        $product->products_group = $request->input('products_group');
         $product->description = $request->input('description');
         $product->bar_code = $request->input('bar_code');
         $product->brand = $request->input('brand');
         $product->price = $request->input('price');
+        $product->origin = $request->input('origin');
+        $product->plan_date = $request->input('plan_date');
+        $product->quality_time = $request->input('quality_time');
+        $product->pack = $request->input('pack');
+        $product->import = $request->input('import');
+        $code = $this->uploadPic($request,'code');
+        if ($code !='false') {
+            if(file_exists($product->code)){
+                unlink($product->code);
+            }
+            $product->code = $code;
+        }
         $product->features = $features;
         if ($request->input('type') == 'item') {
             $product->stock = $request->input('stock');
@@ -719,6 +798,7 @@ class ProductsController extends Controller
     private function validateFeatures($data)
     {
         $features = ProductDetail::all()->toArray();
+
         $features_rules = [];
         $message_rules = [];
         foreach ($features as $row) {
@@ -766,6 +846,7 @@ class ProductsController extends Controller
                         } elseif (isset($row['helpMessageArray']['specific_selection'])) {
                             $message = $data['help_msg_'.$row['indexByName'].'_'.$i];
                         }
+
                         $values[] = [$data['feature_'.$row['indexByName'].'_'.$i], $message];
                     } else {
                         $values[] = $data['feature_'.$row['indexByName'].'_'.$i];
@@ -782,13 +863,15 @@ class ProductsController extends Controller
                     } elseif (isset($row['helpMessageArray']['general_selection'])) {
                         $message = $data['help_msg_'.$row['indexByName']];
                     }
-                    $values = [$data['feature_'.$row['indexByName']], $message];
+                    //$values = [$data['feature_'.$row['indexByName']], $message];
+                    $values = $data['feature_'.$row['indexByName']];
                 } else {
                     $values = isset($data['feature_'.$row['indexByName']]) ? $data['feature_'.$row['indexByName']] : '';
                 }
             }
+
             if ($values) {
-                $array[$row['indexByName']] = $values;
+                 $array[$row['indexByName']] = $values;
             }
         }
 

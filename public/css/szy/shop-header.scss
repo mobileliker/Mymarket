@@ -1,0 +1,56 @@
+
+$CnAHoverDefualt: '.header-a-hover';//顶部a链接hover Class名称
+
+.header{
+  width: 100%;
+  min-width:1200px;
+  height:600px;
+  background: $color3;
+  margin: 0;
+  padding: 0;
+
+  .header-b{
+    width: 100%;
+    height:130px;
+    background:white;
+  }
+  .header-c{
+    width: 100%;
+    height:440px;
+  }
+}
+
+#{$CnAHoverDefualt} a:hover{
+  color: $defualtColor;
+}
+
+.header-theme{
+  width: 100%;
+  height:40px;
+  background: $defualtColor;
+}
+.header-theme-center{
+  width:1200px;
+  height:100%;
+  margin: 0 auto;
+  li{
+    list-style-type: none;
+    width:120px;
+    height: 100%;
+    float: left;
+    text-align: center;
+    background: #31BCA2;
+    margin-right:5px;
+    cursor: pointer;
+    a{
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 40px;
+    }
+  }
+}
+
+
+
+

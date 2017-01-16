@@ -49,11 +49,310 @@ input, select, button, a {
     background: #31C4A8;
     float: left; }
 
+.header-a {
+  width: 100%;
+  height: 30px;
+  background: #F2F2F2;
+  border-bottom: 1px solid #DEDEDE; }
+
+.header-nav {
+  width: 1200px;
+  height: 100%;
+  margin: 0 auto; }
+
+.header-nav1 {
+  width: 30%;
+  height: 100%;
+  float: left;
+  line-height: 30px; }
+  .header-nav1 a {
+    font-size: 12px;
+    color: #A5A5A5; }
+
+.header-nav2 {
+  width: 70%;
+  height: 100%;
+  float: right; }
+  .header-nav2 li {
+    width: 62px;
+    height: 100%;
+    float: right;
+    line-height: 30px;
+    list-style-type: none;
+    font-size: 12px;
+    color: #A5A5A5; }
+    .header-nav2 li a {
+      font-size: 12px;
+      color: #A5A5A5; }
+
+.header-nav-b {
+  height: 100%;
+  width: 200px;
+  float: left; }
+
+.header-nav-b1 {
+  height: 70%;
+  width: 100%;
+  margin-top: 15px; }
+  .header-nav-b1 img {
+    height: 80px;
+    width: 100%; }
+
+.header-nav-b2 {
+  height: 20%;
+  width: 100%; }
+  .header-nav-b2 span {
+    color: #4B4B4B;
+    font-size: 12px;
+    line-height: 23px; }
+    .header-nav-b2 span a {
+      color: #4B4B4B;
+      font-size: 12px; }
+    .header-nav-b2 span a:hover {
+      color: #31C4A8; }
+
+.header-nav-b2-span1 {
+  float: left; }
+
+.header-nav-b2-span2 {
+  float: right; }
+  .header-nav-b2-span2 img {
+    width: 15px;
+    height: 15px; }
+
+.header-nav-right {
+  width: 800px;
+  height: 100%;
+  float: right; }
+
+.header-nav-right-l {
+  width: 100%;
+  height: 100%; }
+
+.header-nav-right-r {
+  width: 30%;
+  height: 100%; }
+
+.header-nav-right-la {
+  width: 100%;
+  height: 30%;
+  margin-top: 35px;
+  float: left; }
+  .header-nav-right-la input {
+    width: 380px;
+    height: 35px;
+    border: 2px solid #31C4A8;
+    color: #5B5B5B;
+    font-size: 15px;
+    float: left;
+    border-right: none; }
+  .header-nav-right-la button {
+    width: 90px;
+    height: 35px;
+    margin: 0;
+    padding: 0;
+    float: left;
+    color: white;
+    font-size: 15px;
+    font-weight: bold; }
+
+.header-nav-right-la-bt1 {
+  background: #31C4A8;
+  border: 2px solid #31C4A8;
+  cursor: pointer; }
+
+.header-nav-right-la-bt1:hover {
+  background: #2CAF95;
+  border: 2px solid #2CAF95; }
+
+.header-nav-right-la-bt2 {
+  background: #BC7EDB;
+  border: 2px solid #BC7EDB;
+  cursor: pointer; }
+
+.header-nav-right-la-bt2:hover {
+  background: #AD71C9;
+  border: 2px solid #AD71C9; }
+
+.header-nav-right-l-div {
+  width: 380px;
+  height: 30px;
+  text-align: left;
+  margin-top: 5px;
+  color: #31C4A8;
+  font-size: 14px; }
+  .header-nav-right-l-div a {
+    color: #A5A5A5;
+    font-size: 13px; }
+  .header-nav-right-l-div a:hover {
+    color: #31C4A8; }
+
+.header-nav-right-la-cart {
+  width: 160px;
+  height: 35px;
+  float: right;
+  border: 1px solid #FC8950;
+  color: #FC8950;
+  line-height: 35px;
+  text-align: center;
+  cursor: pointer; }
+  .header-nav-right-la-cart a {
+    color: #FC8950;
+    font-size: 15px; }
+
+.header-nav-right-la-cart:hover {
+  border: 1px solid #FC8950;
+  border-top: 2px solid #FC8950; }
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: '宋体'; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+a {
+  text-decoration: none; }
+
+input, select, button, a {
+  outline: none; }
+
+.right-fixed {
+  width: 46px;
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  z-index: 10000; }
+  .right-fixed .r-fixed-l {
+    width: 40px;
+    height: 100%;
+    float: left; }
+    .right-fixed .r-fixed-l .l-list {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      top: 45%; }
+      .right-fixed .r-fixed-l .l-list li {
+        width: 100%;
+        height: 34px;
+        margin-top: 3px;
+        background: #31C4A8; }
+        .right-fixed .r-fixed-l .l-list li a {
+          margin: 3px 3px; }
+        .right-fixed .r-fixed-l .l-list li img {
+          width: 60%;
+          height: 60%;
+          margin: 6px 6px; }
+      .right-fixed .r-fixed-l .l-list li:hover {
+        background: #2EAF98; }
+  .right-fixed .r-fixed-r {
+    width: 6px;
+    height: 100%;
+    background: #31C4A8;
+    float: left; }
+
+.footer {
+  width: 100%;
+  min-height: 200px;
+  background: #F5F5F5;
+  border-top: 3px solid #31C4A8;
+  float: left;
+  margin-top: 10px; }
+  .footer .footer-center {
+    width: 1200px;
+    min-height: 200px;
+    margin: auto; }
+    .footer .footer-center .c-top {
+      width: 100%;
+      height: 150px;
+      border-bottom: 1px solid #ccc; }
+      .footer .footer-center .c-top li, .footer .footer-center .c-top .space {
+        height: 70%;
+        float: left;
+        margin-top: 20px; }
+      .footer .footer-center .c-top li {
+        width: 12.25%; }
+        .footer .footer-center .c-top li .li-t {
+          width: 100%;
+          height: 40%;
+          line-height: 20px; }
+          .footer .footer-center .c-top li .li-t span {
+            width: 23%;
+            height: 80%;
+            display: inline-block; }
+          .footer .footer-center .c-top li .li-t .span1 {
+            background: url("/img/szy/inc/pay-mh.png") no-repeat; }
+          .footer .footer-center .c-top li .li-t .span2 {
+            background: url("/img/szy/inc/merchant.png") no-repeat; }
+          .footer .footer-center .c-top li .li-t .span3 {
+            background: url("/img/szy/inc/cantact-us.png") no-repeat; }
+          .footer .footer-center .c-top li .li-t .span4 {
+            background: url("/img/szy/inc/help.png") no-repeat; }
+          .footer .footer-center .c-top li .li-t div {
+            width: 70%;
+            height: 80%;
+            line-height: 40px;
+            float: right; }
+            .footer .footer-center .c-top li .li-t div b {
+              font-size: 15px;
+              color: #4D4D4D; }
+        .footer .footer-center .c-top li .li-f {
+          width: 100%;
+          height: 50%; }
+          .footer .footer-center .c-top li .li-f div {
+            width: 100%;
+            height: 48%; }
+            .footer .footer-center .c-top li .li-f div a {
+              font-size: 12px;
+              color: #4D4D4D;
+              margin-right: 3px; }
+            .footer .footer-center .c-top li .li-f div a:hover {
+              color: #31C4A8; }
+      .footer .footer-center .c-top .space {
+        width: 17%; }
+        .footer .footer-center .c-top .space div {
+          width: 50%;
+          height: 100%;
+          border-right: 1px solid #6A6A6A; }
+    .footer .footer-center .c-footer {
+      width: 100%;
+      height: 170px;
+      margin-top: 15px;
+      margin-bottom: 15px; }
+      .footer .footer-center .c-footer .f-l {
+        width: 150px;
+        height: 150px;
+        border: 1px solid #ccc;
+        float: left; }
+        .footer .footer-center .c-footer .f-l img {
+          width: 150px;
+          height: 150px; }
+      .footer .footer-center .c-footer .f-r {
+        min-width: 80%;
+        height: 150px;
+        margin-left: 5%;
+        float: left; }
+        .footer .footer-center .c-footer .f-r li {
+          width: 100%;
+          height: 15%;
+          margin-top: 10px;
+          color: #4D4D4D;
+          font-size: 15px; }
+          .footer .footer-center .c-footer .f-r li a {
+            color: #4D4D4D;
+            font-size: 15px; }
+          .footer .footer-center .c-footer .f-r li a:hover {
+            color: #31C4A8; }
+        .footer .footer-center .c-footer .f-r li:nth-child(5n+1) {
+          margin-top: 0px; }
+
 .details {
   width: 100%;
   height: 500px;
-  margin-top: 10px;
-  background: url("./inc/details-bg.png"); }
+  background: url("/img/szy/inc/details-bg.png"); }
   .details .product {
     width: 1200px;
     height: 96%;
@@ -63,8 +362,7 @@ input, select, button, a {
     position: relative;
     top: 15px;
     border-radius: 10px;
-    border-bottom: 2px solid #ccc;
-    padding: 10px 6px 5px 6px; }
+    border-bottom: 2px solid #ccc; }
     .details .product .left {
       width: 350px;
       height: 490px;
@@ -73,7 +371,8 @@ input, select, button, a {
         width: 344px;
         height: 330px;
         border: 1px solid #ccc;
-        padding: 2px; }
+        padding: 2px;
+        border-top-left-radius: 5px; }
         .details .product .left .max-pic img {
           height: 100%;
           width: 100%;
@@ -104,7 +403,8 @@ input, select, button, a {
           height: 100%;
           float: left;
           font-size: 15px;
-          color: #6A6A6A; }
+          color: #6A6A6A;
+          line-height: 30px; }
         .details .product .left .info .bh {
           min-width: 30%;
           max-width: 50%;
@@ -118,7 +418,7 @@ input, select, button, a {
             width: 18px;
             height: 18px;
             position: relative;
-            top: 3px; }
+            top: -5px; }
         .details .product .left .info .sy {
           margin-right: 10px;
           position: relative; }
@@ -129,13 +429,14 @@ input, select, button, a {
             position: absolute;
             top: -190px;
             left: -60px;
-            padding: 5px;
             background: white;
             z-index: 1000;
             display: none; }
             .details .product .left .info .sy .ewm img {
               width: 100%;
-              height: 100%; }
+              height: 100%;
+              margin-top: 5px;
+              border: none; }
         .details .product .left .info .sy:hover, .details .product .left .info .gz:hover {
           color: #31C4A8; }
     .details .product .pm {
@@ -155,12 +456,12 @@ input, select, button, a {
         height: 50px;
         color: #6A6A6A;
         font-size: 15px;
-        line-height: 20px;
+        line-height: 25px;
         overflow: hidden; }
       .details .product .pm .price {
         width: 98%;
-        height: 55px;
-        background: url("./inc/bg3.png") no-repeat;
+        height: 65px;
+        background: url("/img/szy/inc/bg3.png") no-repeat;
         padding: 8px; }
         .details .product .pm .price .left {
           width: 75%;
@@ -281,13 +582,11 @@ input, select, button, a {
           background: #21B699; }
         .details .product .pm .submit .gwc {
           width: 120px;
-          height: 30px;
+          height: 34px;
           border: 2px solid #31C4A8;
           border-radius: 3px;
           background: white;
           cursor: pointer;
-          color: #31C4A8;
-          font-size: 15px;
           line-height: 34px;
           float: left;
           text-align: center;
@@ -295,6 +594,9 @@ input, select, button, a {
           .details .product .pm .submit .gwc img {
             width: 18px;
             height: 18px; }
+          .details .product .pm .submit .gwc a {
+            color: #31C4A8;
+            font-size: 15px; }
         .details .product .pm .submit .gwc:hover {
           border: 1px solid #31C4A8; }
         .details .product .pm .submit .num {
@@ -305,14 +607,14 @@ input, select, button, a {
           margin-left: 20px; }
           .details .product .pm .submit .num input {
             width: 34px;
-            height: 30px;
+            height: 28px;
             border: none;
             float: left;
             text-align: center;
             font-size: 15px; }
           .details .product .pm .submit .num li {
-            width: 15px;
-            height: 14.5px;
+            width: 14px;
+            height: 14px;
             float: left;
             background: #DEDEDE;
             border-left: 1px solid #6A6A6A;
@@ -392,7 +694,7 @@ input, select, button, a {
             width: 16px;
             height: 14px;
             position: relative;
-            top: 3px; }
+            top: -3px; }
         .details .product .serve .lx li:nth-child(2n+2) {
           margin-left: 10px; }
 
@@ -410,7 +712,7 @@ input, select, button, a {
     float: left; }
     .content .left .ewm {
       width: 100%;
-      height: 270px;
+      height: 245px;
       border: 1px solid #ccc;
       border-radius: 10px;
       text-align: center; }
@@ -425,13 +727,14 @@ input, select, button, a {
         line-height: 40px;
         text-align: center; }
       .content .left .ewm .img {
-        width: 80%;
+        width: 212px;
         height: 160px;
-        padding: 20px; }
+        padding: 10px;
+        margin-top: 10px; }
         .content .left .ewm .img img {
           width: 100%;
-          height: 100%;
-          margin: 0 auto; }
+          height: 140px;
+          margin: auto; }
       .content .left .ewm span {
         font-size: 15px;
         color: #6A6A6A; }
@@ -487,11 +790,11 @@ input, select, button, a {
         border-top: none; }
   .content .right {
     width: 80%;
-    min-height: 460px;
+    min-height: 300px;
     float: right; }
     .content .right .desc {
       width: 100%;
-      height: 440px;
+      min-height: 240px;
       border: 1px solid #ccc;
       border-radius: 2px; }
       .content .right .desc .d-title {
@@ -532,7 +835,7 @@ input, select, button, a {
         font-size: 15px; }
       .content .right .desc .d-xx {
         width: 98%;
-        height: 230px;
+        height: 80px;
         float: right; }
         .content .right .desc .d-xx .xx-san {
           width: 290px;
@@ -545,7 +848,7 @@ input, select, button, a {
           font-size: 15px; }
           .content .right .desc .d-xx .xx-san li {
             width: 100%;
-            height: 12%;
+            height: 40%;
             margin-top: 0.5%;
             color: #4D4D4D;
             font-size: 15px;
@@ -577,4 +880,4 @@ input, select, button, a {
         .content .right .desc-img .img-center img {
           width: 100%; }
 
-/*# sourceMappingURL=details.css.map */
+/*# sourceMappingURL=product-detail.css.map */

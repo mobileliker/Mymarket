@@ -82,13 +82,13 @@
 						<div class="c-{{$nav[0]->color}}"></div>
 						<div class="img"><img src="{{$nav[0]->image}}"></div>
 						<div class="right">
-							<div class="r-class"><a href=""><b>{{$nav[0]->name}}</b></a></div>
+							<div class="r-class"><a href="products?category={{$nav[0]->name}}"><b>{{$nav[0]->name}}</b></a></div>
 							<div class="f-h">></div>
 							<div class="x-class">@foreach ($nav[2] as $p){{$p->name}}&nbsp;@endforeach</div>
 							<div class="hide-class">
 								<div>
 									@foreach ($nav[2] as $pro)
-									<h5><a href="">{{$pro->name}}</a></h5>
+									<h5><a href="products?search={{$pro->name}}">{{$pro->name}}</a></h5>
 									@endforeach 
 								</div>
 							</div>
