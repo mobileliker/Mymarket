@@ -46,7 +46,7 @@ class RegisterController extends Controller
      */
     protected function showRegistrationForm()
     {
-        return view('auth.register', [
+        return view('szy.auth.register', [
             'email' => session()->has('email') ? session()->get('email') : '',
         ]);
     }
