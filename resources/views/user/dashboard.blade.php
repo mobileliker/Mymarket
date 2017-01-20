@@ -12,7 +12,7 @@
 	@section('center_content')
 
 		<div class="page-header">
-			<h5>{{ trans('user.dashboard') }}</h5>
+			<h5><span class="glyphicon glyphicon-dashboard"></span> {{ trans('user.dashboard') }}</h5>
 		</div>
 
 	  	@if (\Auth::check() && \Auth::user()->hasRole(['business','admin']))
@@ -25,7 +25,7 @@
 
 			<div class="row">&nbsp;</div>
 
-			<div class="list-group">
+			<div class="list-group list-gp">
 				<a href="javascript:void(0);" class="list-group-item active">{{ trans('user.your_products') }}</a>
 				<a href="{{ route('products.myProducts') }}" class="list-group-item">{{ trans('globals.all') }}<span class="badge">{{ $products['all'] }}</span></a>
 				<a href="{{ route('products.myProducts').'?filter=active' }}" class="list-group-item">{{ trans('globals.active') }}<span class="badge">{{ $products['active'] }}</span></a>
@@ -33,7 +33,7 @@
 				<a href="{{ route('products.myProducts').'?filter=low' }}" class="list-group-item">{{ trans('product.inputs_view.low_stock') }}<span class="badge">{{ $products['lowStock'] }}</span></a>
 			</div>
 
-			<div class="list-group">
+			<div class="list-group list-gp">
 				<a href="javascript:void(0);" class="list-group-item active">{{ trans('user.your_sales') }}</a>
 				<a href="{{ route('orders.pendingOrders') }}" class="list-group-item">{{ trans('store.all_transactions') }}<span class="badge">{{ $sales['all'] }}</span></a>
 				<a href="javascript:void(0);" class="list-group-item"><strong>{{ trans('store.grand_total') }}</strong><span class="badge">{{ \Utility::showPrice($sales['total']) }}</span></a>
@@ -45,7 +45,7 @@
 
 		@else
 
-			<div class="list-group">
+			<div class="list-group list-gp">
 				<a href="javascript:void(0);" class="list-group-item active">{{ trans('user.your_orders') }}</a>
 				<a href="{{ route('orders.show_orders') }}" class="list-group-item">{{ trans('globals.all') }}&nbsp;<span class="badge">{{ $orders['all'] }}</span></a>
 				<a href="{{ route('orders.show_orders') }}" class="list-group-item">{{ trans('store.openOrders') }}&nbsp;<span class="badge">{{ $orders['open'] }}</span></a>

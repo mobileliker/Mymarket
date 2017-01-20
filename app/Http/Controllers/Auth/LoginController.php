@@ -121,4 +121,8 @@ class LoginController extends Controller
     {
         return trans('user.credentials_do_not_match_our_records');
     }
+
+    public function showLoginForm(){
+        return view('szy.auth.login');
+    }
 }

@@ -5,11 +5,18 @@
 	<div ng-controller="CategoryController" class="panel panel-default">
 		<div class="panel-heading"><h6><span class="glyphicon glyphicon-tasks"></span> {{ trans('categories.registration_category') }}</h6>	</div>
 		<div class="panel-body">
-			{!! Form::model(Request::all(),['route'=>'wpanel.category.store', 'class'=>'form-horizontal', 'role'=>'form']) !!}
+			{!! Form::model(Request::all(),['route'=>'wpanel.category.store', 'class'=>'form-horizontal', 'role'=>'form','enctype'=>'multipart/form-data']) !!}
 				<div class="form-group">
 					<label class="col-md-4 control-label">{{ trans('globals.name') }}</label>
 					<div class="col-md-6">
 						{!! Form::text('name',null,['class'=>'form-control']) !!}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-4 control-label">英文名字</label>
+					<div class="col-md-6">
+						{!! Form::text('english',null,['class'=>'form-control']) !!}
 					</div>
 				</div>
 
@@ -19,6 +26,31 @@
 						{!! Form::text('description',null,['class'=>'form-control']) !!}
 					</div>
 				</div>
+
+				<div class="row form-group">
+					<label class="col-md-4 control-label">分类图标(前端):</label>
+					<div class="col-md-2">
+			      		<input class='upload-pic' type="file" id="pic_logo" name="image" style="display:none">
+						<img src="[[image || '/img/no-image.jpg']]" alt="点击" class="thumbnail" onclick="$('input[id=pic_logo]').click();" width="40px" height="40px" style="cursor:pointer">
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<label class="col-md-4 control-label">广告图(纵向):</label>
+					<div class="col-md-2">
+			      		<input class='upload-pic' type="file" id="pic_h" name="image-h" style="display:none">
+						<img src="[['/img/no-image.jpg']]" alt="点击" class="thumbnail" onclick="$('input[id=pic_h]').click();" width="80px" height="140px" style="cursor:pointer">
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<label class="col-md-4 control-label">广告图(横向):</label>
+					<div class="col-md-2">
+			      		<input class='upload-pic' type="file" id="pic_w" name="image-w" style="display:none">
+						<img src="[[image-w || '/img/no-image.jpg']]" alt="点击" class="thumbnail" onclick="$('input[id=pic_w]').click();" width="440px" height="100px" style="cursor:pointer">
+					</div>
+				</div>
+				{{--
 				<div class="row form-group">
 					<label class="col-md-4 control-label">{{ trans('globals.image') }}</label>
 					<div class="col-md-2">
@@ -31,6 +63,8 @@
 						<input type="hidden" value="[[image]]" name="image" />
 					</div>
 				</div>
+				--}}
+
 				<div id="iconSelect" class="form-group">
 					<label class="col-md-4 control-label">{{ trans('categories.select_icon') }}</label>
 					<div class="col-md-6 demo-icons">
@@ -48,6 +82,12 @@
 							<span class="[[icon]]"></span>
 							<input type="hidden" name="icon" ng-model="icon" value="[[icon]]" />
 						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">主题颜色</label>
+					<div class="col-md-6">
+						{!! Form::select('color',["green"=>'绿色',"red"=>'红色',"orange"=>'橙色',"blue"=>'蓝色',"purple"=>'紫色',],null,['class'=>'form-control']) !!}
 					</div>
 				</div>
 				<div class="form-group">
@@ -89,11 +129,26 @@
 		</div>
 	</div>
 @stop
+
 @section('scripts')
     @parent
+	{!! Html::script('/js/vendor/deleted/jquery.min.js') !!}
     {!! Html::script('/js/vendor/file-upload/angular-file-upload-shim.min.js') !!}
     {!! Html::script('/js/vendor/file-upload/angular-file-upload.min.js') !!}
 	<script>
+        //图片上传事件
+        $(".upload-pic").change(function () {
+        	uploadPic(this.files[0],$(this));
+        });
+
+        function uploadPic(a,b){
+            var reader = new FileReader();
+            reader.readAsDataURL(a);
+            //监听文件读取结束后事件
+            reader.onloadend = function (e) {
+					$(b).next('img').attr('src',e.target.result);
+            };
+        };
 		(function(app){
             app.controller('CategoryController', ['$scope', '$upload','$timeout','notify',
             	function ($scope, $upload, $timeout, notify) {

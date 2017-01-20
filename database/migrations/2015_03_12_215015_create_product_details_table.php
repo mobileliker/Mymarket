@@ -22,9 +22,9 @@ class CreateProductDetailsTable extends Migration
             $table->increments('id');
             $table->string('name', 100);
             $table->enum('input_type', ['text', 'select', 'radio', 'checkbox', 'image', 'document']);
-            $table->json('default_values');
-            $table->json('validation_rules');
-            $table->json('help_message');
+            $table->text('default_values');
+            $table->text('validation_rules');
+            $table->text('help_message');
             $table->string('type_products');
             $table->smallInteger('max_num_values')->default(1);
             $table->enum('status', ['active', 'inactive']);

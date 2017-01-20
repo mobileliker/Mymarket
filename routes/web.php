@@ -15,11 +15,29 @@
 
 Auth::routes();
 
+        // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+        // Route::post('login', 'Auth\LoginController@login');
+        // Route::post('logout', 'Auth\LoginController@logout');
+
+        // // Registration Routes...
+        // Route::get('register', 'Auth\RegisterController@showRegistrationForm');
+        // Route::post('register', 'Auth\RegisterController@register');
+
+        // // Password Reset Routes...
+        // Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+        // Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+        // Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+        // Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
 // home
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'HomeController@index');
+});
+
+Route::group(['prefix' => 'business', 'roles' => array_keys(trans('globals.roles')), 'middleware' => ['auth', 'roles']], function () {
+	Route::resource('myBusiness', 'MyBusinessController');
 });
 
 //users routes
@@ -45,3 +63,6 @@ require __DIR__.'/web/about.php';
 
 //utilities
 require __DIR__.'/web/utilities.php';
+
+//shop routes
+require __DIR__.'/web/shop.php';

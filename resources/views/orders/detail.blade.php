@@ -262,7 +262,7 @@
 
                                 @if(isset($is_seller) && $detail->product->type != 'item' && $order->status == 'pending')
                                     <div class="col-md-1 text-right">
-                                       <a class="btn btn-info btn-sm" href="javascript: void(0)" ng-click="delivery('{{ $order->id }}', '{{ $detail->product>id }}')">{{ trans('store.delivery') }}</a>
+                                       <a class="btn btn-info btn-sm" href="javascript: void(0)" ng-click="delivery('{{ $order->id }}', '{{ $detail->product->id }}')">{{ trans('store.delivery') }}</a>
                                        <span ng-show="detail.status=='0'">{{ trans('store.dispatched') }}</span>
                                     </div>
                                 @else

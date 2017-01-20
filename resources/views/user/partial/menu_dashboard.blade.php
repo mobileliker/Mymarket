@@ -14,7 +14,13 @@
 			<?php $menu=\Menu::dashboard(true);?>
 			@foreach ($menu as $item)
 			    <li class="list-group-item {{isset($item['class'])?$item['class']:''}} {{ Utility::active($item['route']) }}" >
-					<a href='{{$item['route']}}'>@if(isset($item['icon']))<span class="{{$item['icon']}}"></span>@endif {{$item['text']}} @if(isset($item['cont'])&&$item['cont']>0)<span class="badge pull-right">{{$item['cont']}}</span>@endif </a>
+					<a href='{{$item['route']}}'>
+						@if(isset($item['icon']))
+						<span class="{{$item['icon']}}"></span>
+						@endif {{$item['text']}} @if(isset($item['cont'])&&$item['cont']>0)
+						<span class="badge pull-right">{{$item['cont']}}</span>
+						@endif 
+					</a>
 				</li>
 			@endforeach
 			</ul>

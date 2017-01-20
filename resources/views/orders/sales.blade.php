@@ -18,9 +18,9 @@
 
         <div class="page-header">
             @if (\Auth::user()->role == 'person')
-                <h5>{{ trans('user.your_orders') }}</h5>
+                <h5><span class="glyphicon glyphicon-shopping-cart"></span> {{ trans('user.your_orders') }}</h5>
             @else
-                <h5>{{ trans('user.your_sales') }}</h5>
+                <h5><span class="glyphicon glyphicon-piggy-bank"></span> {{ trans('user.your_sales') }}</h5>
             @endif
         </div>
 
