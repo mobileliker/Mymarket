@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+        'failed' => '用户名或密码错误',
         'account'                      => '账号',
         'facebook'                     => 'Facebook',
         'twitter'                      => 'Twitter',
