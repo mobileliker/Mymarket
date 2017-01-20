@@ -31,8 +31,14 @@ class MyBusinessController extends Controller
             $lbArr = explode(',', $lbs);
         }
         $user->lbs=$lbArr;
+        $panel = [
+            'left'   => ['width' => '2', 'class' => 'user-panel'],
+            'center' => ['width' => '10'],
+        ];
 
-        return view('user.business.mybusiness', compact('user'));
+        return view('user.business.mybusiness', compact('user','panel'));
+        
+        
     }
 
     /**
