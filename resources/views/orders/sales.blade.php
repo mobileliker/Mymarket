@@ -74,6 +74,7 @@
                                                     @else
                                                         <a href="{{ route('orders.show_seller_order', $order->id) }}">#{{ \Utility::codeMasked($order->id) }}</a>
                                                     @endif
+                                                    <span class="badge"> {{trans('globals.order_status.'.$order->status) }}</span>
                                                 </td>
                                                 <td class="text-left">{{ $order->user->profile['fullName'] }}</td>
                                                 <td class="text-center"><a href="mailto:{{ $order->user->email }}">{{ $order->user->email }}</a></td>
@@ -243,7 +244,7 @@
                                                             #{{ \Utility::codeMasked($order->id) }}
                                                         </a>
                                                     @endif
-                                                    <span class="badge"> {{ $order->status }}</span>
+                                                    <span class="badge"> {{trans('globals.order_status.'.$order->status) }}</span>
                                                 </td>
                                                 <td class="text-left">{{ $order->user->profile['fullName'] }}</td>
                                                 <td class="text-center"><a href="mailto:{{ $order->user->email }}">{{ $order->user->email }}</a></td>
