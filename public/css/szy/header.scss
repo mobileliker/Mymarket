@@ -3,7 +3,6 @@ $widthMin: 1200px;//网站框架最小宽度
 $colorBg:#3ECEB5;//网站主色调
 $navBgImg:url('/img/szy/inc/nav-bg.png');//导航主背景图
 
-@import "common";
 .header{
   width: 100%;
   min-width:$widthMin;

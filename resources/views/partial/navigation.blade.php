@@ -7,6 +7,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
+
 			<div class="navbar-brand">
 				<a href="/home" class="navbar-brand">
 					@if($main_company['logo'])

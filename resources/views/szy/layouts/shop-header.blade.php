@@ -4,21 +4,21 @@
 	<div class="header-b">
 		<div class="header-nav">
 			<div class="header-nav-b">
-				<div class="header-nav-b1"><a href=""><img src="dp-logo.png"></a></div>
+				<div class="header-nav-b1"><a href="shop/{{$id}}"><img src="{{$business->logo}}"></a></div>
 				<div class="header-nav-b2">
-					<span class="header-nav-b2-span1">店铺: &nbsp;<a href="">那座山</a></span>
-					<span class="header-nav-b2-span2"><img src="inc/collect.png">&nbsp;<a href="">收藏店铺</a></span>
+					<span class="header-nav-b2-span1">店铺: &nbsp;<a href="javascript:void();">{{$business->business_name}}</a></span>
+					<span class="header-nav-b2-span2"><img src="/img/szy/inc/attention.png">&nbsp;<a href="">关注店铺</a></span>
 				</div>
 			</div>
 			<div  class="header-nav-right">
 				<div class="header-nav-right-l">
 					<div class="header-nav-right-la">
-						<input type="text" >
-						<button class="header-nav-right-la-bt1">搜全站</button>
-						<button class="header-nav-right-la-bt2">搜本店</button>
+						<input type="text" id="text_search" @if(isset($_GET['search']))value="{{$_GET['search']}}"@endif>
+						<button class="header-nav-right-la-bt1" type="button" onclick="search();">搜全站</button>
+						<button class="header-nav-right-la-bt2" type="button" onclick="search2();">搜本店</button>
 						<div class="header-nav-right-la-cart">
-							<a href="">
-								<img src="inc/cart.png">
+							<a href="user/cart">
+								<img src="/img/szy/inc/cart.png">
 								我的购物车
 							</a>
 						</div>
@@ -26,9 +26,11 @@
 
 					<div class="header-nav-right-l-div">
 						<span>推荐 :</span>
-						<a href="">草莓</a>
-						<a href="">香蕉</a>
-						<a href="">石榴</a>
+						@if(!empty($pushs))
+							@foreach($pushs as $push)
+							<a href="">{{$push->name}}</a>&nbsp;
+							@endforeach
+						@endif
 					</div>
 				</div>
 			</div>
@@ -37,7 +39,7 @@
 	<div class="header-c">
 		<div class="header-theme">
 			<div class="header-theme-center">
-				<li><a href="">主页</a></li>
+				{{--<li><a href="">主页</a></li>--}}
 			</div>
 		</div>
 		<div class="header-c-fig slideBox" id="slideBox">
@@ -45,11 +47,16 @@
 				<ul><li>1</li><li>2</li><li>3</li></ul>
 			</div>
 			<div class="bd">
+				@if(!empty($business->lbpic))
+				<?php $bus = explode(',',$business->lbpic)?>
 				<ul>
-				<li><a href="" target="_blank"><img src="image/lb.png" /></a></li>
-				<li><a href="" target="_blank"><img src="image/lb.png" /></a></li>
-				<li><a href="" target="_blank"><img src="image/lb.png" /></a></li>
+					@foreach($bus as $lb)
+						@if(!empty($lb))
+						<li><a href="" target="_blank"><img src="{{$lb}}" /></a></li>
+						@endif
+					@endforeach
 				</ul>
+				@endif
 			</div>
 
 			<!-- 下面是前/后按钮代码，如果不需要删除即可 -->

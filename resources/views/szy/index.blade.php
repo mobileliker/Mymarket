@@ -1,7 +1,7 @@
 @extends('szy.layouts.master')
 
 @section('title')
-我家菜市首页 
+我家菜市 - 首页 
 @stop
 
 

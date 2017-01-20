@@ -83,39 +83,8 @@ class HomeController extends Controller
         }
         // $this->createTags();
 
-        //分类级联数据
-        $categories = DB::table('categories')
-                ->whereNull('categories.category_id')
-                ->orderBy('created_at','desc');
-        $class = $categories->limit(6)->get();
-
-        $navs = array();
-        if (isset($class[0]->id)) {
-            foreach ($class as $value) {
-                $navs[$value->name][0] = $value;
-                $navs[$value->name][1] = DB::table('categories')->where('category_id',$value->id)->orderBy('created_at','desc')->limit(3)->get();
-                $navs[$value->name][2] = DB::table('categories')->where('category_id',$value->id)->orderBy('created_at','desc')->get();
-            } 
-        }
-
-        //楼层分类数据
-        $class = $categories->limit(5)->get();
-
-        $lcs = array();
-        if (isset($class[0]->id)) {
-            foreach ($class as $value) {
-                $lcs[$value->name][0] = $value;
-                $lcs[$value->name][1] = DB::table('categories')->where('category_id',$value->id)
-                ->orderBy('created_at','desc')->select('categories.id','categories.name')
-                ->limit(3)->get();
-                $lcs[$value->name][2] = DB::table('categories')
-                ->join('products','categories.id','=','products.category_id')
-                ->where('categories.category_id',$value->id)
-                ->orderBy('products.created_at','desc')
-                ->select('products.*')
-                ->limit(8)->get();
-            } 
-        }
+        $lcs = $this->classLc();//楼层分类
+        $navs = $this->classProduct();//分类级联菜单
 
         //新品推荐20
         $newProduct = DB::table('products')->orderBy('created_at','desc')->limit(20)->get();
@@ -131,6 +100,47 @@ class HomeController extends Controller
         return view('szy.index', compact('banner','newProduct','navs','labels','sells','lcs'));
 
         // return view('szy.index', compact('panel', 'suggestion', 'allWishes', 'events', 'tagsCloud', 'jumbotronClasses', 'i', 'banner'));
+    }
+
+
+    //分类级联数据
+    static function classProduct(){
+        $categories = DB::table('categories')
+                ->whereNull('categories.category_id')
+                ->orderBy('created_at','desc');
+        $class = $categories->limit(6)->get();
+        $navs = array();
+        if (isset($class[0]->id)) {
+            foreach ($class as $value) {
+                $navs[$value->name][0] = $value;
+                $navs[$value->name][1] = DB::table('categories')->where('category_id',$value->id)->orderBy('created_at','desc')->limit(3)->get();
+                $navs[$value->name][2] = DB::table('categories')->where('category_id',$value->id)->orderBy('created_at','desc')->get();
+            } 
+        }
+        return $navs;
+    }
+    //
+    public function classLc(){
+        $categories = DB::table('categories')
+                ->whereNull('categories.category_id')
+                ->orderBy('created_at','desc');
+        $class = $categories->limit(5)->get();
+        $lcs = array();
+        if (isset($class[0]->id)) {
+            foreach ($class as $value) {
+                $lcs[$value->name][0] = $value;
+                $lcs[$value->name][1] = DB::table('categories')->where('category_id',$value->id)
+                ->orderBy('created_at','desc')->select('categories.id','categories.name')
+                ->limit(3)->get();
+                $lcs[$value->name][2] = DB::table('categories')
+                ->join('products','categories.id','=','products.category_id')
+                ->where('categories.category_id',$value->id)
+                ->orderBy('products.created_at','desc')
+                ->select('products.*')
+                ->limit(8)->get();
+            } 
+        }
+        return $lcs;
     }
 
     private function createTags()

@@ -15,6 +15,69 @@ a {
 input, select, button, a {
   outline: none; }
 
+/* line 5, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+
+/* line 103, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none; }
+
+/* line 32, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+a {
+  text-decoration: none; }
+
+html, body {
+  font-size: 12px; }
+
 .right-fixed {
   width: 46px;
   height: 100%;
@@ -59,6 +122,8 @@ input, select, button, a {
   width: 1200px;
   height: 100%;
   margin: 0 auto; }
+  .header-nav a:hover {
+    color: #31C4A8; }
 
 .header-nav1 {
   width: 30%;
@@ -85,125 +150,6 @@ input, select, button, a {
       font-size: 12px;
       color: #A5A5A5; }
 
-.header-nav-b {
-  height: 100%;
-  width: 200px;
-  float: left; }
-
-.header-nav-b1 {
-  height: 70%;
-  width: 100%;
-  margin-top: 15px; }
-  .header-nav-b1 img {
-    height: 80px;
-    width: 100%; }
-
-.header-nav-b2 {
-  height: 20%;
-  width: 100%; }
-  .header-nav-b2 span {
-    color: #4B4B4B;
-    font-size: 12px;
-    line-height: 23px; }
-    .header-nav-b2 span a {
-      color: #4B4B4B;
-      font-size: 12px; }
-    .header-nav-b2 span a:hover {
-      color: #31C4A8; }
-
-.header-nav-b2-span1 {
-  float: left; }
-
-.header-nav-b2-span2 {
-  float: right; }
-  .header-nav-b2-span2 img {
-    width: 15px;
-    height: 15px; }
-
-.header-nav-right {
-  width: 800px;
-  height: 100%;
-  float: right; }
-
-.header-nav-right-l {
-  width: 100%;
-  height: 100%; }
-
-.header-nav-right-r {
-  width: 30%;
-  height: 100%; }
-
-.header-nav-right-la {
-  width: 100%;
-  height: 30%;
-  margin-top: 35px;
-  float: left; }
-  .header-nav-right-la input {
-    width: 380px;
-    height: 35px;
-    border: 2px solid #31C4A8;
-    color: #5B5B5B;
-    font-size: 15px;
-    float: left;
-    border-right: none; }
-  .header-nav-right-la button {
-    width: 90px;
-    height: 35px;
-    margin: 0;
-    padding: 0;
-    float: left;
-    color: white;
-    font-size: 15px;
-    font-weight: bold; }
-
-.header-nav-right-la-bt1 {
-  background: #31C4A8;
-  border: 2px solid #31C4A8;
-  cursor: pointer; }
-
-.header-nav-right-la-bt1:hover {
-  background: #2CAF95;
-  border: 2px solid #2CAF95; }
-
-.header-nav-right-la-bt2 {
-  background: #BC7EDB;
-  border: 2px solid #BC7EDB;
-  cursor: pointer; }
-
-.header-nav-right-la-bt2:hover {
-  background: #AD71C9;
-  border: 2px solid #AD71C9; }
-
-.header-nav-right-l-div {
-  width: 380px;
-  height: 30px;
-  text-align: left;
-  margin-top: 5px;
-  color: #31C4A8;
-  font-size: 14px; }
-  .header-nav-right-l-div a {
-    color: #A5A5A5;
-    font-size: 13px; }
-  .header-nav-right-l-div a:hover {
-    color: #31C4A8; }
-
-.header-nav-right-la-cart {
-  width: 160px;
-  height: 35px;
-  float: right;
-  border: 1px solid #FC8950;
-  color: #FC8950;
-  line-height: 35px;
-  text-align: center;
-  cursor: pointer; }
-  .header-nav-right-la-cart a {
-    color: #FC8950;
-    font-size: 15px; }
-
-.header-nav-right-la-cart:hover {
-  border: 1px solid #FC8950;
-  border-top: 2px solid #FC8950; }
-
 .header {
   width: 100%;
   min-width: 1200px;
@@ -215,6 +161,110 @@ input, select, button, a {
     width: 100%;
     height: 130px;
     background: white; }
+  .header .header-nav-b {
+    height: 100%;
+    width: 200px;
+    float: left; }
+  .header .header-nav-b1 {
+    height: 70%;
+    width: 100%;
+    margin-top: 15px; }
+    .header .header-nav-b1 img {
+      height: 80px;
+      width: 100%; }
+  .header .header-nav-b2 {
+    height: 20%;
+    width: 100%; }
+    .header .header-nav-b2 span {
+      color: #4B4B4B;
+      font-size: 12px;
+      line-height: 23px; }
+      .header .header-nav-b2 span a {
+        color: #4B4B4B;
+        font-size: 12px; }
+      .header .header-nav-b2 span a:hover {
+        color: #31C4A8; }
+  .header .header-nav-b2-span1 {
+    float: left; }
+  .header .header-nav-b2-span2 {
+    float: right; }
+    .header .header-nav-b2-span2 img {
+      width: 15px;
+      height: 15px; }
+  .header .header-nav-right {
+    width: 800px;
+    height: 100%;
+    float: right; }
+  .header .header-nav-right-l {
+    width: 100%;
+    height: 100%; }
+  .header .header-nav-right-r {
+    width: 30%;
+    height: 100%; }
+  .header .header-nav-right-la {
+    width: 100%;
+    height: 30%;
+    margin-top: 35px;
+    float: left; }
+    .header .header-nav-right-la input {
+      width: 380px;
+      height: 35px;
+      border: 2px solid #31C4A8;
+      color: #5B5B5B;
+      font-size: 15px;
+      float: left;
+      border-right: none; }
+    .header .header-nav-right-la button {
+      width: 90px;
+      height: 35px;
+      margin: 0;
+      padding: 0;
+      float: left;
+      color: white;
+      font-size: 15px;
+      font-weight: bold; }
+  .header .header-nav-right-la-bt1 {
+    background: #31C4A8;
+    border: 2px solid #31C4A8;
+    cursor: pointer; }
+  .header .header-nav-right-la-bt1:hover {
+    background: #2CAF95;
+    border: 2px solid #2CAF95; }
+  .header .header-nav-right-la-bt2 {
+    background: #BC7EDB;
+    border: 2px solid #BC7EDB;
+    cursor: pointer; }
+  .header .header-nav-right-la-bt2:hover {
+    background: #AD71C9;
+    border: 2px solid #AD71C9; }
+  .header .header-nav-right-l-div {
+    width: 380px;
+    height: 30px;
+    text-align: left;
+    margin-top: 5px;
+    color: #31C4A8;
+    font-size: 14px;
+    overflow: hidden; }
+    .header .header-nav-right-l-div a {
+      color: #A5A5A5;
+      font-size: 13px; }
+    .header .header-nav-right-l-div a:hover {
+      color: #31C4A8; }
+  .header .header-nav-right-la-cart {
+    width: 160px;
+    height: 35px;
+    float: right;
+    border: 1px solid #FC8950;
+    color: #FC8950;
+    line-height: 35px;
+    text-align: center;
+    cursor: pointer; }
+    .header .header-nav-right-la-cart a {
+      color: #FC8950;
+      font-size: 15px; }
+  .header .header-nav-right-la-cart:hover {
+    border: 1px solid #FC8950;
+    border-top: 2px solid #FC8950; }
   .header .header-c {
     width: 100%;
     height: 440px; }
@@ -261,6 +311,69 @@ a {
 
 input, select, button, a {
   outline: none; }
+
+/* line 5, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+
+/* line 103, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none; }
+
+/* line 32, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+a {
+  text-decoration: none; }
+
+html, body {
+  font-size: 12px; }
 
 .right-fixed {
   width: 46px;
@@ -443,7 +556,7 @@ input, select, button, a {
     display: block;
     width: 32px;
     height: 40px;
-    background: url(image/slider-arrow.png) -110px 5px no-repeat;
+    background: url(/img/szy/lb/slider-arrow.png) -110px 5px no-repeat;
     filter: alpha(opacity=50);
     opacity: 0.5;
     left: auto;
@@ -476,7 +589,7 @@ input, select, button, a {
       .content .ct-left .l-info .info-top {
         width: 100%;
         height: 40px;
-        background: url("inc/bg2.png");
+        background: url("/img/szy/inc/bg2.png");
         background-size: 200px 40px; }
       .content .ct-left .l-info .info-title {
         width: 100%;
@@ -560,7 +673,8 @@ input, select, button, a {
           font-size: 15px;
           line-height: 20px;
           color: orange;
-          margin-top: 4px; }
+          margin-top: 4px;
+          font-weight: bold; }
   .content .ct-right {
     width: 78%;
     min-height: 200px;
@@ -574,7 +688,7 @@ input, select, button, a {
       .content .ct-right .r-desc .desc-bg {
         width: 100%;
         height: 40px;
-        background: url("inc/bg1.png");
+        background: url("/img/szy/inc/bg1.png");
         background-size: 100% 40px; }
     .content .ct-right .desc-text {
       width: 97%;
@@ -626,9 +740,9 @@ input, select, button, a {
           display: inline-block;
           margin-top: 6px; }
         .content .ct-right .product-order li .jt-top {
-          background: url("inc/jt-top.png") no-repeat; }
+          background: url("/img/szy/inc/jt-top.png") no-repeat; }
         .content .ct-right .product-order li .jt-footer {
-          background: url("inc/jt-footer.png") no-repeat; }
+          background: url("/img/szy/inc/jt-footer.png") no-repeat; }
       .content .ct-right .product-order li:active {
         background: white; }
     .content .ct-right .product-list {
@@ -637,14 +751,14 @@ input, select, button, a {
       background: red; }
       .content .ct-right .product-list .list-single {
         width: 22%;
-        height: 280px;
+        height: 290px;
         border: 1px solid #ccc;
         float: left;
         margin-right: 3.7%;
         margin-top: 20px; }
         .content .ct-right .product-list .list-single .sin-img {
           width: 96%;
-          height: 65%;
+          height: 60%;
           margin: 3px auto; }
           .content .ct-right .product-list .list-single .sin-img img {
             width: 100%;
@@ -654,26 +768,26 @@ input, select, button, a {
           height: 6%;
           margin: 5px auto;
           color: #6A6A6A;
-          font-size: 15px; }
+          font-size: 15px;
+          font-weight: bold; }
           .content .ct-right .product-list .list-single .sin-money b {
             color: orange; }
         .content .ct-right .product-list .list-single .sin-title {
           color: #4D4D4D;
           width: 94%;
-          height: 6%;
+          height: 34px;
           margin: 2px auto;
-          overflow: hidden; }
+          overflow: hidden;
+          line-height: 17px; }
         .content .ct-right .product-list .list-single .sin-sell {
           width: 100%;
           height: 12%;
           margin-top: 17px; }
           .content .ct-right .product-list .list-single .sin-sell li {
             float: left;
-            border: 1px solid #ccc;
-            width: 49.7%;
+            border-top: 1px solid #ccc;
+            width: 50%;
             height: 98%;
-            border-bottom: none;
-            border-left: none;
             color: #6A6A6A;
             font-size: 12px;
             line-height: 34px;

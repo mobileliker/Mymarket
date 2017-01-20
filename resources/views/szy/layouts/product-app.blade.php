@@ -17,20 +17,22 @@
 
 	{{-- Antvel CSS files --}}
 	{!! Html::style('/antvel-bower/bootstrap/dist/css/bootstrap.css') !!}
+	{!! Html::style('/css/app.css') !!}
 
 	@section('css')
-		{!! Html::style('/css/szy/product-detail.css') !!}
+
 	@show
 
 </head>
 <body>
+
 
 @section('celerity')
 	@include('szy.layouts.celerity')
 @show
 
 @section('header')
-	@include('szy.layouts.top')
+	@include('szy.layouts.list-header')
 @show
 
 @section('content')
@@ -39,17 +41,11 @@
 
 
 @section('footer')
-
 	@include('szy.layouts.footer')
-
-@show
-
-
-@section('scripts')
-	{!! Html::script('/antvel-bower/bootstrap/dist/js/bootstrap.min.js') !!}
-	{!! Html::script('/js/szy/jquery1.42.min.js') !!}
-	{!! Html::script('/js/szy/jquery.SuperSlide.2.1.1.js') !!}
 @show
 
 </body>
+@section('scripts')
+	{!! Html::script('/js/szy/jquery-1.8.3.min.js') !!}
+@show
 </html>

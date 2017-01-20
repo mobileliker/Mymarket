@@ -5,8 +5,8 @@
 @import "footer";
 
 
-$bg1:url('inc/bg1.png');//背景图1
-$bg2:url('inc/bg2.png');//背景图2
+$bg1:url('/img/szy/inc/bg1.png');//背景图1
+$bg2:url('/img/szy/inc/bg2.png');//背景图2
 
 .header-c-fig{
   height: 400px;
@@ -51,7 +51,7 @@ $bg2:url('inc/bg2.png');//背景图2
     left:3%; top:50%; 
     margin-top:-25px; 
     display:block; width:32px; 
-    height:40px; background:url(image/slider-arrow.png) -110px 5px no-repeat; 
+    height:40px; background:url(/img/szy/lb/slider-arrow.png) -110px 5px no-repeat; 
     filter:alpha(opacity=50);opacity:0.5;   
     left:auto; right:3%; background-position:8px 5px; 
   }
@@ -141,7 +141,7 @@ $bg2:url('inc/bg2.png');//背景图2
         .list-title{width:100%;height:40px;line-height:20px;overflow: hidden;margin-top:4px;
           a{font-size:$fontSize;color:$color1;}
         }
-        .list-money{width:100%;height:20px;text-align:center;font-size:$fontSize;line-height:20px;color:orange;margin-top:4px;}
+        .list-money{width:100%;height:20px;text-align:center;font-size:$fontSize;line-height:20px;color:orange;margin-top:4px;font-weight:bold;}
       }
     }
   }
@@ -194,8 +194,8 @@ $bg2:url('inc/bg2.png');//背景图2
       .active{background:white;}
       li{float:left;border-right:1px solid $color3;min-width:80px;height:100%;text-align:center;cursor:pointer;
         span{width:8px;height:10px;display: inline-block;margin-top:6px;}
-        .jt-top{background:url('inc/jt-top.png') no-repeat;}
-        .jt-footer{background:url('inc/jt-footer.png') no-repeat;}
+        .jt-top{background:url('/img/szy/inc/jt-top.png') no-repeat;}
+        .jt-footer{background:url('/img/szy/inc/jt-footer.png') no-repeat;}
       }
       li:active{background:white;}
     }
@@ -205,14 +205,14 @@ $bg2:url('inc/bg2.png');//背景图2
       background:red;
       .list-single{
         width: 22%;
-        height:280px;
+        height:290px;
         border:1px solid $color3;
         float: left;
         margin-right:3.7%; 
         margin-top:20px;
         .sin-img{
           width:96%;
-          height:65%;
+          height:60%;
           margin:3px auto;
           img{
             width: 100%;
@@ -220,12 +220,12 @@ $bg2:url('inc/bg2.png');//背景图2
           }
         }
         .sin-money{
-          width:94%;height:6%;margin:5px auto;color:$color1;font-size:$fontSize;
+          width:94%;height:6%;margin:5px auto;color:$color1;font-size:$fontSize;font-weight:bold;
           b{color:orange;}
         }
-        .sin-title{color:$color2;width:94%;height:6%;margin:2px auto;overflow:hidden;}
+        .sin-title{color:$color2;width:94%;height:34px;margin:2px auto;overflow:hidden;line-height:17px;}
         .sin-sell{width:100%;height:12%;margin-top:17px;
-          li{float:left;border:1px solid $color3;width:49.7%;height:98%;border-bottom:none;border-left:none;
+          li{float:left;border-top:1px solid $color3;width:50%;height:98%;
             color:$color1;font-size:$fontSizeMin;line-height:34px;text-align:center;cursor:pointer;
             b{color:orange;}
           }

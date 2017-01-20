@@ -124,11 +124,11 @@
                             {!! Form::text('brand',null,['class'=>'form-control','required']) !!}
                         </div>
                         <div class="col-sm-4">
-                            {!! Form::label('bar_code',trans('product.inputs_view.bar_code')) !!}:&nbsp;
-                            {!! Form::text('bar_code',null,['class'=>'form-control']) !!}
+                            {!! Form::label('price_raw','原价') !!}:&nbsp;
+                            {!! Form::number('price_raw',null,['class'=>'form-control','required']) !!}
                         </div>
                         <div class="col-sm-4">
-                            {!! Form::label('price',trans('product.globals.price')) !!}:&nbsp;
+                            {!! Form::label('price','现价') !!}:&nbsp;
                             {!! Form::number('price',null,['class'=>'form-control','step'=>'any','required']) !!}
                         </div>
                     </div>
@@ -139,9 +139,16 @@
                             {!! Form::number('stock',null,['class'=>'form-control','required']) !!}
                         </div>
                         <div class="col-sm-4">
-                            {!! Form::label('low_stock',trans('product.inputs_view.low_stock')) !!}:&nbsp;
+                            {!! Form::label('low_stock','低库存') !!}:&nbsp;
                             {!! Form::number('low_stock',null,['class'=>'form-control','required']) !!}
                         </div>
+                        <div class="col-sm-4">
+                            {!! Form::label('bar_code',trans('product.inputs_view.bar_code')) !!}:&nbsp;
+                            {!! Form::text('bar_code',null,['class'=>'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group ng-cloak" >
                         <div class="col-sm-4">
                             {!! Form::label('origin','产地') !!}:&nbsp;
                             @if(isset($product->origin))
@@ -150,10 +157,7 @@
                             {!! Form::text('origin',null,['class'=>'form-control','required']) !!}
                             @endif
                         </div>
-                    </div>
-
-                    <div class="form-group ng-cloak" >
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             {!! Form::label('plan_date','生产日期') !!}:&nbsp;
                             @if(isset($product->plan_date))
                             {!! Form::text('plan_date',$product->plan_date,['class'=>'form-control','required']) !!}
@@ -161,7 +165,7 @@
                             {!! Form::text('plan_date',null,['class'=>'form-control','required']) !!}
                             @endif
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             {!! Form::label('quality_time','保质期') !!}:&nbsp;
                             @if(isset($product->quality_time))
                             {!! Form::number('quality_time',$product->quality_time,['class'=>'form-control','required']) !!}
@@ -169,7 +173,10 @@
                             {!! Form::number('quality_time',90,['class'=>'form-control','required']) !!}
                             @endif
                         </div>
-                        <div class="col-sm-3">
+                    </div>
+
+                    <div class="form-group ng-cloak" >
+                        <div class="col-sm-4">
                             {!! Form::label('pack','包装') !!}:&nbsp;
                             @if(isset($product->pack))
                             {!! Form::text('pack',$product->pack,['class'=>'form-control','required']) !!}
@@ -177,7 +184,7 @@
                             {!! Form::text('pack',null,['class'=>'form-control','required']) !!}
                             @endif
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             {!! Form::label('import','进口/国产') !!}:&nbsp;
 
                             <select name="import" class="form-control">
@@ -189,6 +196,17 @@
                                 <option value=1>进口</option>
                             @endif
                             </select>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="control-label">二维码:</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input class='upload-pic' type="file" id="pic_code" name="code" style="display:none">
+                            @if(isset($product->code) && !empty($product->code))
+                            <img src="{{$product->code}}" alt="点击" class="thumbnail" onclick="$('input[id=pic_code]').click();" width="90px" height="80px" style="cursor:pointer">
+                            @else
+                            <img src="img/no-img.png" alt="点击" class="thumbnail" onclick="$('input[id=pic_code]').click();" width="90px" height="80px" style="cursor:pointer">
+                            @endif
                         </div>
                     </div>
 
@@ -259,15 +277,11 @@
                     @include('features.makeInputsToDocumentsPicturesVideos',['force'=>false])
                     @include('features.makeInputs',['force'=>false])
                     <div class="col-md-12">
-                        <label class="control-label">溯源二维码:</label>
-                        <input class='upload-pic' type="file" id="pic_code" name="code" style="display:none">
-                        @if(isset($product->code) && !empty($product->code))
-                        <img src="{{$product->code}}" alt="点击" class="thumbnail" onclick="$('input[id=pic_code]').click();" width="140px" height="140px" style="cursor:pointer">
-                        @else
-                        <img src="img/no-img.png" alt="点击" class="thumbnail" onclick="$('input[id=pic_code]').click();" width="140px" height="140px" style="cursor:pointer">
-                        @endif
-                    </div>
+                            <label class="control-label">商品详情介绍:</label>
 
+                    <script id="editor" type="text/plain"  name="desc_img" 
+                    style="width:1024px;height:400px;border:1px solid #3DCDB4;">@if(isset($product->desc_img)){!! $product->desc_img !!}@endif</script>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -298,20 +312,28 @@
     {!! Html::script('/js/vendor/file-upload/angular-file-upload-shim.min.js') !!}
     {!! Html::script('/js/vendor/file-upload/angular-file-upload.min.js') !!}
     {!! Html::script('/js/vendor/deleted/jquery.min.js') !!}
+    {!! Html::script('/ueditor/ueditor.config.js') !!}
+    {!! Html::script('/ueditor/ueditor.all.min.js') !!}
+    {!! Html::script('/ueditor/lang/zh-cn/zh-cn.js') !!}
     <script>
-    //图片上传事件
-    $(".upload-pic").change(function () {
-        uploadPic(this.files[0],$(this));
-    });
+        //实例化编辑器
+        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+        var ue = UE.getEditor('editor');
+        imagePathFormat='/upload/desc_img/'; 
 
-    function uploadPic(a,b){
-        var reader = new FileReader();
-        reader.readAsDataURL(a);
-        //监听文件读取结束后事件
-        reader.onloadend = function (e) {
-            $(b).next('img').attr('src',e.target.result);
+        //图片上传事件
+        $(".upload-pic").change(function () {
+            uploadPic(this.files[0],$(this));
+        });
+
+        function uploadPic(a,b){
+            var reader = new FileReader();
+            reader.readAsDataURL(a);
+            //监听文件读取结束后事件
+            reader.onloadend = function (e) {
+                $(b).next('img').attr('src',e.target.result);
+            };
         };
-    };
 
         (function(app){
             app.controller('upload', ['$scope', '$upload', '$timeout','$http', function ($scope, $upload, $timeout, $http) {

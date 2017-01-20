@@ -33,6 +33,10 @@
 					@if(auth::user()->role == 'admin')
 					<li><a href="wpanel/profile">控制面板</a>|</li>
 					@endif
+
+					@if(auth::user()->role == 'business')
+					<li><a href="shop/{{auth::user()->id}}">我的商铺</a>|</li>
+					@endif
 				@endif
 			</div>
 		</div>
@@ -50,7 +54,7 @@
 							<option>商品</option>
 							{{--<option>商家</option>--}}
 						</select>
-						<input type="text" id="home_search">
+						<input type="text" id="home_search" value="@if(isset($_GET['search'])){{$_GET['search']}}@endif">
 						<button class="header-nav-right-la-bt1" onclick="search();">搜索</button>
 						<div class="header-nav-right-la-cart">
 							<a href="user/cart">

@@ -1,14 +1,47 @@
 @extends('szy.layouts.product-app')
 
 @section('title')
-商品详情页
+	我家菜市 - 商品详情页
 @stop
 
-
+@section('css')
+	{!! Html::style('/css/szy/product-detail.css') !!}
+@stop
 
 @section('content')
 	<!-- 商品详情页内容 -->
 	<div class='details'>
+			<div class="product-edit-fixed">
+			   @if (Auth::id()===$product->user_id)
+		            @include('user.partial.menu_dashboard')
+					<div class="row hidden-xs">
+			            <div class="col-md-12">
+			        		{!! Form::open(['route' => ['products.change_status', $product->id], 'method' => 'post', 'class' => 'form-inline']) !!}
+			                    <a href="{{ route('products.edit',[$product->id]) }}" class="btn btn-success btn-sm full-width">
+									<span class="glyphicon glyphicon-edit"></span>&nbsp;
+			                    	{{ trans('globals.edit') }}
+			                    </a>
+
+								<div class="row">&nbsp;</div>
+
+			                    <button type="submit" class="btn btn-primary btn-danger btn-sm full-width">
+									<span class="glyphicon @if ($product->status) glyphicon-ban-circle @else glyphicon-ok-circle @endif"></span>&nbsp;
+			                    	{{ $product->status ? trans('globals.disable') : trans('globals.enable') }}
+			                    </button>
+
+								<div class="row">&nbsp;</div>
+
+			                    @if ($product->type=='key')
+			                        <button type="button" ng-controller="ModalCtrl" ng-init="data={'data':{{ $product->id }}}" ng-click="modalOpen({templateUrl:'/modalAllKeys',controller:'getKeysVirtualProducts',resolve:'data'})" class="btn btn-primary btn-sm full-width">
+										<span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+			                        	{{ trans('product.globals.see_keys') }}
+			                        </button>
+			                    @endif
+			                {!! Form::close() !!}
+			            </div>
+			        </div>
+		    	@endif
+			</div>
 		<div class='product'>
 			<div class="left">
 				<div class="max-pic">
@@ -28,7 +61,13 @@
 					<div class="sy"><img src="/img/szy/inc/search.png"><span class="sy-span">商品溯源</span> 
 						<div class="ewm" state='n'><img src="{{$product->code}}"></div>
 					</div>
-					<div class="gz"><img src="/img/szy/inc/collect.png">关注商品</div>
+					@if (!(Auth::id()===$product->user_id))
+					<div class="gz">
+						<a href="user/orders/addTo/wishlist/{{$product->id}}">
+							<img src="/img/szy/inc/collect.png">关注商品
+						</a>
+					</div>
+					@endif
 				</div>
 			</div>
 			<div class="pm">
@@ -38,7 +77,7 @@
 					<div class="left">
 						<div class="pre">
 							<div class="l">价格</div>
-							<div class="r">￥88.00</div>
+							<div class="r">￥{{$product->price_raw}}</div>
 						</div>
 						<div class="next">
 							<div class="l">促销价</div>
@@ -54,13 +93,17 @@
 					<div class="ps">
 						配送至:
 						<select>
-							<option>重庆朝天门</option>
-							<option>重庆铜梁安居古镇</option>
+							<option>@if(!empty($addresDefault)){{$addresDefault->state}}{{$addresDefault->city}}@endif</option>
+							@if(!empty($address))
+								@foreach($address as $addres)
+								<option>{{$addres->state}}{{$addres->city}}</option>
+								@endforeach
+							@endif
 						</select>
 						有货 &nbsp; 免邮费
 					</div>
 					<div class="fw">
-						服 务:由<a href="">生之园</a>从广州市提供发货,并提供售后服务
+						服 务:由<a href="">{{$business->business_name}}</a>从{{$business->address}}提供发货,并提供售后服务
 						@if ($product->stock <= $product->low_stock)
 							<span class = "label label-warning">{{ trans('store.lowStock') }}</span>
 						@else
@@ -71,36 +114,46 @@
 				<div class="cs">
 					<div class="lf">选择规格:</div>
 					<div class="rt">
-						<li>5kg/箱</li>
-						<li>8kg/箱</li>
-						<li>10kg/箱</li>
-						<li>15kg/箱</li>
+					@foreach($productCS as $pcs)
+					<a href="products/{{$pcs->id}}">
+						<li @if($pcs->id == $product->id) class="gg-defaultColor" @endif>
+							@foreach ($pcs->features as $key => $feature)
+								@if ($key != 'images')
+								{{  ucwords( is_array($feature) ? implode(' ', $feature) : $feature ) }}						
+								@endif
+							@endforeach
+						</li>
+					</a>
+					@endforeach	
 					</div>
-				</div>
-	            <form action="user/orders/addTo/cart/{{$product->id}}" method="POST">
-                    <input name="_method" type="hidden" value="PUT">
-                    {{ csrf_field() }}
-                    <input type="submit" style="display:none" id="cart_submit">
-                </form>
-				<div class="submit">
-					<button>立即购买</button>
-					<div class="gwc">
-						<a href="javascript:void(0);" onclick="$('input[id=cart_submit]').click();">
-							<img src="/img/szy/inc/add-cart.png"> 
-							加入购物车
-						</a>
+
+					<div class="submit">
+						@if (!(Auth::id()===$product->user_id))
+						<button>立即购买</button>
+						<div class="gwc">
+							<a href="javascript:void(0);" onclick="$('input[id=cart_submit]').click();">
+								<img src="/img/szy/inc/add-cart.png"> 
+								加入购物车
+							</a>
+						</div>
+						<div class="num">
+							<input type="text" value="1" class="num-price-count" maxnum={{$product->stock}}>
+							<li class="num-add">+</li>
+							<li class="num-minus" style="border-top:1px solid #4D4D4D;" >-</li>
+						</div>
+						@endif
 					</div>
-					<div class="num">
-						<input type="text" value="1">
-						<li>+</li>
-						<li style="border-top:1px solid #4D4D4D;">-</li>
-					</div>
+					<form action="user/orders/addTo/cart/{{$product->id}}" method="POST">
+	                    <input name="_method" type="hidden" value="PUT">
+	                    {{ csrf_field() }}
+	                    <input type="submit" style="display:none" id="cart_submit">
+	                </form>
 				</div>
 			</div>
 
 			<div class="serve">
 				<div class="title">
-					<a href="">广州天河生之园</a>
+					<a href="">{{$business->business_name}}</a>
 				</div>
 				<div class="zs">
 					<div class='lf'>9.65</div>
@@ -111,21 +164,24 @@
 					</div>
 				</div>
 				<div class="lx">
-					<li><a href=""><img src="/img/szy/inc/phone.png"> 联系卖家</a></li>
-					<li><a href=""><img src="/img/szy/inc/consult.png"> 咨询客服</a></li>
-					<li><a href=""><img src="/img/szy/inc/shop.png"> 进店逛逛</a></li>
-					<li><a href=""><img src="/img/szy/inc/attention.png"> 关注商铺</a></li>
+					<li><a href="" {{$business->phone}}><img src="/img/szy/inc/phone.png">联系卖家</a></li>
+					<li><a href="" {{$business->qq}}><img src="/img/szy/inc/consult.png"> 咨询客服</a></li>
+					<li><a href="shop/{{$business->user_id}}" ><img src="/img/szy/inc/shop.png"> 进店逛逛</a></li>
+					<li><a href="" ><img src="/img/szy/inc/attention.png"> 关注商铺</a></li>
 				</div>
 			</div>
 		</div>
 
 		<div class="content">
+			
 			<div class="left">
+				{{--
 				<div class="ewm">
 					<div class="title">店铺二维码</div>
 					<div class="img"><img src="./eq.png"></div>
 					<span>扫一扫,进入手机店铺</span>
 				</div>
+				--}}
 				<div class="tj-p">
 					<div class="title">店家推荐</div>
 					@if($sells!="")
@@ -142,6 +198,7 @@
 					@endif
 				</div>
 			</div>
+
 			<div class="right">
 				<div class="desc">
 					<div class="d-title">
@@ -177,7 +234,7 @@
 				</div>
 				<div class="desc-img">
 					<div class="img-center">
-						<img src="./image/desc-img.png">
+						{!! $product->desc_img !!}
 					</div>
 				</div>
 			</div>
@@ -188,6 +245,39 @@
 @section('scripts')
    @parent
 <script type="text/javascript">
+	
+	//规格默认选中
+	$(".gg-defaultColor").css('border','1px solid #31C4A8');
+	$(".gg-defaultColor").css('border-bottom','2px solid #31C4A8');
+
+	//价格加减点击事件
+	$(".num-add").click(function(){
+		numAddorMinus('add');
+	});
+
+	$(".num-minus").click(function(){
+		numAddorMinus('minus');
+	});
+
+	//加减方法
+	function numAddorMinus(type){
+		var num = parseInt($(".num-price-count").val());
+		var maxnum = parseInt($(".num-price-count").attr('maxnum'));
+		if (type=='add') {
+			if(num<maxnum){
+				$(".num-price-count").val(num+1);
+			}
+		}else{
+			if (num>1) {
+				$(".num-price-count").val(num-1);
+			};
+		}
+	};
+	//数量计算价格
+	// $(".num-price-count").change(function(){
+	// 	var num = parseInt($(this).val());
+	// });
+
 	//大小图切换
 	$(".min-pic li img").click(function(){
 		$(".max-pic img").attr('src',$(this).attr('src'));

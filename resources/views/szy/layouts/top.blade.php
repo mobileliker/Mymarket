@@ -31,6 +31,9 @@
 					@if(auth::user()->role == 'admin')
 					<li><a href="wpanel/profile">控制面板</a>|</li>
 					@endif
+					@if(auth::user()->role == 'business')
+					<li><a href="shop/{{auth::user()->id}}">我的商铺</a>|</li>
+					@endif
 				@endif
 			</div>
 		</div>
