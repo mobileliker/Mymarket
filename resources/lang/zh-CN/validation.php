@@ -113,6 +113,7 @@ return [
         'email'      => '邮箱',
         'password'   => '密码',
         'nickname'   => '用户名（昵称）',
+        'login'      => '用户名'
     ],
 
     'recaptcha' => '验证码不正确。',

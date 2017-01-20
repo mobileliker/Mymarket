@@ -42,6 +42,7 @@ class CreateCompanyTable extends Migration
             $table->string('google_plus')->nullable();
             $table->string('facebook_app_id')->nullable();
             $table->longText('description');
+            $table->longText('lbpic');
             $table->longText('keywords');
             $table->longText('about_us');
             $table->longText('refund_policy');

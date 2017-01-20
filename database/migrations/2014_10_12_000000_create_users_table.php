@@ -37,7 +37,7 @@ class CreateUsersTable extends Migration
             $table->enum('role', array_keys(trans('globals.roles')))->default('person');
             $table->enum('type', array_keys(trans('globals.type_user')))->default('normal');
             $table->enum('verified', array_keys(trans('globals.verification')))->default('no');
-            $table->json('preferences')->nullable();
+            $table->text('preferences')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->timestamp('disabled_at')->nullable();

@@ -19,7 +19,7 @@
 	@section('center_content')
 
 		<div class="page-header">
-            <h5>{{ trans('address.my_addresses') }}</h5>
+            <h5><span class="glyphicon glyphicon-map-marker"></span> {{ trans('address.my_addresses') }}</h5>
         </div>
 
         <div class="row">

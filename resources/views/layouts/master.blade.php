@@ -35,7 +35,10 @@
 	<![endif]-->
 </head>
 <body>
-
+	{{--
+@section('header')
+	@include('partial.header')
+@show--}}
 <section class = "@yield('page_class', 'home')">
 
 	{{-- Navigation bar section --}}

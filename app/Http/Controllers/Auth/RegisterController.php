@@ -7,6 +7,7 @@ use App\Person;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -46,7 +47,7 @@ class RegisterController extends Controller
      */
     protected function showRegistrationForm()
     {
-        return view('auth.register', [
+        return view('szy.auth.register', [
             'email' => session()->has('email') ? session()->get('email') : '',
         ]);
     }
@@ -58,15 +59,13 @@ class RegisterController extends Controller
      */
     protected function register(Request $request)
     {
-        $this->validate($request, $this->rules());
-
+        $this->validate($request,$this->rules());
         $user = $this->createUser($request->all());
-
+        
         $this->sendRegistrationEmail($request->all());
-
         auth()->login($user);
-
         return redirect($this->redirectTo);
+        
     }
 
     /**
@@ -77,10 +76,11 @@ class RegisterController extends Controller
     protected function rules()
     {
         return [
-            'first_name' => 'required|max:20|min:3',
-            'last_name'  => 'required|max:20|min:3',
+            //'first_name' => 'required|max:20|min:3',
+            //'last_name'  => 'required|max:20|min:3',
+            'nickname'  => 'required|max:20|min:3|unique:users',
             'email'      => 'required|email|max:255|unique:users',
-            'password'   => 'required|min:6',
+            'password'   => 'required|min:6|confirmed',
         ];
     }
 
@@ -95,19 +95,29 @@ class RegisterController extends Controller
     {
         $user = User::create([
             'email'       => $data['email'],
-            'nickname'    => $data['email'],
+            'nickname'    => $data['nickname'],
             'password'    => bcrypt($data['password']),
             'role'        => 'person',
         ]);
 
         Person::create([
             'user_id'    => $user->id,
-            'first_name' => $data['first_name'],
-            'last_name'  => $data['last_name'],
+            //'first_name' => $data['first_name'],
+            //'last_name'  => $data['last_name'],
         ]);
 
         return $user;
     }
+    
+    public function validate(Request $request, array $rules, array $messages = [], array $customAttributes = [])
+    {
+        $validator = $this->getValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
+          
+        if ($validator->fails()) { 
+            $this->throwValidationException($request, $validator); 
+        }
+    }
+   
 
     /**
      * Send the registration email.
@@ -120,7 +130,8 @@ class RegisterController extends Controller
     {
         $title = trans('user.emails.verification_account.subject');
 
-        $name = $data['first_name'].' '.$data['last_name'];
+        //$name = $data['first_name'].' '.$data['last_name'];
+        $name = $data['nickname'];
 
         \Mail::queue('emails.accountVerification', ['data' => $data, 'title' => $title, 'name' => $name], function ($message) use ($data) {
             $message->to($data['email'])->subject(trans('user.emails.verification_account.subject'));

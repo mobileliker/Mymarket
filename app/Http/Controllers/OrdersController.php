@@ -147,6 +147,7 @@ class OrdersController extends Controller
 
             //callback url
             if ($destination == 'wishlist') {
+
                 Session::push('message', trans('store.productAddedToWishList'));
 
                 return redirect()->route('orders.show_wish_list');
@@ -155,6 +156,7 @@ class OrdersController extends Controller
 
                 return redirect()->route('products.show', [$productId]);
             } else {
+
                 Session::push('message', trans('store.productAdded'));
 
                 return redirect()->route('orders.show_cart');
@@ -494,7 +496,21 @@ class OrdersController extends Controller
 
         Session::forget('suggest-listed');
 
-        return view('orders.wish',
+        // return view('orders.wish',
+        //     compact(
+        //         'cart',
+        //         'user',
+        //         'panel',
+        //         'suggestions',
+        //         'cart',
+        //         'laterCart',
+        //         'wishLists',
+        //         'wishListName',
+        //         'hasWishList',
+        //         'hasLaterCart'
+        //     )
+        // );
+        return view('szy.wishes',
             compact(
                 'cart',
                 'user',
@@ -574,6 +590,13 @@ class OrdersController extends Controller
              * @var [type]
              */
             $cart = Order::ofType('cart')->where('user_id', $user->id)->with('details')->first();
+            $cartProducts = array();
+            $count = count($cart['details']);
+            foreach ($cart['details'] as $key=>$value) {
+                $business = Business::where('user_id',$value['product']['user_id'])->select('user_id','business_name','logo as business_logo')->first()->toArray();
+                $cartProducts[$business['business_name']]['product'][$key] = $value['product'];
+                $cartProducts[$business['business_name']]['business'] = $business;
+            }
 
             /**
              * $laterCart has all the shopping cart (saved for later) information, which comes from an type of order called "later".
@@ -690,11 +713,11 @@ class OrdersController extends Controller
         ];
 
         //suggestions based on cart content
-        $suggestions = ProductsController::getSuggestions(['preferences_key' => Session::get('suggest-listed'), 'limit' => 4]);
+        $suggestions = ProductsController::getSuggestions(['preferences_key' => Session::get('suggest-listed'), 'limit' => 10]);
+        // echo "<pre>";print_r($suggestions[0]['features']['images'][0]);die;
+        // Session::forget('suggest-listed');
 
-        Session::forget('suggest-listed');
-
-        return view('orders.cart', compact('cart', 'user', 'panel', 'laterCart', 'suggestions', 'totalItems', 'totalAmount'));
+        return view('szy.cart', compact('cart', 'user', 'panel', 'laterCart', 'suggestions', 'totalItems', 'totalAmount','cartProducts','count'));
     }
 
     /**
@@ -729,6 +752,7 @@ class OrdersController extends Controller
         if (!($basicCart)) {
             Session::push('message', trans('store.productNotFound'));
         } else {
+            
             if ($product->type != 'item') {
                 switch ($product->type) {
                     case 'key':
@@ -737,6 +761,7 @@ class OrdersController extends Controller
                     break;
                 }
             }
+
             $orderDetail = OrderDetail::where('order_id', $basicCart->id)->where('product_id', $product->id)->first();
             $orderDetail->delete();
 
@@ -958,7 +983,8 @@ class OrdersController extends Controller
 
             $callBackUrl = 'user/orders/checkOut';
 
-            return view('address.list', compact('user', 'panel', 'cart', 'addresses', 'callBackUrl', 'defaultId'));
+            // return view('address.list', compact('user', 'panel', 'cart', 'addresses', 'callBackUrl', 'defaultId'));
+            return view('szy.affirm-orders', compact('user', 'panel', 'cart', 'addresses', 'callBackUrl', 'defaultId'));
         }
     }
 

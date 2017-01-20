@@ -13,7 +13,8 @@
 	@section('center_content')
 
 		<div class="page-header">
-			<h5>{{ trans('user.user_account_settings') }}</h5>
+			<h5><span class="glyphicon glyphicon-user"></span>
+			{{ trans('user.user_account_settings') }}</h5>
 		</div>
 
 		{!! Form::model($user, ['url'=>'user/profile/save', 'class'=>'form-horizontal', 'role'=>'form']) !!}
@@ -39,7 +40,11 @@
 											  </div>
 											</div>
 											<div class="user-photo">
+												@if (!empty($user['pic_url']))
 												<img src="[[picture]]" class="thumbnail" style="width:80px;"  alt="Photo" ng-file-select ng-model="files" ngf-accept="'image/*'" accept="image/*">
+												@else
+												<img src="no-img.png" class="thumbnail" style="width:80px;"  alt="Photo" ng-file-select ng-model="files" ngf-accept="'image/*'" accept="image/*">
+												@endif
 												<input type="hidden" value="[[file!=''?file:picture]]" name="pic_url">
 											</div>
 										</div>
@@ -60,6 +65,7 @@
 							</tab>
 
 							{{-- social information --}}
+							{{--
 							<tab heading="{{ trans('user.social_information') }}">
 								<div class="row">&nbsp;</div>
 								<div class="row">
@@ -67,7 +73,7 @@
 										@include('user.partial.optional_inputs')
 									</div>
 								</div>
-							</tab>
+							</tab>--}}
 
 							{{-- security information --}}
 							<tab heading="{{ trans('user.pass_account') }}">

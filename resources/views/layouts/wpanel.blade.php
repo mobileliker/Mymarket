@@ -7,7 +7,14 @@
 <div class="list-group">
   <?php $menu=\Menu::backend(true);?>
   @foreach ($menu as $item)
-  <a class="list-group-item {{isset($item['class'])?$item['class']:''}} {{ Utility::active($item['route']) }}" href='{{$item['route']}}'>@if(isset($item['icon']))<span class="{{$item['icon']}}"></span>@endif {{$item['text']}} @if(isset($item['cont'])&&$item['cont']>0)<span class="badge pull-right">{{$item['cont']}}</span>@endif </a>
+  <a class="list-group-item {{isset($item['class'])?$item['class']:''}} {{ Utility::active($item['route']) }}" href='{{$item['route']}}'>
+  	@if(isset($item['icon']))
+  	<span class="{{$item['icon']}}"></span>
+  	@endif {{$item['text']}} 
+  	@if(isset($item['cont'])&&$item['cont']>0)
+  	<span class="badge pull-right">{{$item['cont']}}</span>
+  	@endif 
+  </a>
   @endforeach
 </div>
 @stop

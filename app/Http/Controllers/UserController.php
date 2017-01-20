@@ -225,8 +225,17 @@ class UserController extends Controller
      */
     public function saveProfile(Request $request)
     {
+        $form_rule = [
+        'email'                 => 'required|email|unique:users,email,'.\Auth::user()->id,
+        'nickname'              => 'required|max:255|unique:users,nickname,'.\Auth::user()->id,
+        // 'business_name'         => 'required|max:255|unique:businesses,business_name,'.\Auth::user()->id,'user_id',
+        'old_password'          => 'required_with:password,password_confirmation',
+        'password'              => 'required_with:old_password,password_confirmation|confirmed|different:old_password',
+        'password_confirmation' => 'required_with:old_password,password|different:old_password|same:password',
+        ];
+
         $user = \Auth::user();
-        $v = \Validator::make($request->all(), $this->form_rules);
+        $v = \Validator::make($request->all(), $form_rule);
 
         if ($v->fails()) {
             return redirect()->back()->withErrors($v->errors())->withInput();

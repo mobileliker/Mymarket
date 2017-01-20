@@ -5,11 +5,18 @@
 	<div ng-controller="CategoryController" class="panel panel-default">
 		<div class="panel-heading"> <span class="glyphicon glyphicon-tasks"></span> {{ trans('categories.update_title') }}</div>
 		<div class="panel-body" ng-init="icon='{{ $category->icon }}'">
-			{!! Form::model($category,['route'=>['wpanel.category.update',$category],'method'=>'PUT','class'=>'form-horizontal','role'=>'form']) !!}
+			{!! Form::model($category,['route'=>['wpanel.category.update',$category],'method'=>'PUT','class'=>'form-horizontal','role'=>'form','enctype'=>'multipart/form-data']) !!}
 				<div class="form-group">
 					<label class="col-md-4 control-label">{{ trans('globals.name') }}</label>
 					<div class="col-md-6">
 						{!! Form::text('name',null,['class'=>'form-control']) !!}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-4 control-label">英文名字</label>
+					<div class="col-md-6">
+						{!! Form::text('english',null,['class'=>'form-control']) !!}
 					</div>
 				</div>
 
@@ -19,6 +26,7 @@
 						{!! Form::text('description',null,['class'=>'form-control']) !!}
 					</div>
 				</div>
+				{{--
 				<div class="row form-group">
 					<label class="col-md-4 control-label">{{ trans('globals.image') }}</label>
 					<div class="col-md-2">
@@ -30,7 +38,44 @@
 						<div class="thumbnail" ng-file-select ng-model="image_upload" accept=".jpg,.png" style="height:120px; background-image:url('[[image || '/img/no-image.jpg']]'); background-size: 100%;"></div>
 						<input type="hidden" value="[[image]]" name="image" />
 					</div>
+				</div>--}}
+
+				<div class="row form-group">
+					<label class="col-md-4 control-label">分类图标(前端):</label>
+					<div class="col-md-2">
+			      		<input class='upload-pic' type="file" id="pic_logo" name="image" style="display:none">
+						@if(!empty($category->image))
+						<img src="{{$category->image}}" alt="点击" class="thumbnail" onclick="$('input[id=pic_logo]').click();" width="40px" height="40px" style="cursor:pointer">
+						@else
+						<img src="[['/img/no-image.jpg']]" alt="点击" class="thumbnail" onclick="$('input[id=pic_logo]').click();" width="120px" height="120px" style="cursor:pointer">
+						@endif
+					</div>
 				</div>
+
+				<div class="row form-group">
+					<label class="col-md-4 control-label">广告图(纵向):</label>
+					<div class="col-md-2">
+			      		<input class='upload-pic' type="file" id="pic_h" name="image-h" style="display:none">
+			      		@if(!empty($category->image_h))
+						<img src="{{$category->image_h}}" alt="点击" class="thumbnail" onclick="$('input[id=pic_h]').click();" width="80px" height="140px" style="cursor:pointer">
+						@else
+						<img src="[['/img/no-image.jpg']]" alt="点击" class="thumbnail" onclick="$('input[id=pic_h]').click();" width="80px" height="140px" style="cursor:pointer">
+						@endif
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<label class="col-md-4 control-label">广告图(横向):</label>
+					<div class="col-md-2">
+			      		<input class='upload-pic' type="file" id="pic_w" name="image-w" style="display:none">
+			      			@if(!empty($category->image_w))
+								<img src="{{$category->image_w}}" alt="点击" class="thumbnail" onclick="$('input[id=pic_w]').click();" width="440px" height="100px" style="cursor:pointer">
+							@else
+								<img src="[['/img/no-image.jpg']]" alt="点击" class="thumbnail" onclick="$('input[id=pic_w]').click();" width="440px" height="100px" style="cursor:pointer">
+							@endif
+					</div>
+				</div>
+
 				<div class="form-group">
 					<label class="col-md-4 control-label">{{ trans('categories.select_icon') }}</label>
 					<div class="col-md-6 demo-icons">
@@ -50,6 +95,14 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label class="col-md-4 control-label">主题颜色</label>
+					<div class="col-md-6">
+						{!! Form::select('color',["green"=>'绿色',"red"=>'红色',"orange"=>'橙色',"blue"=>'蓝色',"purple"=>'紫色',],null,['class'=>'form-control']) !!}
+					</div>
+				</div>
+
 				<div class="form-group">
 					<label class="col-md-4 control-label">{{ trans('globals.status') }}</label>
 					<div class="col-md-6">
@@ -93,7 +146,24 @@
     @parent
     {!! Html::script('/js/vendor/file-upload/angular-file-upload-shim.min.js') !!}
     {!! Html::script('/js/vendor/file-upload/angular-file-upload.min.js') !!}
+	{!! Html::script('/js/vendor/deleted/jquery.min.js') !!}
+
 	<script>
+        //图片上传事件
+        $(".upload-pic").change(function () {
+        	uploadPic(this.files[0],$(this));
+        });
+
+        function uploadPic(a,b){
+            var reader = new FileReader();
+            reader.readAsDataURL(a);
+            //监听文件读取结束后事件
+            reader.onloadend = function (e) {
+					$(b).next('img').attr('src',e.target.result);
+            };
+        };
+
+
 		(function(app){
             app.controller('CategoryController', ['$scope', '$upload','$timeout','notify',
             		function ($scope, $upload, $timeout, notify) {

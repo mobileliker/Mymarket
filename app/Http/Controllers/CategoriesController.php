@@ -35,9 +35,13 @@ class CategoriesController extends Controller
             'name'        => $request->input('name'),
             'description' => $request->input('description'),
             'status'      => $request->input('status'),
-            'image'       => $request->input('image'),
+            'color'       => $request->input('color'),
+            // 'image'       => $request->input('image'),
+            // 'image_w'     => $request->input('image-w'),
+            // 'image_h'     => $request->input('image-h'),
             'icon'        => $request->input('icon'),
             'type'        => $request->input('type'),
+            'english'        => $request->input('english'),
         ];
         if ($data['type'] == 1) {
             $data['category_id'] = $request->input('parentg');
@@ -143,7 +147,14 @@ class CategoriesController extends Controller
     {
         $this->validate($request, $this->form_rules);
         $data = $this->formatData($request);
+        $data['image'] = $this->uploadPic($request,'image');
+
         $category = Category::create($data);
+        $category->english = $data['english'];
+        $category->color = $data['color'];
+        $category->image_w= $this->uploadPic($request,'image-w');
+        $category->image_h= $this->uploadPic($request,'image-h');
+        $category->save();
         \Session::flash('message', trans('categories.insert_message'));
 
         return redirect('wpanel/categories');
@@ -212,10 +223,41 @@ class CategoriesController extends Controller
     {
         $this->validate($request, $this->form_rules);
         $data = $this->formatData($request);
-        $category = Category::find($id);
-        $category->update($data);
-        \Session::flash('message', trans('categories.update_message'));
 
+        $category = Category::find($id);
+
+        $image = $this->uploadPic($request,'image');
+
+        if ($image!='false') {
+            if (file_exists($category->image)) {
+                unlink($category->image);
+            }
+            $data['image'] = $image;
+        }else{
+            $data['image'] = $category->image;
+        }
+
+        $category->update($data);
+        $category->english = $data['english'];
+        $category->color = $data['color'];
+
+        $image_w = $this->uploadPic($request,'image-w');
+        $image_h = $this->uploadPic($request,'image-h');
+
+        if ($image_w!='false') {
+            if (file_exists($category->image_w)) {
+                unlink($category->image_w);
+            }
+            $category->image_w = $image_w;
+        }
+        if ($image_h!='false') {
+            if (file_exists($category->image_h)) {
+                unlink($category->image_h);
+            }
+            $category->image_h = $image_h;
+        }
+        $category->save();
+        \Session::flash('message', trans('categories.insert_message'));
         return redirect()->route('wpanel.category.show', [$id]);
     }
 
@@ -260,5 +302,21 @@ class CategoriesController extends Controller
         }
 
         return File::section('category_img')->upload($request->file('file'));
+    }
+
+    //图片异步上传
+    public function uploadPic(Request $request,$name)
+    {   
+        $path = 'upload/productClass/';
+        $filename = 'PRODUCT_CLASS'.time().rand(1,10000);
+        $file = $request->file($name);
+
+        if ($request->hasFile($name)) {
+            $Extension = $file->getClientOriginalExtension();
+            $file->move($path, $filename.'.'.$Extension);
+            return $path.$filename.'.'.$Extension; //原图路径加名称
+        }else{
+            return 'false';
+        }
     }
 }

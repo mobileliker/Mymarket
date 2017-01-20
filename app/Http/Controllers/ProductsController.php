@@ -15,17 +15,21 @@ use App\Helpers\File;
 use App\Helpers\productsHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 use App\Order;
 use App\OrderDetail;
 use App\Product;
 use App\ProductDetail;
 use App\User;
+use App\Business;
+use App\Address;
 use App\VirtualProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class ProductsController extends Controller
 {
@@ -57,6 +61,7 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
+
         /**
          * $refine
          * array that contains all the information retrieved through the URL
@@ -64,7 +69,9 @@ class ProductsController extends Controller
          *
          * @var array
          */
-        $refine = \Utility::requestToArrayUnique($request->all());
+        $order = $request->input('order');
+        $ade = $request->input('ade');
+        $refine = \Utility::requestToArrayUnique($request->except(['order','ade']));
 
         /**
          * $search
@@ -72,7 +79,46 @@ class ProductsController extends Controller
          *
          * @var [type]
          */
+
         $search = $request->get('search');
+
+        //相关产品 搜索框
+        if (empty($search)) {
+            $sells = DB::table('products')
+                ->join('order_details','products.id','=','order_details.product_id')
+                ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
+                ->groupBy('order_details.product_id')
+                ->orderBy('num','desc')
+                ->limit(5)->get();
+        }else{
+            $classFirst = Product::where('name', 'like', '%'.$search.'%')->select('category_id')->first();
+            if(!empty($classFirst)){
+            $sells = DB::table('products')->where('products.category_id','=',$classFirst->category_id)
+                ->join('order_details','products.id','=','order_details.product_id')
+                ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
+                ->groupBy('order_details.product_id')
+                ->orderBy('num','desc')
+                ->limit(5)->get(); 
+            }
+        }
+
+        //你是不是想找的商品
+        if (empty($search)) {
+            $xzs = DB::table('products')
+                ->join('order_details','products.id','=','order_details.product_id')
+                ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
+                ->groupBy('order_details.product_id')
+                ->orderBy('num','desc')
+                ->limit(5)->get();
+        }else{
+            $xzs = DB::table('products')->where('products.category_id','=',$classFirst->category_id)
+                ->where('name', 'like', '%'.$search.'%')
+                ->join('order_details','products.id','=','order_details.product_id')
+                ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
+                ->groupBy('order_details.product_id')
+                ->orderBy('num','desc')
+                ->limit(5)->get(); 
+        }
 
         /**
          * $products
@@ -81,11 +127,37 @@ class ProductsController extends Controller
          * @var [type]
          */
         $products = Product::select('id', 'category_id', 'name', 'price', 'description', 'condition', 'brand', 'rate_val', 'type', 'features', 'parent_id', 'tags')
+            // $products = DB::table('products')
             ->search($search)
             ->refine($refine)
             ->free()
-            ->actives()
-            ->orderBy('rate_val', 'desc');
+            ->actives();
+            // ->orderBy('rate_val', 'desc');
+
+        //排序字段
+        if (!empty($order)) {
+            if ($order == 'all') {
+                $products = $products->orderBy('rate_val',$ade);
+            }
+            if ($order == 'date') {
+
+                $products = $products->orderBy('created_at',$ade);
+            }
+            if ($order == 'price') {
+                $products = $products->orderBy('price',$ade);
+            }
+            if ($order == 'sell') {
+                $products = $products
+                ->join('order_details','products.id','=','order_details.product_id')
+                ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
+                ->groupBy('order_details.product_id')
+                ->orderBy('num',$ade);
+            }
+        }else{
+            $products = $products->orderBy('rate_val', 'desc');
+            $order = 'all';
+            $ade = 'desc';
+        }
 
         /**
          * $all_products
@@ -170,7 +242,7 @@ class ProductsController extends Controller
             }
         }
 
-        $products = $products->paginate(28);
+        $products = $products->paginate(30);
         $panel = $this->panel;
         $panel['left']['class'] = 'categories-panel';
         $products->each(function (&$item) {
@@ -179,7 +251,9 @@ class ProductsController extends Controller
             }
         });
 
-        return view('products.index', compact('filters', 'products', 'panel', 'listActual', 'search', 'refine', 'suggestions'));
+
+
+        return view('szy/list', compact('filters', 'products', 'panel', 'listActual', 'search', 'refine', 'suggestions','sells','xzs','order','ade'));
     }
 
     public function myProducts(Request $request)
@@ -240,10 +314,34 @@ class ProductsController extends Controller
         $oldFeatures = ProductDetail::oldFeatures([]);
         $productsDetails = new featuresHelper();
 
-        return view('products.form',
-                compact('product', 'panel', 'features', 'categories', 'condition', 'typeItem', 'typesProduct', 'disabled', 'edit', 'oldFeatures', 'productsDetails'));
+        //查询从属商品后10条 日期排序
+        $cs = Product::whereColumn('id', '=','products_group')
+        ->where('user_id','=',auth()->user()->id)
+        ->orderBy('created_at','desc')
+        ->select('id','name','products_group')
+        ->take(10)
+        ->get(); 
+        
+        return view('products.form',compact('product', 'panel', 'features', 'categories', 'cs',
+            'condition', 'typeItem', 'typesProduct', 'disabled', 'edit', 'oldFeatures', 'productsDetails')
+        );
     }
 
+    //图片异步上传
+    public function uploadPic(Request $request,$name)
+    {   
+        $path = 'upload/code/';
+        $filename = 'Code'.time().rand(1,10000);
+        $file = $request->file($name);
+
+        if ($request->hasFile($name)) {
+            $Extension = $file->getClientOriginalExtension();
+            $file->move($path, $filename.'.'.$Extension);
+            return $path.$filename.'.'.$Extension; //原图路径加名称
+        }else{
+            return 'false';
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -281,6 +379,23 @@ class ProductsController extends Controller
         $product->condition = $request->input('condition');
         $product->features = $features;
         $product->type = $request->input('type');
+        $product->origin = $request->input('origin');
+        $product->plan_date = $request->input('plan_date');
+        $product->quality_time = $request->input('quality_time');
+        $product->pack = $request->input('pack');
+        $product->import = $request->input('import');
+        $product->price_raw = $request->input('price_raw');
+        $product->desc_img = $request->input('desc_img');
+        $products_group = $request->input('products_group');
+        if ($products_group!='false') {
+            $product->products_group = $products_group;
+        }
+
+        $code = $this->uploadPic($request,'code');
+        if ($code !='false') {
+            $product->code = $code;
+        }
+
         if ($request->input('type') == 'item') {
             $product->stock = $request->input('stock');
             $product->low_stock = $request->input('low_stock');
@@ -293,6 +408,10 @@ class ProductsController extends Controller
             $product->status = $request->input('status');
         }
         $product->save();
+
+        $product->products_group = $product->id;
+        $product->save();
+
         $message = '';
         if ($request->input('type') != 'item') {
             switch ($request->input('type')) {
@@ -377,7 +496,8 @@ class ProductsController extends Controller
         $product = Product::select([
             'id', 'category_id', 'user_id', 'name', 'description',
             'price', 'stock', 'features', 'condition', 'rate_val',
-            'rate_count', 'low_stock', 'status', 'type', 'tags', 'products_group', 'brand',
+            'rate_count', 'low_stock', 'status', 'type', 'tags', 'products_group', 'brand','origin',
+            'plan_date','pack','quality_time','import','price_raw','desc_img'
         ])->with([
             'group' => function ($query) {
                 $query->select(['id', 'products_group', 'features']);
@@ -433,7 +553,43 @@ class ProductsController extends Controller
                 $product->group = $featuresHelper->group($product->group);
             }
 
-            return view('products.detailProd', compact('product', 'panel', 'allWishes', 'reviews', 'freeproductId', 'features', 'suggestions'));
+            //同类推荐
+            $sells = DB::table('products')
+                // ->join('order_details','products.id','=','order_details.product_id')
+                ->where('category_id','=',$product->category_id)
+                ->where('products.id','!=',$id)
+                ->select(
+                    // DB::raw('count(*) as num'),
+                    // 'order_details.product_id',
+                    'products.id',
+                    'products.name',
+                    'products.description',
+                    'products.price','products.features'
+                    )
+                // ->groupBy('order_details.product_id')
+                // ->orderBy('num','desc')
+                ->limit(10)
+                ->get();
+
+            //地址查询
+            if(isset(auth()->user()->id)){
+                $address = Address::where('user_id',auth()->user()->id);
+                $addresDefault = $address->where('default',1)->select('state','id','city')->first();    
+                $address = $address->where('default','!=',1)->select('state','id','city')->get();    
+            }
+
+            //从属相关商品查询
+            $productCS = Product::where('products_group','=',$product->products_group)
+            ->whereNotNull('products_group')
+            ->select('id','features')
+            ->get();
+
+            //店铺信息
+            $business = Business::where('user_id',$product->user_id)->first();
+
+            return view('szy.detailProduct', compact('product', 'panel', 'allWishes', 'reviews', 'business',
+                'freeproductId', 'features', 'suggestions','sells','addresDefault','address','productCS')
+            );
         } else {
             return redirect(route('products'));
         }
@@ -482,7 +638,18 @@ class ProductsController extends Controller
 
         $productsDetails = new featuresHelper();
 
-        return view('products.form', compact('product', 'panel', 'features', 'categories', 'condition', 'typeItem', 'disabled', 'edit', 'oldFeatures', 'productsDetails'));
+        //查询从属商品后10条 日期排序
+        $cs = Product::whereColumn('id', '=','products_group')
+        ->where('products_group','!=',$id)
+        ->orderBy('created_at','desc')
+        ->select('id','name','products_group')
+        ->take(10)
+        ->get(); 
+
+        return view('products.form', 
+            compact('product', 'panel', 'features', 'categories', 'condition', 'typeItem',
+             'disabled', 'edit', 'oldFeatures', 'productsDetails','cs')
+            );
     }
 
     /**
@@ -525,10 +692,25 @@ class ProductsController extends Controller
             $product->condition = $request->input('condition');
         }
         $product->status = $request->input('status');
+        $product->products_group = $request->input('products_group');
         $product->description = $request->input('description');
         $product->bar_code = $request->input('bar_code');
         $product->brand = $request->input('brand');
         $product->price = $request->input('price');
+        $product->origin = $request->input('origin');
+        $product->plan_date = $request->input('plan_date');
+        $product->quality_time = $request->input('quality_time');
+        $product->pack = $request->input('pack');
+        $product->import = $request->input('import');
+        $product->price_raw = $request->input('price_raw');
+        $product->desc_img = $request->input('desc_img');
+        $code = $this->uploadPic($request,'code');
+        if ($code !='false') {
+            if(file_exists($product->code)){
+                unlink($product->code);
+            }
+            $product->code = $code;
+        }
         $product->features = $features;
         if ($request->input('type') == 'item') {
             $product->stock = $request->input('stock');
@@ -719,6 +901,7 @@ class ProductsController extends Controller
     private function validateFeatures($data)
     {
         $features = ProductDetail::all()->toArray();
+
         $features_rules = [];
         $message_rules = [];
         foreach ($features as $row) {
@@ -766,6 +949,7 @@ class ProductsController extends Controller
                         } elseif (isset($row['helpMessageArray']['specific_selection'])) {
                             $message = $data['help_msg_'.$row['indexByName'].'_'.$i];
                         }
+
                         $values[] = [$data['feature_'.$row['indexByName'].'_'.$i], $message];
                     } else {
                         $values[] = $data['feature_'.$row['indexByName'].'_'.$i];
@@ -782,13 +966,15 @@ class ProductsController extends Controller
                     } elseif (isset($row['helpMessageArray']['general_selection'])) {
                         $message = $data['help_msg_'.$row['indexByName']];
                     }
-                    $values = [$data['feature_'.$row['indexByName']], $message];
+                    //$values = [$data['feature_'.$row['indexByName']], $message];
+                    $values = $data['feature_'.$row['indexByName']];
                 } else {
                     $values = isset($data['feature_'.$row['indexByName']]) ? $data['feature_'.$row['indexByName']] : '';
                 }
             }
+
             if ($values) {
-                $array[$row['indexByName']] = $values;
+                 $array[$row['indexByName']] = $values;
             }
         }
 
@@ -1068,6 +1254,7 @@ class ProductsController extends Controller
         //making one array to return
         $array = [];
         $products = array_values($products);
+
         for ($i = 0; $i < count($products); $i++) {
             if (count($products[$i]) > 0) {
                 $array = array_merge($array, $products[$i]);

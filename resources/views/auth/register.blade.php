@@ -29,18 +29,11 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-md-6 col-lg-6 ">
-							{!! Form::label('first_name',trans('user.first_name')) !!}:
+						<div class="col-md-12">
+							{!! Form::label('last_name','用户名') !!}:
 							<div class="input-group">
 				      			<div class="input-group-addon"><span class="fa fa-align-justify"></span></div>
-								{!! Form::text('first_name', null, ['ng-disabled'=>'disabled','class'=>'form-control']) !!}
-							</div>
-						</div>
-						<div class="col-md-6 col-lg-6 ">
-							{!! Form::label('last_name',trans('user.last_name')) !!}:
-							<div class="input-group">
-				      			<div class="input-group-addon"><span class="fa fa-align-justify"></span></div>
-								{!! Form::text('last_name', null, ['ng-disabled'=>'disabled','class'=>'form-control']) !!}
+								{!! Form::text('nickname', null, ['ng-disabled'=>'disabled','class'=>'form-control']) !!}
 							</div>
 						</div>
 					</div>
@@ -65,12 +58,12 @@
 						</div>
 					</div>
 
-					<div class="row">
-						<div class="col-md-12">
-							<label>{{ trans('user.are_you_human') }}</label>
-							{!! Recaptcha::render() !!}
-						</div>
+				{{-- <div class="row">
+					<div class="col-md-12">
+						<label>{{ trans('user.are_you_human') }}</label>
+						{!! Recaptcha::render() !!}
 					</div>
+				</div>--}}
 
 					<div class="form-group">
 						<div class="col-md-12">
