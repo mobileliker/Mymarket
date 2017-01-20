@@ -7,6 +7,7 @@ use App\Person;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -58,15 +59,13 @@ class RegisterController extends Controller
      */
     protected function register(Request $request)
     {
-        $this->validate($request, $this->rules());
-
+        $this->validate($request,$this->rules());
         $user = $this->createUser($request->all());
-
+        
         $this->sendRegistrationEmail($request->all());
-
         auth()->login($user);
-
         return redirect($this->redirectTo);
+        
     }
 
     /**
@@ -79,9 +78,9 @@ class RegisterController extends Controller
         return [
             //'first_name' => 'required|max:20|min:3',
             //'last_name'  => 'required|max:20|min:3',
-            'nickname'  => 'required|max:20|min:3',
+            'nickname'  => 'required|max:20|min:3|unique:users',
             'email'      => 'required|email|max:255|unique:users',
-            'password'   => 'required|min:6',
+            'password'   => 'required|min:6|confirmed',
         ];
     }
 
@@ -109,6 +108,16 @@ class RegisterController extends Controller
 
         return $user;
     }
+    
+    public function validate(Request $request, array $rules, array $messages = [], array $customAttributes = [])
+    {
+        $validator = $this->getValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
+          
+        if ($validator->fails()) { 
+            $this->throwValidationException($request, $validator); 
+        }
+    }
+   
 
     /**
      * Send the registration email.

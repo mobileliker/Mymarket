@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class LoginController extends Controller
 {
@@ -27,6 +28,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    protected $username = 'login';
 
     /**
      * Create a new controller instance.
@@ -66,16 +68,29 @@ class LoginController extends Controller
     protected function handle(Request $request)
     {
         $this->validate($request, $this->rules());
-
-        if (auth()->attempt($this->credentials($request), $request->has('remember'))) {
+        
+        $credentials = $this->credentials($request);
+        if ($this->guard()->attempt($credentials, $request->has('remember'))) {
             return redirect($this->redirectTo);
         }
-
-        return redirect('/login')
-            ->withInput($request->only('email', 'remember'))
+        $this->incrementLoginAttempts($request);
+        return $this->sendFailedLoginResponse($request);
+    }
+    
+    //登录失败提示
+    public function sendFailedLoginResponse(Request $request)
+    {
+        return redirect()->back()
+            ->withInput($request->only($this->loginUsername(), 'remember'))
             ->withErrors([
-                'email' => $this->getFailedLoginMessage(),
+                $this->loginUsername() => Lang::get('用户名或密码错误'),
             ]);
+    }
+    
+    //获取登录字段
+    public function loginUsername()
+    {
+        return property_exists($this, 'username') ? $this->username : 'email';
     }
 
     /**
@@ -86,7 +101,7 @@ class LoginController extends Controller
     protected function rules()
     {
         $rules = [
-            'email'    => 'required|email',
+            'login'    => 'required',
             'password' => 'required',
         ];
 
@@ -104,11 +119,14 @@ class LoginController extends Controller
      *
      * @return array
      */
-    protected function credentials(Request $request)
+    
+    public function credentials(Request $request)
     {
+        $login = $request->get('login');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nickname';
         return [
-            'email'    => $request->email,
-            'password' => $request->password,
+            $field => $login,
+            'password' => $request->get('password'),
         ];
     }
 
@@ -124,7 +142,5 @@ class LoginController extends Controller
 
     public function showLoginForm(){
         return view('szy.auth.login');
-    }
-
-    
+    } 
 }
