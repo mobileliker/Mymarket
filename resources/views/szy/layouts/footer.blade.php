@@ -77,7 +77,7 @@
 			</li>
 		</div>
 		<div class="c-footer">
-			<div class="f-l"><img src="./eq.png"></div>
+			<div class="f-l"><img src="/img/szy/szy-wechat.jpg"></div>
 			<div class="f-r">
 				<li>扫码关注我家菜市官方微信</li>
 				<li>

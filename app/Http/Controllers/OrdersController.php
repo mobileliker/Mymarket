@@ -510,6 +510,8 @@ class OrdersController extends Controller
         //         'hasLaterCart'
         //     )
         // );
+        $wisheType = 'product';
+
         return view('szy.wishes',
             compact(
                 'cart',
@@ -521,9 +523,23 @@ class OrdersController extends Controller
                 'wishLists',
                 'wishListName',
                 'hasWishList',
-                'hasLaterCart'
+                'hasLaterCart','wisheType'
             )
         );
+    }
+
+    //关注的店铺
+    public function showWishShop(Request $request){
+        $wisheType = 'shop';
+
+        $businessCount = DB::table('businesses')
+                    ->join('users','businesses.user_id','=','users.id')
+                    ->join('user_business','users.id','=','user_business.business_id')
+                    ->where('user_business.user_id','=',auth()->user()->id)
+                    ->select('businesses.user_id','businesses.business_name','user_business.created_at','businesses.logo')
+                    ->paginate(6);
+ 
+        return view('szy.wishes-shop',compact('wisheType','businessCount'));
     }
 
     /**
@@ -590,11 +606,14 @@ class OrdersController extends Controller
              * @var [type]
              */
             $cart = Order::ofType('cart')->where('user_id', $user->id)->with('details')->first();
+
             $cartProducts = array();
             $count = count($cart['details']);
             foreach ($cart['details'] as $key=>$value) {
                 $business = Business::where('user_id',$value['product']['user_id'])->select('user_id','business_name','logo as business_logo')->first()->toArray();
                 $cartProducts[$business['business_name']]['product'][$key] = $value['product'];
+                $cartProducts[$business['business_name']]['product'][$key]['detail_id'] = $value['id'];
+                $cartProducts[$business['business_name']]['product'][$key]['quantity'] = $value['quantity'];
                 $cartProducts[$business['business_name']]['business'] = $business;
             }
 
@@ -714,7 +733,7 @@ class OrdersController extends Controller
 
         //suggestions based on cart content
         $suggestions = ProductsController::getSuggestions(['preferences_key' => Session::get('suggest-listed'), 'limit' => 10]);
-        // echo "<pre>";print_r($suggestions[0]['features']['images'][0]);die;
+        // echo "<pre>";print_r();die;
         // Session::forget('suggest-listed');
 
         return view('szy.cart', compact('cart', 'user', 'panel', 'laterCart', 'suggestions', 'totalItems', 'totalAmount','cartProducts','count'));
@@ -941,6 +960,15 @@ class OrdersController extends Controller
         }
     }
 
+
+    //修改购物车数量方法
+    public function cartAmount(Request $request){
+        $order = OrderDetail::find($request->input('id'));
+        $order->quantity = $request->input('amount');
+
+        return $order->save();
+    }
+
     /**
      * Starts the checkout process.
      *
@@ -948,9 +976,27 @@ class OrdersController extends Controller
      *
      * @return Response
      */
-    public function checkOut()
+    public function checkOut(Request $request)
     {
         $user = \Auth::user();
+
+        $order_ids = $request->input('order_ids');
+        $order_ids = explode(',',$order_ids);
+
+        if (!empty($order_ids)) {
+                $products = DB::table('order_details')
+                        ->join('products','order_details.product_id','=','products.id')
+                        ->whereIn('order_details.id',$order_ids)
+                        ->select('products.*','order_details.id as details_id','order_details.quantity')
+                        ->get();    
+        }
+
+        if (!empty($products)) {
+            foreach ($products as $key => $value) {
+               $business_products[$value->user_id][$key] = $value;
+            }
+        }
+
 
         $cart = Order::ofType('cart')->ofUser($user->id)->select('id')->first();
 
@@ -983,9 +1029,105 @@ class OrdersController extends Controller
 
             $callBackUrl = 'user/orders/checkOut';
 
+            //支付进度
+            $payPlan = 1;
+
+            // print_r($business_products);die;
             // return view('address.list', compact('user', 'panel', 'cart', 'addresses', 'callBackUrl', 'defaultId'));
-            return view('szy.affirm-orders', compact('user', 'panel', 'cart', 'addresses', 'callBackUrl', 'defaultId'));
+
+            return view('szy.affirm-orders', compact('cart', 'user', 'panel', 'isResume', 'cartAddress', 
+                'totalItems', 'totalAmount','addresses','business_products','payPlan'));
         }
+    }
+
+    /**
+     * 支付
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function pay(Request $request){
+
+        $address_id = $request->input('address_id');
+        $paytype = $request->input('paytype');
+        $remarks = $request->input('remarks');
+        $details_ids = explode(',',$request->input('details_ids'));
+
+        //支付进度
+        $payPlan = 2;
+
+        return view('szy.pay',compact('payPlan'));
+    }
+
+    /**
+     * 交易完成
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function orderSuccessful(Request $request){
+
+        $address_id = $request->input('address_id');
+        $paytype = $request->input('paytype');
+        $remarks = $request->input('remarks');
+        $details_ids = explode(',',$request->input('details_ids'));
+
+        //查询user id
+        $data = DB::table('products')->join('order_details','products.id','=','order_details.product_id')
+                ->whereIn('order_details.id',$details_ids)
+                ->select('order_details.id','products.user_id','order_details.order_id')
+                ->get();
+
+        //根据卖家id 分类
+        foreach ($data as $value) {
+            $products[$value->user_id][] = $value->id;
+        }       
+
+        //查询第一个订单状态
+        $firstOrder = OrderDetail::find($details_ids[0])->select('order_id')->first();
+        $sellerCheck = Order::where('type','order')->where('id',$firstOrder->order_id)->where('status','open')->first();
+
+        //判断是否为第一次提交
+        if (!empty($sellerCheck)) {
+            //操作订单 
+            foreach ($products as $sellerid => $product) {
+               $orders = new Order;
+               $orders->address_id = $address_id;
+               $orders->description = $remarks;
+               $orders->status = 'open';
+               $orders->type = 'order';
+               $orders->seller_id = $sellerid;
+               $orders->user_id = auth()->user()->id;
+               if ($orders->save()) {
+                   foreach ($product as $id) {
+                      $order_details = OrderDetail::find($id);
+                      $order_details->order_id = $orders->id;
+                      $order_details->save();
+                   }
+               }
+            }
+        }
+
+        //查询订单信息
+        foreach ($products as $sellerid => $product) {
+
+            $orderinfos[$sellerid] = DB::table('businesses')
+                            ->join('orders','businesses.user_id','=','orders.seller_id')
+                            ->join('order_details','orders.id','=','order_details.order_id')
+                            ->join('addresses','orders.address_id','=','addresses.id')
+                            ->where('order_details.id','=',$product[0])
+                            ->where('businesses.user_id','=',$sellerid)
+                            ->groupBy('orders.id')
+                            ->select('businesses.*','orders.id as order_id','addresses.state','addresses.city','addresses.line1')
+                            ->first();
+        }
+
+        //支付进度
+        $payPlan = 3;
+
+        return view('szy.pay-successful', compact('orderinfos','paytype','payPlan'));
     }
 
     /**
@@ -1011,6 +1153,8 @@ class OrdersController extends Controller
 
         //Checks if the user selected an address that belongs to him/her
         $userAddress = Address::where('user_id', $user->id)->where('id', $address->id)->first();
+
+        $addresses = $user->addresses->sortByDesc('default');
 
         if ($userAddress) {
             //Checks if the user has points for the cart price and the store has stock
@@ -1069,6 +1213,7 @@ class OrdersController extends Controller
                 $is_logged = true;
 
                 return view('orders.cart', compact('cart', 'user', 'panel', 'isResume', 'cartAddress', 'totalItems', 'totalAmount'));
+
             }
         } else {
             return redirect()->route('orders.show_cart')->withErrors(['main_error' => [trans('store.errorOnAddress')]]);

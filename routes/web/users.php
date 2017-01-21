@@ -66,6 +66,12 @@ Route::group(['prefix' => 'user', 'roles' => array_keys(trans('globals.roles')),
 
     Route::get('orders', ['uses' => 'OrdersController@usersOrders', 'as' => 'orders.show_orders']);
 
+    Route::get('orders/cartAmount', 'OrdersController@cartAmount');//计算购物车单个商品数量
+
+    Route::post('orders/pay', 'OrdersController@pay');//支付
+
+    Route::post('orders/pay/successful', 'OrdersController@orderSuccessful');//支付成功
+
     //filtered by dates
     Route::post('orders', ['uses' => 'OrdersController@usersOrders', 'as' => 'orders.show_orders']);
 

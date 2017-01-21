@@ -111,9 +111,12 @@ class ProductsController extends Controller
                 ->orderBy('num','desc')
                 ->limit(5)->get();
         }else{
-            $xzs = DB::table('products')->where('products.category_id','=',$classFirst->category_id)
-                ->where('name', 'like', '%'.$search.'%')
+
+            $xzs = DB::table('products')
+                ->join('categories','products.category_id','=','categories.id')
                 ->join('order_details','products.id','=','order_details.product_id')
+                ->where('products.name', 'like', '%'.$search.'%')
+                ->whereNull('categories.category_id')
                 ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
                 ->groupBy('order_details.product_id')
                 ->orderBy('num','desc')
