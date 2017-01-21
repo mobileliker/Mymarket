@@ -1,4 +1,313 @@
 @charset "UTF-8";
+.bg-green {
+  background: #31C4A8; }
+
+.bg-red {
+  background: #F77872; }
+
+.bg-blue {
+  background: #50C1E9; }
+
+.bg-purple {
+  background: #B69BC6; }
+
+.bg-orange {
+  background: #FFB24A; }
+
+.z-green {
+  color: #31C4A8; }
+
+.z-red {
+  color: #F77872; }
+
+.z-blue {
+  color: #50C1E9; }
+
+.z-purple {
+  color: #B69BC6; }
+
+.z-orange {
+  color: #FFB24A; }
+
+.z-green:hover {
+  color: #DEF9F4; }
+
+.z-red:hover {
+  color: #FAD2D2; }
+
+.z-blue:hover {
+  color: #CDEFF9; }
+
+.z-purple:hover {
+  color: #F5EDFA; }
+
+.z-orange:hover {
+  color: #FCEBD9; }
+
+.bd-green {
+  border-right: 2px solid #31C4A8; }
+
+.bd-red {
+  border-right: 2px solid #F77872; }
+
+.bd-blue {
+  border-right: 2px solid #50C1E9; }
+
+.bd-purple {
+  border-right: 2px solid #B69BC6; }
+
+.bd-orange {
+  border-right: 2px solid #FFB24A; }
+
+.p-bg-green {
+  background: #DEF9F4;
+  color: #31C4A8; }
+
+.p-bg-red {
+  background: #FAD2D2;
+  color: #F77872; }
+
+.p-bg-blue {
+  background: #CDEFF9;
+  color: #50C1E9; }
+
+.p-bg-purple {
+  background: #F5EDFA;
+  color: #B69BC6; }
+
+.p-bg-orange {
+  background: #FCEBD9;
+  color: #FFB24A; }
+
+.hv-green, .hv-red, .hv-blue, .hv-purple, .hv-orange {
+  background: #ECF0F1; }
+
+.hv-green:hover {
+  background: #31C4A8; }
+
+.hv-red:hover {
+  background: #F77872; }
+
+.hv-blue:hover {
+  background: #50C1E9; }
+
+.hv-purple:hover {
+  background: #B69BC6; }
+
+.hv-orange:hover {
+  background: #FFB24A; }
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: '宋体'; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+a {
+  text-decoration: none; }
+
+input, select, button, a {
+  outline: none; }
+
+/* line 5, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+
+/* line 103, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none; }
+
+/* line 32, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+a {
+  text-decoration: none; }
+
+html, body {
+  font-size: 12px; }
+
+.right-fixed {
+  width: 46px;
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  z-index: 10000; }
+  .right-fixed .r-fixed-l {
+    width: 40px;
+    height: 100%;
+    float: left; }
+    .right-fixed .r-fixed-l .l-list {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      top: 45%; }
+      .right-fixed .r-fixed-l .l-list li {
+        width: 100%;
+        height: 34px;
+        margin-top: 3px;
+        background: #31C4A8; }
+        .right-fixed .r-fixed-l .l-list li a {
+          margin: 3px 3px; }
+        .right-fixed .r-fixed-l .l-list li img {
+          width: 60%;
+          height: 60%;
+          margin: 6px 6px; }
+      .right-fixed .r-fixed-l .l-list li:hover {
+        background: #2EAF98; }
+  .right-fixed .r-fixed-r {
+    width: 6px;
+    height: 100%;
+    background: #31C4A8;
+    float: left; }
+
+.bg-green {
+  background: #31C4A8; }
+
+.bg-red {
+  background: #F77872; }
+
+.bg-blue {
+  background: #50C1E9; }
+
+.bg-purple {
+  background: #B69BC6; }
+
+.bg-orange {
+  background: #FFB24A; }
+
+.z-green {
+  color: #31C4A8; }
+
+.z-red {
+  color: #F77872; }
+
+.z-blue {
+  color: #50C1E9; }
+
+.z-purple {
+  color: #B69BC6; }
+
+.z-orange {
+  color: #FFB24A; }
+
+.z-green:hover {
+  color: #DEF9F4; }
+
+.z-red:hover {
+  color: #FAD2D2; }
+
+.z-blue:hover {
+  color: #CDEFF9; }
+
+.z-purple:hover {
+  color: #F5EDFA; }
+
+.z-orange:hover {
+  color: #FCEBD9; }
+
+.bd-green {
+  border-right: 2px solid #31C4A8; }
+
+.bd-red {
+  border-right: 2px solid #F77872; }
+
+.bd-blue {
+  border-right: 2px solid #50C1E9; }
+
+.bd-purple {
+  border-right: 2px solid #B69BC6; }
+
+.bd-orange {
+  border-right: 2px solid #FFB24A; }
+
+.p-bg-green {
+  background: #DEF9F4;
+  color: #31C4A8; }
+
+.p-bg-red {
+  background: #FAD2D2;
+  color: #F77872; }
+
+.p-bg-blue {
+  background: #CDEFF9;
+  color: #50C1E9; }
+
+.p-bg-purple {
+  background: #F5EDFA;
+  color: #B69BC6; }
+
+.p-bg-orange {
+  background: #FCEBD9;
+  color: #FFB24A; }
+
+.hv-green, .hv-red, .hv-blue, .hv-purple, .hv-orange {
+  background: #ECF0F1; }
+
+.hv-green:hover {
+  background: #31C4A8; }
+
+.hv-red:hover {
+  background: #F77872; }
+
+.hv-blue:hover {
+  background: #50C1E9; }
+
+.hv-purple:hover {
+  background: #B69BC6; }
+
+.hv-orange:hover {
+  background: #FFB24A; }
+
 * {
   margin: 0;
   padding: 0;
@@ -139,135 +448,114 @@ html, body {
   height: 100%;
   float: right; }
   .header-nav2 li {
-    width: 62px;
     height: 100%;
     float: right;
     line-height: 30px;
     list-style-type: none;
     font-size: 12px;
-    color: #A5A5A5; }
+    color: #A5A5A5;
+    margin: 0px 4px 0px 4px; }
     .header-nav2 li a {
       font-size: 12px;
       color: #A5A5A5; }
 
-.header-nav-b {
-  height: 100%;
-  width: 200px;
-  float: left; }
+.bg-green {
+  background: #31C4A8; }
 
-.header-nav-b1 {
-  height: 70%;
-  width: 100%;
-  margin-top: 15px; }
-  .header-nav-b1 img {
-    height: 80px;
-    width: 100%; }
+.bg-red {
+  background: #F77872; }
 
-.header-nav-b2 {
-  height: 20%;
-  width: 100%; }
-  .header-nav-b2 span {
-    color: #4B4B4B;
-    font-size: 12px;
-    line-height: 23px; }
-    .header-nav-b2 span a {
-      color: #4B4B4B;
-      font-size: 12px; }
-    .header-nav-b2 span a:hover {
-      color: #31C4A8; }
+.bg-blue {
+  background: #50C1E9; }
 
-.header-nav-b2-span1 {
-  float: left; }
+.bg-purple {
+  background: #B69BC6; }
 
-.header-nav-b2-span2 {
-  float: right; }
-  .header-nav-b2-span2 img {
-    width: 15px;
-    height: 15px; }
+.bg-orange {
+  background: #FFB24A; }
 
-.header-nav-right {
-  width: 800px;
-  height: 100%;
-  float: right; }
+.z-green {
+  color: #31C4A8; }
 
-.header-nav-right-l {
-  width: 100%;
-  height: 100%; }
+.z-red {
+  color: #F77872; }
 
-.header-nav-right-r {
-  width: 30%;
-  height: 100%; }
+.z-blue {
+  color: #50C1E9; }
 
-.header-nav-right-la {
-  width: 100%;
-  height: 30%;
-  margin-top: 35px;
-  float: left; }
-  .header-nav-right-la input {
-    width: 380px;
-    height: 35px;
-    border: 2px solid #31C4A8;
-    color: #5B5B5B;
-    font-size: 15px;
-    float: left;
-    border-right: none; }
-  .header-nav-right-la button {
-    width: 90px;
-    height: 35px;
-    margin: 0;
-    padding: 0;
-    float: left;
-    color: white;
-    font-size: 15px;
-    font-weight: bold; }
+.z-purple {
+  color: #B69BC6; }
 
-.header-nav-right-la-bt1 {
-  background: #31C4A8;
-  border: 2px solid #31C4A8;
-  cursor: pointer; }
+.z-orange {
+  color: #FFB24A; }
 
-.header-nav-right-la-bt1:hover {
-  background: #2CAF95;
-  border: 2px solid #2CAF95; }
+.z-green:hover {
+  color: #DEF9F4; }
 
-.header-nav-right-la-bt2 {
-  background: #BC7EDB;
-  border: 2px solid #BC7EDB;
-  cursor: pointer; }
+.z-red:hover {
+  color: #FAD2D2; }
 
-.header-nav-right-la-bt2:hover {
-  background: #AD71C9;
-  border: 2px solid #AD71C9; }
+.z-blue:hover {
+  color: #CDEFF9; }
 
-.header-nav-right-l-div {
-  width: 380px;
-  height: 30px;
-  text-align: left;
-  margin-top: 5px;
-  color: #31C4A8;
-  font-size: 14px; }
-  .header-nav-right-l-div a {
-    color: #A5A5A5;
-    font-size: 13px; }
-  .header-nav-right-l-div a:hover {
-    color: #31C4A8; }
+.z-purple:hover {
+  color: #F5EDFA; }
 
-.header-nav-right-la-cart {
-  width: 160px;
-  height: 35px;
-  float: right;
-  border: 1px solid #FC8950;
-  color: #FC8950;
-  line-height: 35px;
-  text-align: center;
-  cursor: pointer; }
-  .header-nav-right-la-cart a {
-    color: #FC8950;
-    font-size: 15px; }
+.z-orange:hover {
+  color: #FCEBD9; }
 
-.header-nav-right-la-cart:hover {
-  border: 1px solid #FC8950;
-  border-top: 2px solid #FC8950; }
+.bd-green {
+  border-right: 2px solid #31C4A8; }
+
+.bd-red {
+  border-right: 2px solid #F77872; }
+
+.bd-blue {
+  border-right: 2px solid #50C1E9; }
+
+.bd-purple {
+  border-right: 2px solid #B69BC6; }
+
+.bd-orange {
+  border-right: 2px solid #FFB24A; }
+
+.p-bg-green {
+  background: #DEF9F4;
+  color: #31C4A8; }
+
+.p-bg-red {
+  background: #FAD2D2;
+  color: #F77872; }
+
+.p-bg-blue {
+  background: #CDEFF9;
+  color: #50C1E9; }
+
+.p-bg-purple {
+  background: #F5EDFA;
+  color: #B69BC6; }
+
+.p-bg-orange {
+  background: #FCEBD9;
+  color: #FFB24A; }
+
+.hv-green, .hv-red, .hv-blue, .hv-purple, .hv-orange {
+  background: #ECF0F1; }
+
+.hv-green:hover {
+  background: #31C4A8; }
+
+.hv-red:hover {
+  background: #F77872; }
+
+.hv-blue:hover {
+  background: #50C1E9; }
+
+.hv-purple:hover {
+  background: #B69BC6; }
+
+.hv-orange:hover {
+  background: #FFB24A; }
 
 * {
   margin: 0;
@@ -734,7 +1022,7 @@ html, body {
             width: 18px;
             height: 18px;
             position: relative;
-            top: -5px; }
+            top: 3px; }
         .details .product .left .info .sy {
           margin-right: 10px;
           position: relative; }

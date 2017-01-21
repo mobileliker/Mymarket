@@ -57,9 +57,17 @@
 					@endforeach
 				</div>
 				<div class="info">
-					<div class="bh">商品编号:10241544545</div>
+
+					{{--<div class="bh">商品编号:10241544545</div>--}}
+
 					<div class="sy"><img src="/img/szy/inc/search.png"><span class="sy-span">商品溯源</span> 
-						<div class="ewm" state='n'><img src="{{$product->code}}"></div>
+						<div class="ewm" state='n'>
+							@if(!empty($product->code))
+							<img src="{{$product->code}}">
+							@else 
+							<img src="/img/szy/szy-wechat.jpg">
+							@endif
+						</div>
 					</div>
 					@if (!(Auth::id()===$product->user_id))
 					<div class="gz">
@@ -129,7 +137,7 @@
 
 					<div class="submit">
 						@if (!(Auth::id()===$product->user_id))
-						<button>立即购买</button>
+						{{--<button>立即购买</button>--}}
 						<div class="gwc">
 							<a href="javascript:void(0);" onclick="$('input[id=cart_submit]').click();">
 								<img src="/img/szy/inc/add-cart.png"> 
