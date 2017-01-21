@@ -2,6 +2,8 @@
 
 Route::get('orders/report/{type}/{filter}', ['uses' => 'OrdersController@reports', 'as' => 'orders.report']);
 
+Route::post('order/delivery/{id}', 'DeliveryController@storeOrUpdate'); //保存发货信息
+
 Route::get('user/orders/addTo/{destination}/{productId}', ['uses' => 'OrdersController@addToOrder', 'as' => 'orders.add_to_order']);
 
 Route::get('user/orders/removeFrom/{orderName}/{productId}/{idOrder?}', ['uses' => 'OrdersController@removeFromOrder', 'as' => 'orders.remove_from_order']);
@@ -27,3 +29,5 @@ Route::get('mailTest', 'OrdersController@mailtest');
 Route::resource('virtualproductorders', 'VirtualProductOrdersController');
 
 Route::post('editKeyVirtualProductsOrders/{id}', ['uses' => 'VirtualProductOrdersController@editKey', 'as' => 'virtualProductOrdersController.editKey']);
+
+

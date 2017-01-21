@@ -1539,7 +1539,9 @@ class OrdersController extends Controller
 
                 $grandTotal = $order->details->sum('price');
 
-                return view('orders.detail', compact('user', 'panel', 'orderAddress', 'is_buyer', 'order', 'orderAddress', 'order_comments', 'totalItems', 'grandTotal'));
+                $delivery = $order->delivery;
+
+                return view('orders.detail', compact('delivery','user', 'panel', 'orderAddress', 'is_buyer', 'order', 'orderAddress', 'order_comments', 'totalItems', 'grandTotal'));
             } else {
                 $order = Order::where('id', $id)->where('seller_id', $user->id)->first();
                 if ($order) {
@@ -1589,7 +1591,9 @@ class OrdersController extends Controller
 
         $is_seller = true;
 
-        return view('orders.detail', compact('user', 'is_seller', 'panel', 'orderAddress', 'order', 'order_comments', 'totalItems', 'grandTotal'));
+        $delivery = $order->delivery;
+
+        return view('orders.detail', compact('user', 'is_seller', 'panel', 'orderAddress', 'order', 'order_comments', 'totalItems', 'grandTotal', 'delivery'));
     }
 
     /**

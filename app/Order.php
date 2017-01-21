@@ -61,6 +61,11 @@ class Order extends Model
         return $this->belongsToMany('App\FreeProduct')->withTimestamps();
     }
 
+    public function delivery()
+    {
+        return $this->hasOne('App\Delivery');
+    }
+
     public static function create(array $options = [])
     {
         //separate order details
