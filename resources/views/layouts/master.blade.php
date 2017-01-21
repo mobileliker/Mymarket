@@ -157,5 +157,7 @@
 	{!! Html::script('/antvel-bower/angular-local-storage/dist/angular-local-storage.min.js') !!}
 @show
 
+@yield('mm_script')
+
 </body>
 </html>

@@ -13,7 +13,7 @@ use App\Helpers\productsHelper;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Company;
-use App\Product;
+use App\Product, App\Article;
 use DB;
 class HomeController extends Controller
 {
@@ -154,5 +154,82 @@ class HomeController extends Controller
 
             $prod->save();
         }
+    }
+
+    public function slug($slug){
+        $panel = [
+            'center' => [
+                'width' => 10,
+            ],
+            'left' => [
+                'width' => 2,
+                'class' => 'home-no-padding',
+            ],
+        ];
+
+        $helperProd = new productsHelper();
+
+        $carousel = $helperProd->suggest('carousel');
+        $viewed = $helperProd->suggest('viewed', 8);
+        $categories = $helperProd->suggest('categories');
+        $purchased = $helperProd->suggest('purchased');
+
+        $suggestion = [
+            'carousel'   => $carousel,
+            'viewed'     => $viewed,
+            'categories' => $categories,
+            'purchased'  => $purchased,
+        ];
+
+        $helperProd->resetHaystack(); //reseting session id validator
+
+        $events = [];
+        if (config('app.offering_free_products')) {
+            $events = FreeProduct::getNextEvents([
+                'id',
+                'description',
+                'min_participants',
+                'max_participants',
+                'participation_cost',
+                'start_date',
+                'end_date',
+            ], 4, date('Y-m-d'));
+        }
+
+        $tagsCloud = ProductsController::getTopRated(0, 20, true);
+        $labels = ProductsController::getTopRated(0, 1, true);
+
+        $allWishes = '';
+        $user = \Auth::user();
+        if ($user) {
+            $allWishes = Order::ofType('wishlist')->where('user_id', $user->id)->where('description', '<>', '')->get();
+        }
+
+        $i = 0; //carousel implementation
+        $jumbotronClasses = ['jumbotron-box-left', 'jumbotron-box-right']; //carousel implementation
+
+        $banner = [
+            '/img/banner/01.png',
+            '/img/banner/02.png',
+            '/img/banner/03.png',
+            '/img/banner/04.png',
+            '/img/banner/05.png'
+        ];
+        $lbpic = Company::select('lbpic')->first();
+        if ($lbpic!='') {
+            $banner = explode(',',$lbpic->lbpic);
+        }
+        // $this->createTags();
+
+        $lcs = $this->classLc();//楼层分类
+        $navs = $this->classProduct();//分类级联菜单
+
+        $article = Article::where('slug', $slug)->first();
+        if($article == null){
+            abort(404);
+        }else{
+            return view('szy.page.show', compact('article', 'labels', 'navs'));
+        }
+
     }
 }

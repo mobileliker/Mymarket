@@ -40,6 +40,9 @@ Route::group(['prefix' => 'business', 'roles' => array_keys(trans('globals.roles
 	Route::resource('myBusiness', 'MyBusinessController');
 });
 
+
+Route::get('page/{slug}', 'HomeController@slug');
+
 //users routes
 require __DIR__.'/web/users.php';
 
