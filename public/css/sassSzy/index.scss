@@ -56,9 +56,9 @@ $priceBg:url(../../img/szy/product-new.png) no-repeat;
 	.picScroll-left .bd ul{ overflow:hidden; zoom:1; }
 	.picScroll-left .bd ul li{ margin:0 12px; float:left; _display:inline; overflow:hidden; text-align:center;  }
 	.picScroll-left .bd ul li .pic{ text-align:center; 
-		.desc{width:220px;height:35px;position:absolute;bottom:0px;background:#FFB24A;opacity:0.9;
+		.desc{width:220px;height:35px;position:absolute;bottom:0px;background:#FFB24A;opacity:0.9;text-align:left; padding:0 8 0 8;
 			line-height:35px;
-			a{color:white;font-size:$fontSize;font-weight:bold;}
+			a{color:white;font-size:$fontSizeMin;font-weight:bold;}
 		}
 	}
 	.picScroll-left .bd ul li .pic img{ width:220px; height:174px; display:block;  padding:2px; border:1px solid #ccc; }
@@ -95,9 +95,9 @@ $priceBg:url(../../img/szy/product-new.png) no-repeat;
 		top:-10px;left:0px;z-index:1000;font-size:$fontSize;font-weight:bold;line-height:25px;}
 	}
 	.picScroll-left-two .bd ul li .pic{ text-align:center;
-		.desc{width:226px;height:45px;position:absolute;bottom:40px;background:#FFB24A;opacity:0.9;
-			line-height:35px;text-align:left;overflow:hidden;
-			a{color:white;font-size:$fontSize;font-weight:bold;}
+		.desc{width:226px;height:45px;position:absolute;bottom:40px;background:#FFB24A;opacity:0.9;padding:0 8 0 8;
+			line-height:22px;text-align:left;overflow:hidden;
+			a{color:white;font-size:$fontSizeMin;font-weight:bold;}
 		}
 	}
 	.picScroll-left-two .bd ul li .pic img{ width:100%; height:154px; display:block;  margin:auto;  }
@@ -139,7 +139,7 @@ $priceBg:url(../../img/szy/product-new.png) no-repeat;
 		.list{width:950px;height:100%;margin-left:10px;float:left;
 			li{width:226px;height:245px;margin-left:12.5px;margin-top:6px;float:left;border:1px solid $color3;position:relative;
 				.pic{ text-align:center; width:100%;height:67%;position:relative;
-					.desc{width:100%;height:40px;position:absolute;top:158px;opacity:0.9;
+					.desc{width:100%;height:40px;position:absolute;top:158px;opacity:0.9; padding:0 10 0 10;
 						line-height:20px;text-align:left;overflow:hidden;
 						a{color:white;font-size:$fontSizeMin;font-weight:bold;}
 					}

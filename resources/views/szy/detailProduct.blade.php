@@ -42,144 +42,145 @@
 			        </div>
 		    	@endif
 			</div>
-		<div class='product'>
-			<div class="left">
-				<div class="max-pic">
-					<img src="{{$product->features['images'][0]}}">
-				</div>
-				<div class="min-pic">
-					<?php $num=0; ?>
-					@foreach($product->features['images'] as $image)
-						<?php $num++; ?>
-						@if($num<5)
-						<li><img src="{{$image}}"></li>
-						@endif
-					@endforeach
-				</div>
-				<div class="info">
-
-					{{--<div class="bh">商品编号:10241544545</div>--}}
-
-					<div class="sy"><img src="/img/szy/inc/search.png"><span class="sy-span">商品溯源</span> 
-						<div class="ewm" state='n'>
-							@if(!empty($product->code))
-							<img src="{{$product->code}}">
-							@else 
-							<img src="/img/szy/szy-wechat.jpg">
+		<div class="product-padding">
+			<div class='product'>
+				<div class="left">
+					<div class="max-pic">
+						<img src="{{$product->features['images'][0]}}">
+					</div>
+					<div class="min-pic">
+						<?php $num=0; ?>
+						@foreach($product->features['images'] as $image)
+							<?php $num++; ?>
+							@if($num<5)
+							<li><img src="{{$image}}"></li>
 							@endif
-						</div>
+						@endforeach
 					</div>
-					@if (!(Auth::id()===$product->user_id))
-					<div class="gz">
-						<a href="user/orders/addTo/wishlist/{{$product->id}}">
-							<img src="/img/szy/inc/collect.png">关注商品
-						</a>
-					</div>
-					@endif
-				</div>
-			</div>
-			<div class="pm">
-				<div class="title">{{$product->name}}</div>
-				<div class="desc">{{$product->description}}</div>
-				<div class="price">
-					<div class="left">
-						<div class="pre">
-							<div class="l">价格</div>
-							<div class="r">￥{{$product->price_raw}}</div>
-						</div>
-						<div class="next">
-							<div class="l">促销价</div>
-							<div class="r">￥{{$product->price}}</div>
-						</div>
-					</div>
-					<div class="right">
-						<div class="pre">月销量 <b>1554</b></div>
-						<div class="next">累计评价 <b>1545</b></div>
-					</div>
-				</div>
-				<div class="delivery">
-					<div class="ps">
-						配送至:
-						<select>
-							<option>@if(!empty($addresDefault)){{$addresDefault->state}}{{$addresDefault->city}}@endif</option>
-							@if(!empty($address))
-								@foreach($address as $addres)
-								<option>{{$addres->state}}{{$addres->city}}</option>
-								@endforeach
-							@endif
-						</select>
-						有货 &nbsp; 免邮费
-					</div>
-					<div class="fw">
-						服 务:由<a href="">{{$business->business_name}}</a>从{{$business->address}}提供发货,并提供售后服务
-						@if ($product->stock <= $product->low_stock)
-							<span class = "label label-warning">{{ trans('store.lowStock') }}</span>
-						@else
-							<span class = "label label-success">{{ trans('store.inStock') }}</span>
-						@endif
-					</div>
-				</div>
-				<div class="cs">
-					<div class="lf">选择规格:</div>
-					<div class="rt">
-					@foreach($productCS as $pcs)
-					<a href="products/{{$pcs->id}}">
-						<li @if($pcs->id == $product->id) class="gg-defaultColor" @endif>
-							@foreach ($pcs->features as $key => $feature)
-								@if ($key != 'images')
-								{{  ucwords( is_array($feature) ? implode(' ', $feature) : $feature ) }}						
+					<div class="info">
+
+						{{--<div class="bh">商品编号:10241544545</div>--}}
+
+						<div class="sy"><img src="/img/szy/inc/search.png"><span class="sy-span">商品溯源</span> 
+							<div class="ewm" state='n'>
+								@if(!empty($product->code))
+								<img src="{{$product->code}}">
+								@else 
+								<img src="/img/szy/szy-wechat.jpg">
 								@endif
-							@endforeach
-						</li>
-					</a>
-					@endforeach	
-					</div>
-
-					<div class="submit">
+							</div>
+						</div>
 						@if (!(Auth::id()===$product->user_id))
-						{{--<button>立即购买</button>--}}
-						<div class="gwc">
-							<a href="javascript:void(0);" onclick="$('input[id=cart_submit]').click();">
-								<img src="/img/szy/inc/add-cart.png"> 
-								加入购物车
+						<div class="gz">
+							<a href="user/orders/addTo/wishlist/{{$product->id}}">
+								<img src="/img/szy/inc/collect.png">关注商品
 							</a>
 						</div>
-						<div class="num">
-							<input type="text" value="1" class="num-price-count" maxnum={{$product->stock}}>
-							<li class="num-add">+</li>
-							<li class="num-minus" style="border-top:1px solid #4D4D4D;" >-</li>
-						</div>
 						@endif
 					</div>
-					<form action="user/orders/addTo/cart/{{$product->id}}" method="POST">
-	                    <input name="_method" type="hidden" value="PUT">
-	                    {{ csrf_field() }}
-	                    <input type="submit" style="display:none" id="cart_submit">
-	                </form>
 				</div>
-			</div>
+				<div class="pm">
+					<div class="title">{{$product->name}}</div>
+					<div class="desc">{{$product->description}}</div>
+					<div class="price">
+						<div class="left">
+							<div class="pre">
+								<div class="l">价格</div>
+								<div class="r">￥{{$product->price_raw}}</div>
+							</div>
+							<div class="next">
+								<div class="l">促销价</div>
+								<div class="r">￥{{$product->price}}</div>
+							</div>
+						</div>
+						<div class="right">
+							<div class="pre">月销量 <b>1554</b></div>
+							<div class="next">累计评价 <b>1545</b></div>
+						</div>
+					</div>
+					<div class="delivery">
+						<div class="ps">
+							配送至:
+							<select>
+								<option>@if(!empty($addresDefault)){{$addresDefault->state}}{{$addresDefault->city}}@endif</option>
+								@if(!empty($address))
+									@foreach($address as $addres)
+									<option>{{$addres->state}}{{$addres->city}}</option>
+									@endforeach
+								@endif
+							</select>
+							有货 &nbsp; 免邮费
+						</div>
+						<div class="fw">
+							服 务:由<a href="">{{$business->business_name}}</a>从{{$business->address}}提供发货,并提供售后服务
+							@if ($product->stock <= $product->low_stock)
+								<span class = "label label-warning">{{ trans('store.lowStock') }}</span>
+							@else
+								<span class = "label label-success">{{ trans('store.inStock') }}</span>
+							@endif
+						</div>
+					</div>
+					<div class="cs">
+						<div class="lf">选择规格:</div>
+						<div class="rt">
+						@foreach($productCS as $pcs)
+						<a href="products/{{$pcs->id}}">
+							<li @if($pcs->id == $product->id) class="gg-defaultColor" @endif>
+								@foreach ($pcs->features as $key => $feature)
+									@if ($key != 'images')
+									{{  ucwords( is_array($feature) ? implode(' ', $feature) : $feature ) }}						
+									@endif
+								@endforeach
+							</li>
+						</a>
+						@endforeach	
+						</div>
 
-			<div class="serve">
-				<div class="title">
-					<a href="">{{$business->business_name}}</a>
-				</div>
-				<div class="zs">
-					<div class='lf'>9.65</div>
-					<div class="rt">
-						<li>商品评价 9.65 <img src="/img/szy/inc/jt-footer.png"></li>
-						<li>服务评价 9.65 <img src="/img/szy/inc/jt-footer.png"></li>
-						<li>物流评价 9.65 <img src="/img/szy/inc/jt-footer.png"></li>
+						<div class="submit">
+							@if (!(Auth::id()===$product->user_id))
+							{{--<button>立即购买</button>--}}
+							<div class="gwc">
+								<a href="javascript:void(0);" onclick="$('input[id=cart_submit]').click();">
+									<img src="/img/szy/inc/add-cart.png"> 
+									加入购物车
+								</a>
+							</div>
+							<div class="num">
+								<input type="text" value="1" class="num-price-count" maxnum={{$product->stock}}>
+								<li class="num-add">+</li>
+								<li class="num-minus" style="border-top:1px solid #4D4D4D;" >-</li>
+							</div>
+							@endif
+						</div>
+						<form action="user/orders/addTo/cart/{{$product->id}}" method="POST">
+		                    <input name="_method" type="hidden" value="PUT">
+		                    {{ csrf_field() }}
+		                    <input type="submit" style="display:none" id="cart_submit">
+		                </form>
 					</div>
 				</div>
-				<div class="lx">
-					<li><a href="" {{$business->phone}}><img src="/img/szy/inc/phone.png">联系卖家</a></li>
-					<li><a href="" {{$business->qq}}><img src="/img/szy/inc/consult.png"> 咨询客服</a></li>
-					<li><a href="shop/{{$business->user_id}}" ><img src="/img/szy/inc/shop.png"> 进店逛逛</a></li>
-					<li><a href="" ><img src="/img/szy/inc/attention.png"> 关注商铺</a></li>
-				</div>
+				{{--
+				<div class="serve">
+					<div class="title">
+						<a href="">{{$business->business_name}}</a>
+					</div>
+					<div class="zs">
+						<div class='lf'>9.65</div>
+						<div class="rt">
+							<li>商品评价 9.65 <img src="/img/szy/inc/jt-footer.png"></li>
+							<li>服务评价 9.65 <img src="/img/szy/inc/jt-footer.png"></li>
+							<li>物流评价 9.65 <img src="/img/szy/inc/jt-footer.png"></li>
+						</div>
+					</div>
+					<div class="lx">
+						<li><a href="" {{$business->phone}}><img src="/img/szy/inc/phone.png">联系卖家</a></li>
+						<li><a href="" {{$business->qq}}><img src="/img/szy/inc/consult.png"> 咨询客服</a></li>
+						<li><a href="shop/{{$business->user_id}}" ><img src="/img/szy/inc/shop.png"> 进店逛逛</a></li>
+						<li><a href="" ><img src="/img/szy/inc/attention.png"> 关注商铺</a></li>
+					</div>
+				</div>--}}
 			</div>
 		</div>
-
 		<div class="content">
 			
 			<div class="left">
@@ -213,7 +214,7 @@
 						<div class="tt-t">商品详情</div>
 					</div>
 					<div class="d-pp">
-						品牌名称: <a href="">{{ ucwords($product->brand) }}</a>		
+						品牌名称: <a href="products?brands={{ ucwords($product->brand) }}">{{ ucwords($product->brand) }}</a>		
 					</div>
 					<div class="d-mc">产品参数:</div>
 					<div class="d-xx">
