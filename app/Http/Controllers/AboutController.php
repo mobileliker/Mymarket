@@ -11,6 +11,8 @@ namespace app\Http\Controllers;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactFormRequest;
+use App\Article;
+use Redirect;
 
 class AboutController extends Controller
 {
@@ -57,7 +59,10 @@ class AboutController extends Controller
     public function about($tab = 'about')
     {
         // return view('about.index', compact('tab'));
-        return view('szy.about', compact('tab'));
+        //return view('szy.about', compact('tab'));
+
+        $article = Article::whereNotNull('category_id')->first();
+        return Redirect::to('/page/'.$article->slug);
     }
 
     public function refunds()

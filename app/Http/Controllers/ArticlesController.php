@@ -176,7 +176,11 @@ class ArticlesController extends Controller
         if($article == null){
             abort(404);
         }else{
-            return view('szy.page.show', compact('article', 'labels'));
+            if($article->category_id != null){
+                return view('szy.about', compact('article', 'labels'));
+            }else{
+                return view('szy.page.show', compact('article', 'labels'));
+            }
         }
     }
 }

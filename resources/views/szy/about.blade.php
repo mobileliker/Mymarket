@@ -38,97 +38,37 @@
         <div class="subside-box">
             {{--<h3>常见问题分类</h3>--}}
             <h3> 帮 助 中 心 </h3>
-            <dl>
-                <dt class="default-show">支付方式<span class="active"></span></dt>
-                <dd>
-                    <ul>
-                        <li class="default-color">
-                            <a href="#">快捷支付</a>
-                        </li>
-                        <li>
-                            <a href="#">支付宝</a>
-                        </li>
-                        <li>
-                            <a href="#">信用卡</a>
-                        </li>
-                        <li>
-                            <a href="#">货到付款</a>
-                        </li>
-                    </ul>
-                </dd>
-            </dl>
-            <dl>
-                <dt>商家服务<span class="hide-arrow"></span></dt>
-                <dd>
-                    <ul>
-                        <li>
-                            <a>我要供货</a>
-                        </li>
-                        <li>
-                            <a>物流服务</a>
-                        </li>
-                        <li>
-                            <a>供货规则</a>
-                        </li>
-                        <li>
-                            <a>运营服务</a>
-                        </li>
-                    </ul>
-                </dd>
-            </dl>
-            <dl>
-                <dt>联系我们<span class="hide-arrow"></span></dt>
-                <dd>
-                    <ul>
-                        <li>
-                            <a>服务电话</a>
-                        </li>
-                        <li>
-                            <a>微薄</a>
-                        </li>
-                        <li>
-                            <a>邮箱</a>
-                        </li>
-                        <li>
-                            <a>微信公众号</a>
-                        </li>
-                    </ul>
-                </dd>
-            </dl>
-            <dl>
-                <dt>消费保障<span class="hide-arrow"></span></dt>
-                <dd>
-                    <ul>
-                        <li>
-                            <div></div>
-                            <a>缺货陪衬</a>
-                        </li>
-                        <li>
-                            <div></div>
-                            <a>发票保障</a>
-                        </li>
-                        <li>
-                            <div></div>
-                            <a>售后规则</a>
-                        </li>
-                        <li>
-                            <div></div>
-                            <a>购物指南</a>
-                        </li>
-                    </ul>
-                </dd>
-            </dl>
-        </div>
+
+            @foreach(App\ArticleCategory::all() as $key=>$category)
+                <dl>
+                    @if($category->id == $article->category_id)
+                        <dt class="default-show">{{$category->display_name}}<span class="active"></span></dt>
+                    @else
+                        <dt class="hide-arrow">{{$category->display_name}}<span class="hide-arrow"></span></dt>
+                    @endif
+                    <dd>
+                        <ul>
+                            @foreach($category->articles as $article2)
+                                @if($article2->id == $article->id)
+                                <li class="default-color">
+                                @else
+                                    <li>
+                                 @endif
+                                    <a href="{{url('/page/'.$article2->slug)}}">{{$article2->title}}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </dd>
+                </dl>
+            @endforeach
+            </div>
         <div class="content">
             <div class="breadcrumb">
-                {{--  这里放对应的标题！！ --}}
-                ...
+                {{$article->title}}
             </div>
             <div class="tabs">
                 <div class="tabcons">
-                    {{--  这里放对应的内容！！ --}}
-                    .....
-
+                    {!!$article->content!!}
                 </div>
             </div>
         </div>
