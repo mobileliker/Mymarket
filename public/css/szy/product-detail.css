@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .bg-green {
   background: #31C4A8; }
 
@@ -116,7 +115,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -342,7 +341,7 @@ html, body {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -606,7 +605,7 @@ html, body {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -1000,7 +999,7 @@ html, body {
     position: absolute;
     top: 200px;
     left: 100px; }
-  .details .product {
+  .details .product-padding {
     width: 1200px;
     height: 100%;
     margin: auto;
@@ -1008,346 +1007,345 @@ html, body {
     background: white;
     position: relative;
     top: 15px;
-    border-radius: 10px;
+    padding: 10px;
     border-bottom: 2px solid #ccc; }
-    .details .product .left {
-      width: 350px;
-      height: 490px;
-      float: left; }
-      .details .product .left .max-pic {
-        width: 344px;
-        height: 330px;
-        border: 1px solid #ccc;
-        padding: 2px;
-        border-top-left-radius: 5px;
-        border-left: none;
-        border-top: none; }
-        .details .product .left .max-pic img {
-          height: 100%;
-          width: 100%;
-          border: none; }
-      .details .product .left .min-pic {
-        width: 100%;
-        height: 70px;
-        margin-top: 15px; }
-        .details .product .left .min-pic li {
-          width: 24%;
-          height: 100%;
-          margin-left: 1%;
-          float: left;
-          cursor: pointer; }
-          .details .product .left .min-pic li img {
+    .details .product-padding .product {
+      width: 1180px;
+      height: 100%; }
+      .details .product-padding .product .left {
+        width: 350px;
+        height: 490px;
+        float: left; }
+        .details .product-padding .product .left .max-pic {
+          width: 344px;
+          height: 330px;
+          border: 1px solid #ccc;
+          padding: 2px; }
+          .details .product-padding .product .left .max-pic img {
             height: 100%;
             width: 100%;
-            border-radius: 5px; }
-          .details .product .left .min-pic li img:hover {
-            border: 1px solid #6A6A6A; }
-        .details .product .left .min-pic li:nth-child(5n+1) {
-          margin-left: 0px; }
-      .details .product .left .info {
-        width: 100%;
-        height: 30px;
-        margin-top: 15px; }
-        .details .product .left .info .bh, .details .product .left .info .sy, .details .product .left .info .gz {
-          height: 100%;
-          float: left;
-          font-size: 15px;
-          color: #6A6A6A;
-          line-height: 30px; }
-        .details .product .left .info .bh {
-          min-width: 30%;
-          max-width: 50%;
-          line-height: 27px;
-          margin-right: 10px;
-          overflow: hidden; }
-        .details .product .left .info .sy, .details .product .left .info .gz {
-          min-width: 20%;
-          cursor: pointer; }
-          .details .product .left .info .sy img, .details .product .left .info .gz img {
-            width: 18px;
-            height: 18px;
-            position: relative;
-            top: 3px; }
-        .details .product .left .info .sy {
-          margin-right: 10px;
-          position: relative; }
-          .details .product .left .info .sy .ewm {
-            width: 180px;
-            height: 180px;
-            border: 1px solid #31C4A8;
-            position: absolute;
-            top: -190px;
-            left: -60px;
-            background: white;
-            z-index: 1000;
-            display: none; }
-            .details .product .left .info .sy .ewm img {
-              width: 100%;
-              height: 100%;
-              margin-top: 5px;
-              border: none; }
-        .details .product .left .info .sy:hover, .details .product .left .info .gz:hover {
-          color: #31C4A8; }
-    .details .product .pm {
-      width: 600px;
-      height: 460px;
-      margin-left: 15px;
-      float: left; }
-      .details .product .pm .title {
-        width: 100%;
-        height: 40px;
-        color: #4D4D4D;
-        font-size: 25px;
-        line-height: 30px;
-        overflow: hidden; }
-      .details .product .pm .desc {
-        width: 100%;
-        height: 50px;
-        color: #6A6A6A;
-        font-size: 15px;
-        line-height: 25px;
-        overflow: hidden; }
-      .details .product .pm .price {
-        width: 98%;
-        height: 65px;
-        background: url("/img/szy/inc/bg3.png") no-repeat;
-        padding: 8px; }
-        .details .product .pm .price .left {
-          width: 75%;
-          height: 100%;
-          float: left; }
-          .details .product .pm .price .left .pre {
-            width: 75%;
-            height: 45%; }
-            .details .product .pm .price .left .pre .l, .details .product .pm .price .left .pre .r {
-              height: 100%;
-              color: #4D4D4D;
-              font-size: 12px;
-              float: left; }
-            .details .product .pm .price .left .pre .l {
-              width: 100px;
-              text-align: center; }
-            .details .product .pm .price .left .pre .r {
-              width: 100px;
-              margin-left: 20px;
-              text-decoration: line-through; }
-          .details .product .pm .price .left .next {
-            width: 75%;
-            height: 45%; }
-            .details .product .pm .price .left .next .l, .details .product .pm .price .left .next .r {
-              height: 100%;
-              font-size: 20px;
-              float: left; }
-            .details .product .pm .price .left .next .l {
-              width: 100px;
-              color: #4D4D4D;
-              text-align: center; }
-            .details .product .pm .price .left .next .r {
-              width: 100px;
-              margin-left: 20px;
-              color: #F67B76;
-              font-size: 25px; }
-        .details .product .pm .price .right {
-          width: 24%;
-          height: 90%;
-          float: left;
-          margin-top: 4px;
-          border-left: 1px solid #ccc; }
-          .details .product .pm .price .right .next, .details .product .pm .price .right .pre {
-            width: 90%;
-            height: 50%;
-            font-size: 15px;
-            color: #4D4D4D;
-            margin-left: 15px;
-            line-height: 25px; }
-          .details .product .pm .price .right .pre b {
-            color: #F67B76; }
-          .details .product .pm .price .right .next b {
-            color: #2EABE1; }
-      .details .product .pm .delivery {
-        width: 100%;
-        height: 90px;
-        margin-top: 15px;
-        border-bottom: 1px dashed #ccc; }
-        .details .product .pm .delivery .fw, .details .product .pm .delivery .ps {
+            border: none; }
+        .details .product-padding .product .left .min-pic {
           width: 100%;
-          height: 30%;
+          height: 70px;
+          margin-top: 15px; }
+          .details .product-padding .product .left .min-pic li {
+            width: 24%;
+            height: 100%;
+            margin-left: 1%;
+            float: left;
+            cursor: pointer; }
+            .details .product-padding .product .left .min-pic li img {
+              height: 100%;
+              width: 100%; }
+            .details .product-padding .product .left .min-pic li img:hover {
+              border: 1px solid #6A6A6A; }
+          .details .product-padding .product .left .min-pic li:nth-child(5n+1) {
+            margin-left: 0px; }
+        .details .product-padding .product .left .info {
+          width: 100%;
+          height: 30px;
+          margin-top: 15px; }
+          .details .product-padding .product .left .info .bh, .details .product-padding .product .left .info .sy, .details .product-padding .product .left .info .gz {
+            height: 100%;
+            float: left;
+            font-size: 15px;
+            color: #6A6A6A;
+            line-height: 30px; }
+          .details .product-padding .product .left .info .bh {
+            min-width: 30%;
+            max-width: 50%;
+            line-height: 27px;
+            margin-right: 10px;
+            overflow: hidden; }
+          .details .product-padding .product .left .info .sy, .details .product-padding .product .left .info .gz {
+            min-width: 20%;
+            cursor: pointer; }
+            .details .product-padding .product .left .info .sy img, .details .product-padding .product .left .info .gz img {
+              width: 18px;
+              height: 18px;
+              position: relative;
+              top: 3px; }
+          .details .product-padding .product .left .info .sy {
+            margin-right: 10px;
+            position: relative; }
+            .details .product-padding .product .left .info .sy .ewm {
+              width: 180px;
+              height: 180px;
+              border: 1px solid #31C4A8;
+              position: absolute;
+              top: -190px;
+              left: -60px;
+              background: white;
+              z-index: 1000;
+              display: none; }
+              .details .product-padding .product .left .info .sy .ewm img {
+                width: 100%;
+                height: 100%;
+                margin-top: 5px;
+                border: none; }
+          .details .product-padding .product .left .info .sy:hover, .details .product-padding .product .left .info .gz:hover {
+            color: #31C4A8; }
+      .details .product-padding .product .pm {
+        width: 600px;
+        height: 460px;
+        margin-left: 15px;
+        float: left; }
+        .details .product-padding .product .pm .title {
+          width: 100%;
+          height: 40px;
           color: #4D4D4D;
-          font-size: 15px;
-          margin-top: 20px; }
-        .details .product .pm .delivery .ps select {
-          width: 160px;
-          height: 100%;
-          color: #4D4D4D;
-          font-size: 12px; }
-        .details .product .pm .delivery .fw a {
-          color: #F67B76; }
-      .details .product .pm .cs {
-        width: 100%;
-        max-height: 110px;
-        margin-top: 20px; }
-        .details .product .pm .cs .lf {
-          width: 15%;
+          font-size: 25px;
+          line-height: 40px;
+          overflow: hidden; }
+        .details .product-padding .product .pm .desc {
+          width: 100%;
           height: 50px;
-          line-height: 50px;
-          color: #4D4D4D;
+          color: #6A6A6A;
           font-size: 15px;
-          float: left; }
-        .details .product .pm .cs .rt {
-          width: 75%;
-          float: left; }
-          .details .product .pm .cs .rt li {
-            width: auto;
-            max-width: 400px;
+          line-height: 25px;
+          overflow: hidden; }
+        .details .product-padding .product .pm .price {
+          width: 98%;
+          height: 65px;
+          background: url("/img/szy/inc/bg3.png") no-repeat;
+          padding: 8px; }
+          .details .product-padding .product .pm .price .left {
+            width: 75%;
+            height: 100%;
+            float: left; }
+            .details .product-padding .product .pm .price .left .pre {
+              width: 75%;
+              height: 45%; }
+              .details .product-padding .product .pm .price .left .pre .l, .details .product-padding .product .pm .price .left .pre .r {
+                height: 100%;
+                color: #4D4D4D;
+                font-size: 12px;
+                float: left; }
+              .details .product-padding .product .pm .price .left .pre .l {
+                width: 100px;
+                text-align: center; }
+              .details .product-padding .product .pm .price .left .pre .r {
+                width: 100px;
+                margin-left: 20px;
+                text-decoration: line-through; }
+            .details .product-padding .product .pm .price .left .next {
+              width: 75%;
+              height: 45%; }
+              .details .product-padding .product .pm .price .left .next .l, .details .product-padding .product .pm .price .left .next .r {
+                height: 100%;
+                font-size: 20px;
+                float: left; }
+              .details .product-padding .product .pm .price .left .next .l {
+                width: 100px;
+                color: #4D4D4D;
+                text-align: center; }
+              .details .product-padding .product .pm .price .left .next .r {
+                width: 100px;
+                margin-left: 20px;
+                color: #F67B76;
+                font-size: 25px; }
+          .details .product-padding .product .pm .price .right {
+            width: 24%;
+            height: 90%;
+            float: left;
+            margin-top: 4px;
+            border-left: 1px solid #ccc; }
+            .details .product-padding .product .pm .price .right .next, .details .product-padding .product .pm .price .right .pre {
+              width: 90%;
+              height: 50%;
+              font-size: 15px;
+              color: #4D4D4D;
+              margin-left: 15px;
+              line-height: 25px; }
+            .details .product-padding .product .pm .price .right .pre b {
+              color: #F67B76; }
+            .details .product-padding .product .pm .price .right .next b {
+              color: #2EABE1; }
+        .details .product-padding .product .pm .delivery {
+          width: 100%;
+          height: 90px;
+          margin-top: 15px;
+          border-bottom: 1px dashed #ccc; }
+          .details .product-padding .product .pm .delivery .fw, .details .product-padding .product .pm .delivery .ps {
+            width: 100%;
+            height: 30%;
+            color: #4D4D4D;
+            font-size: 15px;
+            margin-top: 20px; }
+          .details .product-padding .product .pm .delivery .ps select {
+            width: 160px;
+            height: 100%;
+            color: #4D4D4D;
+            font-size: 12px; }
+          .details .product-padding .product .pm .delivery .fw a {
+            color: #F67B76; }
+        .details .product-padding .product .pm .cs {
+          width: 100%;
+          max-height: 110px;
+          margin-top: 20px; }
+          .details .product-padding .product .pm .cs .lf {
+            width: 15%;
+            height: 50px;
+            line-height: 50px;
+            color: #4D4D4D;
+            font-size: 15px;
+            float: left; }
+          .details .product-padding .product .pm .cs .rt {
+            width: 75%;
+            float: left;
+            max-height: 140px;
+            overflow: hidden; }
+            .details .product-padding .product .pm .cs .rt li {
+              width: auto;
+              max-width: 400px;
+              height: 30px;
+              border: 1px solid #6A6A6A;
+              float: left;
+              padding: 0 4px;
+              margin-left: 10px;
+              margin-top: 5px;
+              line-height: 30px;
+              cursor: pointer;
+              color: #4D4D4D; }
+            .details .product-padding .product .pm .cs .rt li:hover {
+              border-top: 2px solid #6A6A6A; }
+            .details .product-padding .product .pm .cs .rt li:active {
+              border: 2px solid #31C4A8; }
+        .details .product-padding .product .pm .submit {
+          width: 90%;
+          height: 50px;
+          float: left;
+          margin-top: 10px; }
+          .details .product-padding .product .pm .submit button {
+            width: 120px;
+            height: 34px;
+            border: none;
+            background: #31C4A8;
+            color: white;
+            font-size: 15px;
+            line-height: 34px;
+            float: left;
+            text-align: center;
+            cursor: pointer; }
+          .details .product-padding .product .pm .submit button:active {
+            background: #21B699; }
+          .details .product-padding .product .pm .submit .gwc {
+            width: 120px;
+            height: 34px;
+            border: 2px solid #31C4A8;
+            background: white;
+            cursor: pointer;
+            line-height: 34px;
+            float: left;
+            text-align: center;
+            margin-left: 10px; }
+            .details .product-padding .product .pm .submit .gwc img {
+              width: 18px;
+              height: 18px; }
+            .details .product-padding .product .pm .submit .gwc a {
+              color: #31C4A8;
+              font-size: 15px; }
+          .details .product-padding .product .pm .submit .gwc:hover {
+            border: 1px solid #31C4A8; }
+          .details .product-padding .product .pm .submit .num {
+            width: 50px;
             height: 30px;
             border: 1px solid #6A6A6A;
             float: left;
-            padding: 0 4px;
-            margin-left: 10px;
-            margin-top: 5px;
-            line-height: 30px;
-            cursor: pointer;
-            color: #4D4D4D; }
-          .details .product .pm .cs .rt li:hover {
-            border-top: 2px solid #6A6A6A; }
-          .details .product .pm .cs .rt li:active {
-            border: 2px solid #31C4A8; }
-      .details .product .pm .submit {
-        width: 90%;
-        height: 50px;
+            margin-left: 20px; }
+            .details .product-padding .product .pm .submit .num input {
+              width: 34px;
+              height: 28px;
+              border: none;
+              float: left;
+              text-align: center;
+              font-size: 15px; }
+            .details .product-padding .product .pm .submit .num li {
+              width: 14px;
+              height: 14px;
+              float: left;
+              background: #DEDEDE;
+              border-left: 1px solid #6A6A6A;
+              font-size: 12px;
+              color: #4D4D4D;
+              text-align: center;
+              cursor: pointer; }
+            .details .product-padding .product .pm .submit .num li:hover {
+              background: #F5F5F5; }
+      .details .product-padding .product .serve {
+        width: 190px;
+        height: 260px;
+        margin-left: 20px;
         float: left;
-        margin-top: 10px; }
-        .details .product .pm .submit button {
-          width: 120px;
-          height: 34px;
-          border: none;
-          border-radius: 3px;
-          background: #31C4A8;
-          color: white;
-          font-size: 15px;
-          line-height: 34px;
-          float: left;
+        border: 1px solid #4B985D;
+        padding: 8px; }
+        .details .product-padding .product .serve .title {
+          width: 100%;
+          height: 50px;
+          border-bottom: 1px dashed #ccc;
           text-align: center;
-          cursor: pointer; }
-        .details .product .pm .submit button:active {
-          background: #21B699; }
-        .details .product .pm .submit .gwc {
-          width: 120px;
-          height: 34px;
-          border: 2px solid #31C4A8;
-          border-radius: 3px;
-          background: white;
-          cursor: pointer;
-          line-height: 34px;
-          float: left;
-          text-align: center;
-          margin-left: 10px; }
-          .details .product .pm .submit .gwc img {
-            width: 18px;
-            height: 18px; }
-          .details .product .pm .submit .gwc a {
-            color: #31C4A8;
-            font-size: 15px; }
-        .details .product .pm .submit .gwc:hover {
-          border: 1px solid #31C4A8; }
-        .details .product .pm .submit .num {
-          width: 50px;
-          height: 30px;
-          border: 1px solid #6A6A6A;
-          float: left;
-          margin-left: 20px; }
-          .details .product .pm .submit .num input {
-            width: 34px;
+          line-height: 40px; }
+          .details .product-padding .product .serve .title a {
+            color: #2EABE1;
+            font-size: 18px; }
+        .details .product-padding .product .serve .zs {
+          width: 100%;
+          height: 100px;
+          border-bottom: 1px dashed #ccc; }
+          .details .product-padding .product .serve .zs .lf {
+            width: 45%;
+            height: 100%;
+            line-height: 100px;
+            font-size: 30px;
+            color: #4B985D;
+            text-align: center;
+            float: left; }
+          .details .product-padding .product .serve .zs .rt {
+            width: 55%;
+            height: 100%;
+            float: left; }
+            .details .product-padding .product .serve .zs .rt li {
+              width: 100%;
+              height: 25%;
+              float: left;
+              line-height: 30px;
+              font-size: 12px;
+              color: #6A6A6A;
+              text-align: center; }
+              .details .product-padding .product .serve .zs .rt li img {
+                width: 10px;
+                height: 12px; }
+            .details .product-padding .product .serve .zs .rt li:nth-child(1) {
+              margin-top: 10px; }
+        .details .product-padding .product .serve .lx {
+          width: 100%;
+          min-height: 80px;
+          margin-top: 15px; }
+          .details .product-padding .product .serve .lx li {
+            width: 45%;
             height: 28px;
-            border: none;
-            float: left;
-            text-align: center;
-            font-size: 15px; }
-          .details .product .pm .submit .num li {
-            width: 14px;
-            height: 14px;
-            float: left;
-            background: #DEDEDE;
-            border-left: 1px solid #6A6A6A;
-            font-size: 12px;
-            color: #4D4D4D;
-            text-align: center;
-            cursor: pointer; }
-          .details .product .pm .submit .num li:hover {
-            background: #F5F5F5; }
-    .details .product .serve {
-      width: 190px;
-      height: 260px;
-      margin-left: 20px;
-      float: left;
-      border: 1px solid #4B985D;
-      padding: 8px; }
-      .details .product .serve .title {
-        width: 100%;
-        height: 50px;
-        border-bottom: 1px dashed #ccc;
-        text-align: center;
-        line-height: 40px; }
-        .details .product .serve .title a {
-          color: #2EABE1;
-          font-size: 18px; }
-      .details .product .serve .zs {
-        width: 100%;
-        height: 100px;
-        border-bottom: 1px dashed #ccc; }
-        .details .product .serve .zs .lf {
-          width: 45%;
-          height: 100%;
-          line-height: 100px;
-          font-size: 30px;
-          color: #4B985D;
-          text-align: center;
-          float: left; }
-        .details .product .serve .zs .rt {
-          width: 55%;
-          height: 100%;
-          float: left; }
-          .details .product .serve .zs .rt li {
-            width: 100%;
-            height: 25%;
             float: left;
             line-height: 30px;
             font-size: 12px;
             color: #6A6A6A;
-            text-align: center; }
-            .details .product .serve .zs .rt li img {
-              width: 10px;
-              height: 12px; }
-          .details .product .serve .zs .rt li:nth-child(1) {
-            margin-top: 10px; }
-      .details .product .serve .lx {
-        width: 100%;
-        min-height: 80px;
-        margin-top: 15px; }
-        .details .product .serve .lx li {
-          width: 45%;
-          height: 28px;
-          float: left;
-          line-height: 30px;
-          font-size: 12px;
-          color: #6A6A6A;
-          text-align: center;
-          border: 1px solid #ccc;
-          margin-top: 10px;
-          margin-left: 2px;
-          cursor: pointer; }
-          .details .product .serve .lx li a {
-            font-size: 12px;
-            color: #6A6A6A; }
-          .details .product .serve .lx li a:hover {
-            color: #31C4A8; }
-          .details .product .serve .lx li img {
-            width: 16px;
-            height: 14px;
-            position: relative;
-            top: -3px; }
-        .details .product .serve .lx li:nth-child(2n+2) {
-          margin-left: 10px; }
+            text-align: center;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            margin-left: 2px;
+            cursor: pointer; }
+            .details .product-padding .product .serve .lx li a {
+              font-size: 12px;
+              color: #6A6A6A; }
+            .details .product-padding .product .serve .lx li a:hover {
+              color: #31C4A8; }
+            .details .product-padding .product .serve .lx li img {
+              width: 16px;
+              height: 14px;
+              position: relative;
+              top: -3px; }
+          .details .product-padding .product .serve .lx li:nth-child(2n+2) {
+            margin-left: 10px; }
 
 .content {
   width: 1200px;
@@ -1365,7 +1363,6 @@ html, body {
       width: 100%;
       height: 245px;
       border: 1px solid #ccc;
-      border-radius: 10px;
       margin-bottom: 15px;
       text-align: center; }
       .content .left .ewm .title {
@@ -1373,8 +1370,6 @@ html, body {
         height: 40px;
         background: #EDEDED;
         font-size: 20px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
         color: #31C4A8;
         line-height: 40px;
         text-align: center; }
@@ -1394,7 +1389,6 @@ html, body {
       width: 100%;
       height: auto;
       border: 1px solid #ccc;
-      border-radius: 10px;
       margin-bottom: 30px;
       padding-bottom: 20px; }
       .content .left .tj-p .title {
@@ -1402,8 +1396,6 @@ html, body {
         height: 40px;
         background: #EDEDED;
         font-size: 20px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
         color: #31C4A8;
         line-height: 40px;
         text-align: center; }
@@ -1424,7 +1416,8 @@ html, body {
           width: 100%;
           height: 14%;
           margin-top: 10px;
-          overflow: hidden; }
+          overflow: hidden;
+          line-height: 18px; }
           .content .left .tj-p .product-list .p-desc a {
             font-size: 15px;
             color: #6A6A6A; }
@@ -1451,12 +1444,10 @@ html, body {
       .content .right .desc .d-title {
         width: 100%;
         height: 35px;
-        background: #EDEDED;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px; }
+        background: #EDEDED; }
         .content .right .desc .d-title .tt-t {
           width: 90px;
-          height: 104%;
+          height: 108%;
           border-top: 3px solid #31C4A8;
           background: white;
           position: relative;

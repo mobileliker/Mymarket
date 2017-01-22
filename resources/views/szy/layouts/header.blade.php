@@ -45,7 +45,7 @@
 	<div class="header-c">
 		<div class="header-nav">
 			<div class="header-nav-b">
-				<div class="header-nav-b1"><a href="{{url('')}}"><img src="/img/szy/inc/logo.png"></a></div>
+				<div class="header-nav-b1"><a href="{{url('')}}"><img src="{{App\Company::find(1)->logo}}"></a></div>
 			</div>
 			<div  class="header-nav-right">
 				<div class="header-nav-right-l">
@@ -67,10 +67,16 @@
 
 					<div class="header-nav-right-l-div">
 						<b>热门搜索 :</b>
-					@foreach ($labels as $label)
+						<a href="products?search=苹果">苹果</a> 
+						<span>|</span>
+						<a href="products?search=火龙果">火龙果</a> 
+						<span>|</span>
+						<a href="products?search=西瓜">西瓜</a> 
+
+					{{-- @foreach ($labels as $label)
 						<a href="products?search={{$label}}">{{$label}}</a> 
 						<span>|</span>
-					@endforeach 
+					@endforeach --}}
 					</div>
 				</div>
 			</div>

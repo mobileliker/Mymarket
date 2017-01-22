@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .bg-green {
   background: #31C4A8; }
 
@@ -116,7 +115,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -342,7 +341,7 @@ html, body {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -788,7 +787,7 @@ html, body {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
