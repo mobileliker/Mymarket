@@ -16,12 +16,13 @@
 				@endif
 			</div>
 			<div class="header-nav2">
-				<li><a href="user/profile">账号设置</a></li>
+				<li><a href="about">帮助中心</a></li>
+				<li><a href="user/profile">账号设置</a>|</li>
 				<li><a href="user/address">收货地址</a>|</li>
 				<li><a href="wishes">我的关注</a>|</li>
 				<li><a href="user/orders">我的订单</a>|</li>
 				<li><a href="user/cart">购物车</a>|</li>
-				<li><a href="">我的消息</a>|</li>
+				{{--<li><a href="">我的消息</a>|</li>--}}
 				@if (auth()->check())
 					@if(auth::user()->role == 'admin' || auth::user()->role == 'business')
 					<li><a href="orders/usersOrders">我的销售</a>|</li>

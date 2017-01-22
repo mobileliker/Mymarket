@@ -86,6 +86,7 @@ class ProductsController extends Controller
         if (empty($search)) {
             $sells = DB::table('products')
                 ->join('order_details','products.id','=','order_details.product_id')
+                ->where('products.status','=',1)
                 ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
                 ->groupBy('order_details.product_id')
                 ->orderBy('num','desc')
@@ -94,6 +95,7 @@ class ProductsController extends Controller
             $classFirst = Product::where('name', 'like', '%'.$search.'%')->select('category_id')->first();
             if(!empty($classFirst)){
             $sells = DB::table('products')->where('products.category_id','=',$classFirst->category_id)
+                ->where('products.status','=',1)
                 ->join('order_details','products.id','=','order_details.product_id')
                 ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
                 ->groupBy('order_details.product_id')
@@ -105,6 +107,7 @@ class ProductsController extends Controller
         //你是不是想找的商品
         if (empty($search)) {
             $xzs = DB::table('products')
+                ->where('products.status','=',1)
                 ->join('order_details','products.id','=','order_details.product_id')
                 ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
                 ->groupBy('order_details.product_id')
@@ -113,6 +116,7 @@ class ProductsController extends Controller
         }else{
 
             $xzs = DB::table('products')
+                ->where('products.status','=',1)
                 ->join('categories','products.category_id','=','categories.id')
                 ->join('order_details','products.id','=','order_details.product_id')
                 ->where('products.name', 'like', '%'.$search.'%')
@@ -318,11 +322,11 @@ class ProductsController extends Controller
         $productsDetails = new featuresHelper();
 
         //查询从属商品后10条 日期排序
-        $cs = Product::whereColumn('id', '=','products_group')
+        $cs = Product::whereColumn('id','products_group')
         ->where('user_id','=',auth()->user()->id)
         ->orderBy('created_at','desc')
         ->select('id','name','products_group')
-        ->take(10)
+        ->limit(10)
         ->get(); 
         
         return view('products.form',compact('product', 'panel', 'features', 'categories', 'cs',

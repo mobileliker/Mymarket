@@ -56,7 +56,8 @@ class AboutController extends Controller
 
     public function about($tab = 'about')
     {
-        return view('about.index', compact('tab'));
+        // return view('about.index', compact('tab'));
+        return view('szy.about', compact('tab'));
     }
 
     public function refunds()

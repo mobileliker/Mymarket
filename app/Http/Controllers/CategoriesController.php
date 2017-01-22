@@ -154,6 +154,7 @@ class CategoriesController extends Controller
         $category->color = $data['color'];
         $category->image_w= $this->uploadPic($request,'image-w');
         $category->image_h= $this->uploadPic($request,'image-h');
+        $category->image_nav= $this->uploadPic($request,'image-nav');
         $category->save();
         \Session::flash('message', trans('categories.insert_message'));
 
@@ -241,8 +242,16 @@ class CategoriesController extends Controller
         $category->english = $data['english'];
         $category->color = $data['color'];
 
+        $image_nav = $this->uploadPic($request,'image-nav');
         $image_w = $this->uploadPic($request,'image-w');
         $image_h = $this->uploadPic($request,'image-h');
+
+        if ($image_nav!='false') {
+            if (file_exists($category->image_nav)) {
+                unlink($category->image_nav);
+            }
+            $category->image_nav = $image_nav;
+        }
 
         if ($image_w!='false') {
             if (file_exists($category->image_w)) {
@@ -250,13 +259,16 @@ class CategoriesController extends Controller
             }
             $category->image_w = $image_w;
         }
+
         if ($image_h!='false') {
             if (file_exists($category->image_h)) {
                 unlink($category->image_h);
             }
             $category->image_h = $image_h;
         }
+
         $category->save();
+
         \Session::flash('message', trans('categories.insert_message'));
         return redirect()->route('wpanel.category.show', [$id]);
     }

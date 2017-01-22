@@ -608,13 +608,16 @@ class OrdersController extends Controller
             $cart = Order::ofType('cart')->where('user_id', $user->id)->with('details')->first();
 
             $cartProducts = array();
-            $count = count($cart['details']);
-            foreach ($cart['details'] as $key=>$value) {
-                $business = Business::where('user_id',$value['product']['user_id'])->select('user_id','business_name','logo as business_logo')->first()->toArray();
-                $cartProducts[$business['business_name']]['product'][$key] = $value['product'];
-                $cartProducts[$business['business_name']]['product'][$key]['detail_id'] = $value['id'];
-                $cartProducts[$business['business_name']]['product'][$key]['quantity'] = $value['quantity'];
-                $cartProducts[$business['business_name']]['business'] = $business;
+            if (!empty($cart)) {
+                
+                $count = count($cart['details']);
+                foreach ($cart['details'] as $key=>$value) {
+                    $business = Business::where('user_id',$value['product']['user_id'])->select('user_id','business_name','logo as business_logo')->first()->toArray();
+                    $cartProducts[$business['business_name']]['product'][$key] = $value['product'];
+                    $cartProducts[$business['business_name']]['product'][$key]['detail_id'] = $value['id'];
+                    $cartProducts[$business['business_name']]['product'][$key]['quantity'] = $value['quantity'];
+                    $cartProducts[$business['business_name']]['business'] = $business;
+                }
             }
 
             /**
@@ -1090,7 +1093,7 @@ class OrdersController extends Controller
         $sellerCheck = Order::where('type','order')->where('id',$firstOrder->order_id)->where('status','open')->first();
 
         //判断是否为第一次提交
-        if (!empty($sellerCheck)) {
+        if (empty($sellerCheck)) {
             //操作订单 
             foreach ($products as $sellerid => $product) {
                $orders = new Order;

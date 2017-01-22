@@ -18,7 +18,8 @@
 				@endif
 			</div>
 			<div class="header-nav2">
-				<li><a href="user/profile">账号设置</a></li>
+				<li><a href="about">帮助中心</a></li>
+				<li><a href="user/profile">账号设置</a>|</li>
 				<li><a href="user/address">收货地址</a>|</li>
 				<li><a href="wishes">我的关注</a>|</li>
 				<li><a href="user/orders">我的订单</a>|</li>

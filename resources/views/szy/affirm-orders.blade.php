@@ -34,7 +34,7 @@
             </div>
             <div class="control">
                 <a href="javascript:void(0);" id="showAddress" state=0>全部地址显示</a>
-                <a href="user/address">管理收货地址</a>
+                <a href="user/address"  target="_black">管理收货地址</a>
             </div>
             <div class="pay_way">
                 <h1>支付方式</h1>

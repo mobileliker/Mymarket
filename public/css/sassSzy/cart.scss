@@ -27,7 +27,7 @@ body{
 			.cart_table_th{
 				width:1190px;height:38px;background:#e7f7f4;box-shadow: 10px 0px 5px #e3f6f2;
 				.wp{
-					.th_chk,.th_item,.th_info,.th_price,.th_amount,.th_sum,.th_operate{float:left;line-height:36px;color:#777d7d}
+					.th_chk,.th_item,.th_info,.th_price,.th_amount,.th_sum,.th_operate{float:left;line-height:36px;color:#777d7d;}
 					.th_chk{
 						width:109px;height:36px;color:#000;
 						.select{
@@ -72,25 +72,28 @@ body{
 									img{width:70px;height:70px;margin-left:5px;}
 								}
 								.info_cell{
-									width:239px;height:79px;
+									width:239px;height:79px;position: relative;top:20px;
 									a{display:inline-block;line-height:23px;color:#252e2d}
 									span{color:#e2b067}
 								}
 							}
 						}
 						.th_info{
-							width:189px;
+							width:189px;height:36px;
 							p{line-height:22px;color:#a9adae}
 						}
 						.th_price{
-							width:162px;
+							width:162px;height:36px;
+							.td_inner{
+								width:68px;height:22px;position: relative;top:15px;
+							}
 							p{line-height:22px;color:#252e2d}
 							p:first-child{color:#a9adae;text-decoration: line-through;}
 						}
 						.th_amount{
 							width:186px;height:22px;
 							.td_inner{
-								width:68px;height:22px;position: relative;
+								width:68px;height:22px;position: relative;top:30px;
 								.quantity_left_minus,.amount,.quantity_left_add{float:left;}
 								.quantity_left_minus,.quantity_left_add{display:inline-block;width:11px;height:11px;border:1px solid #b4b4b4;line-height:11px;text-align:center;cursor: pointer;}
 								.amount{width:35px;height:19px;position: absolute;left:15px;top:0;text-align:center;outline:none}
@@ -100,9 +103,15 @@ body{
 						}
 						.th_sum{
 							width:156px;font-size:15px;color:#f38286;
+							.td_inner{
+								width:68px;height:22px;position: relative;top:30px;
+							}
 						}
 						.th_operate{
-							width:92px;
+							width:92px;height:36px;
+							.td_inner{
+								width:68px;height:22px;position: relative;top:10px;
+							}
 							p{
 								height:25px;margin-bottom:8px;position: relative;cursor:pointer;
 								img{display:inline-block;width:16px;height:16px;position: absolute;top:0;left:0;

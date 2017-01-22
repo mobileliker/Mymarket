@@ -70,10 +70,10 @@ $priceBg:url(../../img/szy/product-new.png) no-repeat;
 	height:262px;width:$widthMin;margin:10 auto;padding-bottom:40px;
 	.title{
 		width:100%;height:30px;
-		.left{width:50%;height:20px;border-left:5px solid $defualtColor;float:left;color:$color2;font-size:$fontSizeMax;margin-left:5px;}
+		.left{width:50%;height:20px;border-left:5px solid #FFB24A;float:left;color:$color2;font-size:$fontSizeMax;margin-left:5px;}
 		.right{width:40%;height:20px;float:right;color:$color2;font-size:$fontSizeMax;margin-right:7px;
 			.wz{font-size:$fontSize;color:$color3;float:right;width:50px;height:20px;cursor:pointer;}
-			.jt{width:16px;height:16px;background:$defualtColor;float:right;color:white;line-height:16px;text-align:center;cursor:pointer;}
+			.jt{width:16px;height:16px;background:#FFB24A;float:right;color:white;line-height:16px;text-align:center;cursor:pointer;}
 		}
 	}
 	.picScroll-left-two{ width:1212px;  overflow:hidden; position:relative;}
@@ -122,9 +122,9 @@ $priceBg:url(../../img/szy/product-new.png) no-repeat;
 	.title{
 		width:100%;height:30px;margin-top:10px;
 		.left{width:50%;height:70%;color:$color2;font-size:$fontSizeMax;font-weight:bold;line-height:20px;
-			border-left:5px solid $defualtColor;float:left;margin-top:10px;}
+			float:left;margin-top:10px;}
 		.right{width:40%;height:60%;color:$color1;font-size:$fontSizeMax;font-weight:bold;line-height:35px;float:right;margin-top:15px;
-			li{float:right;min-width:40px;padding:0 8px;height:70%;line-height:6px;text-align:center;
+			li{float:right;min-width:40px;padding:0 8 0 0;height:70%;line-height:6px;text-align:center;margin-right:8px;
 				a{font-size:$fontSizeMin;}
 			}
 			li:nth-child(100n+1){border-right:none;padding-right:0px;padding-left:0px;text-align:right;}

@@ -120,6 +120,8 @@
                     </div>
                     @endforeach
                     @else
+                    <br/>
+                    <br/>
                         <h1>你还没有加入商品到购物车！</h1>
                     @endif
                 </div>

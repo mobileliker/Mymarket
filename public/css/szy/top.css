@@ -59,6 +59,21 @@
 .bd-orange {
   border-right: 2px solid #FFB24A; }
 
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
+
 .p-bg-green {
   background: #DEF9F4;
   color: #31C4A8; }

@@ -1,21 +1,21 @@
 /*
 Error: Undefined variable: "$defualtColor".
-        on line 227 of sassSzy/header.scss
+        on line 228 of sassSzy/header.scss
 
-222:         float: left;
-223:       }
-224:       .c-purple{background:#B59CC4;}
-225:       .c-red{background:#F77871}
-226:       .c-blue{background:#4DC1E8;}
-227:       .c-green{background:$defualtColor;}
-228:       .c-orange{background:#FFB24A;}
-229:       .img{height:85%;width:30%;float: left;
-230:         img{width:20px;height:20px;margin-left:20px;margin-top:15px;}
-231:       }
-232:       .right{height:100%;width:55%;float: left;text-align:left;
+223:         float: left;
+224:       }
+225:       .c-purple{background:#B59CC4;}
+226:       .c-red{background:#F77871}
+227:       .c-blue{background:#4DC1E8;}
+228:       .c-green{background:$defualtColor;}
+229:       .c-orange{background:#FFB24A;}
+230:       .img{height:85%;width:30%;float: left;
+231:         img{width:20px;height:20px;margin-left:20px;margin-top:15px;}
+232:       }
+233:       .right{height:100%;width:55%;float: left;text-align:left;
 
 Backtrace:
-sassSzy/header.scss:227
+sassSzy/header.scss:228
 D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/script/tree/variable.rb:49:in `_perform'
 D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/script/tree/node.rb:58:in `perform'
 D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:397:in `visit_prop'
@@ -77,17 +77,14 @@ D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:492:i
 D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
 D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:209:in `each'
 D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:294:in `watch'
-D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/plugin.rb:109:in `method_missing'
-D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/exec/sass_scss.rb:360:in `watch_or_update'
-D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/exec/sass_scss.rb:51:in `process_result'
-D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/exec/base.rb:52:in `parse'
-D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/exec/base.rb:19:in `parse!'
-D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/bin/sass:13:in `<top (required)>'
-D:/Ruby23/bin/sass:22:in `load'
-D:/Ruby23/bin/sass:22:in `<main>'
+D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:473:in `on_file_changed'
+D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/lib/sass/plugin/compiler.rb:331:in `block in watch'
+D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/vendor/listen/lib/listen/listener.rb:252:in `on_change'
+D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
+D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/vendor/listen/lib/listen/adapters/polling.rb:48:in `poll_changed_directories'
+D:/Ruby23/lib/ruby/gems/2.3.0/gems/sass-3.4.23/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
 */
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$defualtColor\".\A         on line 227 of sassSzy/header.scss\A \A 222:         float: left;\A 223:       }\A 224:       .c-purple{background:#B59CC4;}\A 225:       .c-red{background:#F77871}\A 226:       .c-blue{background:#4DC1E8;}\A 227:       .c-green{background:$defualtColor;}\A 228:       .c-orange{background:#FFB24A;}\A 229:       .img{height:85%;width:30%;float: left;\A 230:         img{width:20px;height:20px;margin-left:20px;margin-top:15px;}\A 231:       }\A 232:       .right{height:100%;width:55%;float: left;text-align:left;"; }
+  content: "Error: Undefined variable: \"$defualtColor\".\A         on line 228 of sassSzy/header.scss\A \A 223:         float: left;\A 224:       }\A 225:       .c-purple{background:#B59CC4;}\A 226:       .c-red{background:#F77871}\A 227:       .c-blue{background:#4DC1E8;}\A 228:       .c-green{background:$defualtColor;}\A 229:       .c-orange{background:#FFB24A;}\A 230:       .img{height:85%;width:30%;float: left;\A 231:         img{width:20px;height:20px;margin-left:20px;margin-top:15px;}\A 232:       }\A 233:       .right{height:100%;width:55%;float: left;text-align:left;"; }

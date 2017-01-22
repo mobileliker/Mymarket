@@ -99,7 +99,7 @@
         <div class="gps">
             <div class="title">导航</div>
             @foreach ($lcs as $n)
-            <li><img src="{{$n[0]->image}}">{{$n[0]->name}}</li>
+            <li color="{{$n[0]->color}}"><img src="{{$n[0]->image_nav}}">{{$n[0]->name}}</li>
             @endforeach
             <li id="webTop"><img src="/img/szy/inc/arrows-top.png">顶部</li>
         </div>
@@ -114,7 +114,7 @@
             <img src="{{$lc[0]->image_w}}">
         </div>
         <div class="title">
-            <div class="left">
+            <div class="left bd5-left-{{$lc[0]->color}}">
                 &nbsp;{{$lc[0]->name}} {{$lc[0]->english}}
             </div>
             <div class="right">
@@ -189,7 +189,8 @@
                 var cTop = $(".product-class .hf").eq(i).offset().top;
                 if (cTop-pm-webTop<=-300) {
                     $(".gps li").css('background','#999999');
-                    $(".gps li").eq(i).css('background','#31C4A8');
+                    var color = $(".product-class .hf").eq(i).next('.title').children('.left').css('border-left-color');
+                    $(".gps li").eq(i).css('background',color);
                 };
             }
         }

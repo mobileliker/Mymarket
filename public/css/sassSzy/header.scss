@@ -50,13 +50,14 @@ $navBgImg:url('/img/szy/inc/nav-bg.png');//导航主背景图
   float:right;
 }
 .header-nav2 li{
-  width:70px;
+  max-width:70px;
   height:100%;
   float:right;
   line-height: 35px;
   list-style-type: none;
   font-size: 14px;
   color:white;
+  margin-left:4px;
 }
 .header-nav2 li a{
   font-size: 14px;

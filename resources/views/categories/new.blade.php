@@ -28,10 +28,15 @@
 				</div>
 
 				<div class="row form-group">
-					<label class="col-md-4 control-label">分类图标(前端):</label>
+					<label class="col-md-4 control-label">分类图标(级联):</label>
 					<div class="col-md-2">
 			      		<input class='upload-pic' type="file" id="pic_logo" name="image" style="display:none">
 						<img src="[[image || '/img/no-image.jpg']]" alt="点击" class="thumbnail" onclick="$('input[id=pic_logo]').click();" width="40px" height="40px" style="cursor:pointer">
+					</div>
+					<label class="col-md-2 control-label">分类图标(导航):</label>
+					<div class="col-md-2">
+			      		<input class='upload-pic' type="file" id="pic_nav" name="image-nav" style="display:none">
+						<img src="[[image || '/img/no-image.jpg']]" alt="点击" class="thumbnail" onclick="$('input[id=pic_nav]').click();" width="40px" height="40px" style="cursor:pointer">
 					</div>
 				</div>
 

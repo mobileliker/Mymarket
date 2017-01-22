@@ -59,6 +59,21 @@
 .bd-orange {
   border-right: 2px solid #FFB24A; }
 
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
+
 .p-bg-green {
   background: #DEF9F4;
   color: #31C4A8; }
@@ -257,13 +272,14 @@ html, body {
   float: right; }
 
 .header-nav2 li {
-  width: 70px;
+  max-width: 70px;
   height: 100%;
   float: right;
   line-height: 35px;
   list-style-type: none;
   font-size: 14px;
-  color: white; }
+  color: white;
+  margin-left: 4px; }
 
 .header-nav2 li a {
   font-size: 14px;
@@ -570,6 +586,21 @@ html, body {
 
 .bd-orange {
   border-right: 2px solid #FFB24A; }
+
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
 
 .p-bg-green {
   background: #DEF9F4;
@@ -1006,7 +1037,7 @@ html, body {
     .sell .title .left {
       width: 50%;
       height: 20px;
-      border-left: 5px solid #31C4A8;
+      border-left: 5px solid #FFB24A;
       float: left;
       color: #4D4D4D;
       font-size: 20px;
@@ -1028,7 +1059,7 @@ html, body {
       .sell .title .right .jt {
         width: 16px;
         height: 16px;
-        background: #31C4A8;
+        background: #FFB24A;
         float: right;
         color: white;
         line-height: 16px;
@@ -1171,7 +1202,6 @@ html, body {
       font-size: 20px;
       font-weight: bold;
       line-height: 20px;
-      border-left: 5px solid #31C4A8;
       float: left;
       margin-top: 10px; }
     .product-class .title .right {
@@ -1186,10 +1216,11 @@ html, body {
       .product-class .title .right li {
         float: right;
         min-width: 40px;
-        padding: 0 8px;
+        padding: 0 8 0 0;
         height: 70%;
         line-height: 6px;
-        text-align: center; }
+        text-align: center;
+        margin-right: 8px; }
         .product-class .title .right li a {
           font-size: 12px; }
       .product-class .title .right li:nth-child(100n+1) {

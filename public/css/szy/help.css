@@ -489,66 +489,6 @@ html, body {
       font-size: 12px;
       color: #A5A5A5; }
 
-body {
-  width: 100%;
-  min-width: 1200px;
-  font-size: 12px; }
-
-.wrap header {
-  width: 100%;
-  height: 101px;
-  background: #fff;
-  border-bottom: 1px solid #cecece; }
-  .wrap header .left, .wrap header .right {
-    float: left; }
-  .wrap header .left {
-    margin-top: 10px; }
-  .wrap header .right {
-    width: 486px;
-    float: right;
-    margin-top: 28px; }
-    .wrap header .right ul li {
-      float: left; }
-      .wrap header .right ul li .step_no {
-        position: relative;
-        width: 162px;
-        height: 5px; }
-      .wrap header .right ul li .step_no span {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        left: 71px;
-        top: -10px;
-        border-radius: 50%;
-        line-height: 20px;
-        text-align: center;
-        color: #fff; }
-      .wrap header .right ul li .step_name {
-        width: 162px;
-        height: 22px;
-        text-align: center;
-        line-height: 11px;
-        margin-top: 12px; }
-
-.thin-color {
-  background: #95E0D1; }
-
-.deep-color {
-  background: #2ec3a6; }
-
-.default-color {
-  background: #cacaca; }
-
-.f-thin-color {
-  color: #95E0D1; }
-
-.f-deep-color {
-  color: #2ec3a6; }
-
-.f-default-color {
-  color: #cacaca; }
-
 .bg-green {
   background: #31C4A8; }
 
@@ -870,194 +810,148 @@ html, body {
         .footer .footer-center .c-footer .f-r li:nth-child(5n+1) {
           margin-top: 0px; }
 
-.wrap {
-  width: 1200px;
-  margin: 0 auto; }
-  .wrap .content {
-    width: 100%; }
-    .wrap .content .success-tips {
-      width: 100%;
-      height: 46px;
-      line-height: 48px;
-      font-size: 15px;
-      margin-top: 16px;
-      margin-bottom: 16px;
-      color: #6f6f6f; }
-      .wrap .content .success-tips .top {
-        width: 100%;
-        height: 30px;
-        line-height: 15px; }
-        .wrap .content .success-tips .top .left {
-          float: left;
-          width: 1056px;
-          height: 25px; }
-        .wrap .content .success-tips .top .right {
-          float: right;
-          width: 144px;
-          height: 30px; }
-          .wrap .content .success-tips .top .right span {
-            color: #fa676e;
-            font-weight: bold; }
-      .wrap .content .success-tips .btm {
-        width: 100%;
-        height: 14px;
-        font-size: 12px;
-        line-height: 14px;
-        color: #95999a; }
-        .wrap .content .success-tips .btm .left {
-          float: left;
-          width: 1104px; }
-          .wrap .content .success-tips .btm .left em {
-            color: #fa676e; }
-        .wrap .content .success-tips .btm .right {
-          float: right;
-          width: 96px;
-          color: #1dcd9f;
-          position: relative;
-          cursor: pointer; }
-          .wrap .content .success-tips .btm .right em {
-            display: inline-block;
-            width: 0;
-            height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 8px solid #1dcd9f;
-            position: absolute;
-            top: 5px;
-            left: 52px; }
-    .wrap .content .pay-main {
-      width: 1185px;
-      box-shadow: 0 0 4px #ebf6f2;
-      background: #e7f7f4;
-      padding-top: 25px;
-      padding-left: 15px; }
-      .wrap .content .pay-main .pay-way {
-        width: 1165px;
-        height: 83px;
-        border: 1px solid #b49dc1;
-        border-radius: 4px;
-        line-height: 83px;
-        margin-bottom: 23px; }
-        .wrap .content .pay-main .pay-way .pay-left {
-          float: left;
-          width: 1019px;
-          margin-left: 26px; }
-          .wrap .content .pay-main .pay-way .pay-left .chk, .wrap .content .pay-main .pay-way .pay-left .gs {
-            vertical-align: middle;
-            margin-top: -6px; }
-          .wrap .content .pay-main .pay-way .pay-left .chk {
-            margin-right: 15px; }
-          .wrap .content .pay-main .pay-way .pay-left .card {
-            font-size: 15px;
-            color: #121a1c;
-            border-bottom: 1px solid #ad5f4b;
-            margin-right: 37px; }
-          .wrap .content .pay-main .pay-way .pay-left .shortcut {
-            display: inline-block;
-            width: 34px;
-            height: 18px;
-            background: #b49dc1;
-            color: #fff;
-            line-height: 18px;
-            text-align: center;
-            margin-right: 43px; }
-          .wrap .content .pay-main .pay-way .pay-left em {
-            color: #838383; }
-        .wrap .content .pay-main .pay-way .pay-right em {
-          color: #777777; }
-        .wrap .content .pay-main .pay-way .pay-right span {
-          color: #fa676e;
-          font-weight: bold; }
-      .wrap .content .pay-main .other-way {
-        clear: both;
-        margin-bottom: 25px; }
-        .wrap .content .pay-main .other-way a {
-          display: inline-block;
-          height: 34px;
-          background: #fff;
-          color: #b49dc1;
-          margin-right: 16px;
-          line-height: 34px;
-          text-align: center;
-          font-size: 16px;
-          padding-left: 19px;
-          padding-right: 19px; }
-        .wrap .content .pay-main .other-way a:first-child {
-          border: 1px solid #b49dc1; }
-        .wrap .content .pay-main .other-way a:last-child {
-          border: 1px dashed #b49dc1; }
-      .wrap .content .pay-main .psd-inner {
-        height: 115px; }
-        .wrap .content .pay-main .psd-inner .safe-tip {
-          height: 39px;
-          color: #030d0c;
-          position: relative; }
-          .wrap .content .pay-main .psd-inner .safe-tip img {
-            position: absolute;
-            top: 0px;
-            left: 0px; }
-          .wrap .content .pay-main .psd-inner .safe-tip em {
-            display: inline-block;
-            height: 16px;
-            line-height: 16px;
-            position: absolute;
-            top: 0px;
-            left: 19px; }
-        .wrap .content .pay-main .psd-inner .psd-title {
-          height: 23px; }
-        .wrap .content .pay-main .psd-inner .psd {
-          height: 35px; }
-          .wrap .content .pay-main .psd-inner .psd .box, .wrap .content .pay-main .psd-inner .psd .forget {
-            float: left; }
-          .wrap .content .pay-main .psd-inner .psd .box {
-            width: 190px;
-            height: 30px;
-            border: 1px solid #ccc;
-            line-height: 30px;
-            margin-right: 11px; }
-            .wrap .content .pay-main .psd-inner .psd .box .pawDiv {
-              display: inline-block;
-              line-height: 30px;
-              width: 31px;
-              height: 31px;
-              margin-top: -2px;
-              float: left; }
-              .wrap .content .pay-main .psd-inner .psd .box .pawDiv .bod {
-                width: 30px;
-                height: 20px;
-                border-right: 1px solid #cccccc;
-                margin-top: 6px; }
-                .wrap .content .pay-main .psd-inner .psd .box .pawDiv .bod input.paw {
-                  width: 28px;
-                  height: 20px;
-                  line-height: 20px;
-                  border: none;
-                  text-align: center;
-                  background: #e7f7f4; }
-                .wrap .content .pay-main .psd-inner .psd .box .pawDiv .bod input.paw:focus {
-                  outline: 0; }
-            .wrap .content .pay-main .psd-inner .psd .box .pawDiv:nth-child(6) .bod {
-              border-right: none; }
-          .wrap .content .pay-main .psd-inner .psd .errorPoint {
-            color: red;
-            display: none;
-            clear: both; }
-          .wrap .content .pay-main .psd-inner .psd .forget {
-            width: 100px; }
-            .wrap .content .pay-main .psd-inner .psd .forget a {
-              font-size: 13px;
-              color: #17adec;
-              line-height: 35px; }
-      .wrap .content .pay-main .sure-pay {
-        margin-top: 12px; }
-        .wrap .content .pay-main .sure-pay a {
-          display: inline-block;
-          width: 168px;
-          height: 38px;
-          line-height: 38px;
-          text-align: center;
-          color: #fff;
-          font-size: 19px;
-          background: #30c3a7; }
+body {
+  width: 100%;
+  min-width: 1200px;
+  font-size: 12px; }
 
-/*# sourceMappingURL=pay.css.map */
+.shortcut {
+  width: 100%;
+  height: 36px; }
+
+header {
+  width: 100%;
+  height: 83px;
+  background: #3eceb3; }
+  header .header-main {
+    width: 1200px;
+    height: 83px;
+    margin: 0 auto; }
+    header .header-main .logo {
+      width: 742px;
+      height: 83px; }
+      header .header-main .logo img {
+        vertical-align: middle;
+        margin-top: -14px; }
+      header .header-main .logo b {
+        height: 83px;
+        line-height: 83px;
+        font-size: 23px;
+        color: #fff; }
+    header .header-main .header-nav {
+      width: 458px;
+      margin-top: 16px; }
+      header .header-main .header-nav li {
+        float: left;
+        height: 47px;
+        text-align: center;
+        line-height: 47px;
+        margin-right: 15px; }
+        header .header-main .header-nav li a {
+          padding-left: 11px;
+          padding-right: 11px;
+          color: #fff;
+          display: inline-block;
+          font-size: 15px;
+          font-weight: bold; }
+        header .header-main .header-nav li a:hover {
+          background: #fff;
+          color: #3eceb3; }
+      header .header-main .header-nav li:nth-child(2) {
+        background: #fff; }
+        header .header-main .header-nav li:nth-child(2) a {
+          color: #3eceb3; }
+      header .header-main .header-nav li:last-child {
+        margin-right: 0; }
+    header .header-main .logo, header .header-main .header-nav {
+      float: left; }
+
+.help-main {
+  width: 1200px;
+  min-height: 400px;
+  margin: 0 auto;
+  margin-top: 20px; }
+  .help-main .subside-box, .help-main .content {
+    float: left; }
+  .help-main .subside-box {
+    width: 210px;
+    margin-right: 10px;
+    color: #424242; }
+    .help-main .subside-box h3, .help-main .subside-box dt {
+      height: 40px;
+      line-height: 40px;
+      font-size: 15px; }
+    .help-main .subside-box h3 {
+      color: #fff;
+      background: #3eceb3;
+      text-align: center; }
+    .help-main .subside-box dl dt {
+      background: #f5f5f5;
+      text-indent: 58px;
+      position: relative;
+      border-bottom: 1px solid #fff;
+      cursor: pointer; }
+      .help-main .subside-box dl dt .hide-arrow {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid #999999;
+        position: absolute;
+        top: 16px;
+        left: 178px; }
+      .help-main .subside-box dl dt .active {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 6px solid #999999;
+        position: absolute;
+        top: 16px;
+        left: 178px; }
+    .help-main .subside-box dl dd {
+      display: none; }
+      .help-main .subside-box dl dd ul li {
+        width: 210px;
+        height: 31px;
+        text-indent: 58px;
+        line-height: 31px;
+        border-bottom: 1px solid #f5f5f5;
+        cursor: pointer; }
+        .help-main .subside-box dl dd ul li div {
+          display: none; }
+        .help-main .subside-box dl dd ul li a {
+          color: #424242; }
+        .help-main .subside-box dl dd ul li a:hover {
+          font-weight: bold;
+          text-decoration: underline;
+          color: #3eceb3; }
+      .help-main .subside-box dl dd ul li:hover {
+        background: #E3FFF5; }
+  .help-main .content {
+    width: 980px;
+    background: #e7f7f6; }
+    .help-main .content .breadcrumb {
+      width: 100%;
+      height: 40px;
+      background: #F5F5F5;
+      line-height: 40px;
+      font-size: 15px;
+      color: #424242;
+      text-indent: 20px; }
+    .help-main .content .tabs {
+      width: 100%; }
+      .help-main .content .tabs .tabcons {
+        width: 900px;
+        margin: 20px 20px;
+        border: 1px solid #eaeaea;
+        padding: 20px 20px;
+        background: #fff;
+        color: #424242; }
+
+.default-color {
+  background: #E3FFF5; }
+
+/*# sourceMappingURL=help.css.map */

@@ -10,6 +10,7 @@
 
 @section('content')
 
+@if(!empty($orderinfos))
     @foreach($orderinfos as $sellerid => $orderinfo)
     <div class="success-tips">
         <span>支付成功！订单号:</span>
@@ -61,6 +62,9 @@
         </div>
     </div>
     @endforeach
+@else
+    <span>订单提交错误！</span>
+@endif
 @stop {{-- end content --}}
 
 @section('scripts')
