@@ -97,7 +97,7 @@
 							<div class="f-h">></div>
 							<div class="x-class">@foreach ($nav[2] as $p){{$p->name}}&nbsp;@endforeach</div>
 							<div class="hide-class">
-								<div>
+								<div class="c-{{$nav[0]->color}}">
 									@foreach ($nav[2] as $pro)
 									<h5><a href="products?search={{$pro->name}}">{{$pro->name}}</a></h5>
 									@endforeach 

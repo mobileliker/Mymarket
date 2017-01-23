@@ -1,3 +1,4 @@
+@import "common";
 
 $widthMin: 1200px;//网站框架最小宽度
 $colorBg:#3ECEB5;//网站主色调
@@ -235,12 +236,12 @@ $navBgImg:url('/img/szy/inc/nav-bg.png');//导航主背景图
         .r-class{width:85%;height:50%;float:left;overflow:hidden;}
         .f-h{width:15%;height:50%;float:left;color:$color1;font-size:$fontSizeMax;font-weight:bold;}
         .x-class{width:100%;height:60%;float:left;color:$color1;font-size:$fontSizeMin;overflow:hidden;position:relative;top:-8px;}
-        .hide-class{width:400px;min-height:200px;position:relative;background:white;left:135px;display:none;z-index:1000;
-          border:1px solid $defualtColor;border-radius:5px;border-bottom:2px solid $defualtColor;text-align:left;padding:10px;
-          div{width:96%;height:90%;padding:2px;position:absolute;top:-5px;overflow:hidden;
+        .hide-class{width:400px;height:75px;position:relative;background:white;left:125px;display:none;z-index:1000;
+          text-align:left;padding:10px;
+          div{width:100%;height:100%;padding:2px;position:absolute;top:0px;overflow:hidden;line-height:23px;
             h5{float:left;margin-left:10px;}
-            a{color:$color1;font-size:$fontSize;}
-            a:hover{color:$defualtColor;}
+            a{color:white;font-size:$fontSize;}
+            a:hover{font-weight:bold;}
           }
         }
       }

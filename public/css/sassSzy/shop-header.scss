@@ -1,3 +1,4 @@
+@import "common";
 
 $CnAHoverDefualt: '.header-a-hover';//顶部a链接hover Class名称
 
@@ -36,6 +37,7 @@ $CnAHoverDefualt: '.header-a-hover';//顶部a链接hover Class名称
     color:#4B4B4B;
     font-size:$fontSizeMin; 
     line-height: 23px;
+    cursor:pointer;
     a{
       color:#4B4B4B;
       font-size:$fontSizeMin; 
@@ -47,6 +49,8 @@ $CnAHoverDefualt: '.header-a-hover';//顶部a链接hover Class名称
 }
 .header-nav-b2-span1{
   float: left;
+    overflow: hidden;
+    line-height: 20px;
 }
 .header-nav-b2-span2{
   float: right;
