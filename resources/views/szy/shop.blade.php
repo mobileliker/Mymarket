@@ -20,8 +20,12 @@
 				<li><b>产品供应量</b>: <em>{{$business->business_name}}</em></li>
 				<li><b>店铺访问量</b>: <em>{{$business->business_name}}</em></li>
 			</div>
-			<li class="info-li"><img src="/img/szy/inc/attention.png"><b> 关注店铺</b></li>
-			<li class="info-li"><img src="/img/szy/inc/consult.png"><b> 咨询客服</b></li>
+
+			<li class="info-li">
+				<img src="/img/szy/inc/attention.png">
+				<span> 关注商铺</span>
+			</li>
+			<li class="info-li" ><img src="/img/szy/inc/consult.png"><b> 咨询客服</b></li>
 		</div>--}}
 		<div class="l-info">
 			<div class="info-top"></div>

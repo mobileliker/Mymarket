@@ -9,3 +9,12 @@
 	</div>
 </div>
 
+@section('scripts')
+	@parent
+	<script type="text/javascript">
+		//网站 商品搜索跳转
+		function search(){
+			window.location.href="products?search="+$("#text_search").val(); 
+		}
+	</script>
+@show

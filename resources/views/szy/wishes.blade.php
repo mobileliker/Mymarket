@@ -122,11 +122,6 @@
 	@parent
 	<script type="text/javascript">
 		jQuery(".slideBox").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true});
-
-		//网站 商品搜索跳转
-		function search(){
-			window.location.href="products?search="+$("#text_search").val(); 
-		}
 	</script>
 @show
 
