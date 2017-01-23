@@ -116,7 +116,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -293,11 +293,11 @@ html, body {
 .header-nav-b1 {
   height: 80%;
   width: 100%;
-  margin-top: 10%; }
+  padding-top: 40px; }
 
 .header-nav-b1 img {
-  height: 60%;
-  width: 100%; }
+  height: 62px;
+  width: 200px; }
 
 .header-nav-b2 {
   height: 20%;
@@ -644,7 +644,7 @@ html, body {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -1010,10 +1010,12 @@ html, body {
       bottom: 0px;
       background: #FFB24A;
       opacity: 0.9;
+      text-align: left;
+      padding: 0 8 0 8;
       line-height: 35px; }
       .price .picScroll-left .bd ul li .pic .desc a {
         color: white;
-        font-size: 15px;
+        font-size: 12px;
         font-weight: bold; }
   .price .picScroll-left .bd ul li .pic img {
     width: 220px;
@@ -1129,12 +1131,13 @@ html, body {
       bottom: 40px;
       background: #FFB24A;
       opacity: 0.9;
-      line-height: 35px;
+      padding: 0 8 0 8;
+      line-height: 22px;
       text-align: left;
       overflow: hidden; }
       .sell .picScroll-left-two .bd ul li .pic .desc a {
         color: white;
-        font-size: 15px;
+        font-size: 12px;
         font-weight: bold; }
   .sell .picScroll-left-two .bd ul li .pic img {
     width: 100%;
@@ -1271,6 +1274,7 @@ html, body {
             position: absolute;
             top: 158px;
             opacity: 0.9;
+            padding: 0 10 0 10;
             line-height: 20px;
             text-align: left;
             overflow: hidden; }

@@ -90,6 +90,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('App\Product');
     }
 
+    public function Company()
+    {
+        return $this->hasMany('App\Company');
+    }
+
     public function getHasPhoneAttribute()
     {
         return !is_null($this->mobile_phone) || !is_null($this->work_phone)
