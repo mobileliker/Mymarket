@@ -119,6 +119,7 @@ class Menu
                 ['route' => '/wpanel/categories', 'text' => trans('categories.product_category'), 'icon' => 'glyphicon glyphicon-tasks'],
                 ['route' => '/wpanel/features',   'text' => trans('features.product_features'),   'icon' => 'glyphicon glyphicon-th-list'],
                 ['route' => '/user/set', 'text' => '用户管理' ,'icon' => 'glyphicon glyphicon-cog'],
+                ['route' => '/wpanel/articles', 'text' => '内容管理' ,'icon' => 'glyphicon glyphicon-book'],
             ];
         }
 

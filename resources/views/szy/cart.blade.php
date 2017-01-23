@@ -54,12 +54,12 @@
                 </div>
                 <div class="orderList">
                     @if(!empty($cartProducts))
-                    @foreach($cartProducts as $carts)
+                    @foreach($cartProducts as $business => $carts)
                     <div class="orderHolder">
                         <div class="shop_info">
                             <div class="cart_checkbox">
-                                <input type="checkbox" name="select_all" class="business-input"  value="true">
-                                <span >店铺 ：{{$cart['business']}}</span>
+                                <input type="checkbox" name="select_all" class="business-input"  value="true" >
+                                <span >店铺 ：{{ $business }}</span>
                             </div>
                         </div>
                         @foreach($carts['product'] as $cart)
@@ -68,7 +68,7 @@
                                 <li class="td_chk">
                                     <div class="td_inner">
                                         <div class="select">
-                                            <input type="checkbox" class="product-input" name="select_all" value="true">
+                                            <input type="checkbox" class="product-input" name="select_all"  value="{{$cart['detail_id']}}" >
                                         </div>
                                     </div>  
                                 </li>
@@ -83,8 +83,11 @@
                                 </li>
                                 <li class="th_info">
                                     <div class="item_props">
-                                        <p>12颗净重6斤</p>
-                                        <p>单果重约225g-275g</p>
+                                        @foreach($cart['features'] as $key => $value)
+                                            @if( $key !='images' && $value!=null)
+                                            <p>{{$key}}:{{$value}}</p>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </li>
                                 <li class="th_price">
@@ -95,9 +98,9 @@
                                 </li>
                                 <li class="th_amount" >
                                     <div class="td_inner">
-                                        <span class="quantity_left_minus">-</span>
-                                        <input type="text"  class="amount" value="1" maxp="{{$cart['stock']}}">
-                                        <span class="quantity_left_add" maxp="{{$cart['stock']}}">+</span>
+                                        <span class="quantity_left_minus" det="{{$cart['detail_id']}}">-</span>
+                                        <input type="text"  class="amount" value="{{$cart['quantity']}}" maxp="{{$cart['stock']}}" det="{{$cart['detail_id']}}">
+                                        <span class="quantity_left_add" maxp="{{$cart['stock']}}" det="{{$cart['detail_id']}}">+</span>
                                     </div>
                                 </li>
                                 <li class="th_sum">
@@ -117,6 +120,8 @@
                     </div>
                     @endforeach
                     @else
+                    <br/>
+                    <br/>
                         <h1>你还没有加入商品到购物车！</h1>
                     @endif
                 </div>
@@ -129,11 +134,12 @@
                             <span>全选</span>
                         </div>
                     </div>
+
                     <div class="opreation">
-                        <a href="#">删除勾选商品</a>
+                    {{--    <a href="#">删除勾选商品</a>
                         <a href="#">移到我的关注</a>
                         <a href="#"></a>
-                        <a href="#"></a>
+                        <a href="#"></a> --}}
                     </div>
                     <div class="float_bar_right">
                         <div class="amount_sum">
@@ -149,7 +155,7 @@
                             
                         </div>
                         <div class="btn_aera">
-                            <a href=""><span>去结算</span></a>
+                            <a href="javascript:void(0);"><span>去结算</span></a>
                         </div>
                     </div>
                 </div>
@@ -199,12 +205,37 @@
     @include('szy.layouts.footer')
         
     </div>
+
+    <form action="/user/orders/checkOut" method="GET" id="cartOrder">
+        <input type="hidden" name="order_ids" value="">
+    </form>
 </body>
 
     {!! Html::script('/js/szy/jquery-1.8.3.min.js') !!}
     {!! Html::script('/js/szy/jquery.SuperSlide.2.1.1.js') !!}
     <script type="text/javascript">
         jQuery(".picScroll-left").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:true,vis:5});
+
+        //修改购物车 商品数量
+        function productEditAmount(val,id){
+            $.get("/user/orders/cartAmount?id="+id+"&amount="+val, function(result){
+            });
+        }
+        
+        //购物车提交事件
+         $(".btn_aera").click(function(){
+            var arr = Array();
+            if($('.product-input:checked').length){
+                $('.product-input:checked').each(function(i){
+                    arr[i] = $(this).val();
+                });
+                $("input[name='order_ids']").val(arr);
+                $("#cartOrder").submit();
+            }else{
+               alert('你还没选择任何商品！') ;
+            }
+         });  
+
         //商品搜索跳转
         function search(){
             window.location.href="products?search="+$("#home_search").val(); 
@@ -245,6 +276,7 @@
             }
             productPrice($(this),$(this).siblings(".amount").val());
             countPrice();
+            productEditAmount($(this).siblings(".amount").val(),$(this).attr('det'));
         });
 
         //数量 减号点击事件
@@ -255,6 +287,7 @@
             };
             productPrice($(this),$(this).siblings(".amount").val());
             countPrice();
+            productEditAmount($(this).siblings(".amount").val(),$(this).attr('det'));
         });
 
         //数量 输入change事件
@@ -275,6 +308,7 @@
             }
             productPrice($(this),$(this).val());
             countPrice();
+            productEditAmount($(this).siblings(".amount").val(),$(this).attr('det'));
         });
 
         //计算单个商品价格

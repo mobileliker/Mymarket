@@ -77,9 +77,15 @@
                         @endif
 
                         @if ($order->status == 'pending')
-                            <li>
+                            {{--<li>
                                 <span class="glyphicon glyphicon-send"></span>&nbsp;
                                 <a href="{{ route('orders.send', $order->id) }}">{{ trans('store.order_sent') }}</a>
+                            </li>--}}
+                            <li>
+                                <span class="glyphicon glyphicon-comment"></span>&nbsp;
+                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#delivery_panel">
+                                    新增发货信息
+                                </a>
                             </li>
                         @endif
 
@@ -90,10 +96,88 @@
                             </li>
                         @endif
 
+                        @if($order->status == 'sent')
+                                <li>
+                                    <span class="glyphicon glyphicon-comment"></span>&nbsp;
+                                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#delivery_panel">
+                                        修改发货信息
+                                    </a>
+                                </li>
+                        @endif
+
                     @endif
                 </ol>
             </div>
         </div>
+
+        <div class="row collapse" id="delivery_panel">
+            <div class="col-md-12">
+                <div class = "panel panel-default">
+                    <form action="{{url('/order/delivery/'.$order->id)}}" method="POST">
+                        {!! csrf_field() !!}
+                        {!! method_field('POST') !!}
+                        <div class="panel-body" style="font-size:12px;color:#000;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {!! Form::label('delivery_type', '发货类型') !!}:&nbsp;
+                                    @if($delivery)
+                                        {!! Form::select('delivery_type',[''=>'不使用物流','普通物流'=>'普通物流'],$delivery->delivery_type,['class'=>'form-control']) !!}
+                                    @else
+                                        {!! Form::select('delivery_type',[''=>'不使用物流','普通物流'=>'普通物流'],'普通物流',['class'=>'form-control']) !!}
+                                    @endif
+                                </div>
+                                <div class="col-md-12" id="delivery_name_group">
+                                    {!! Form::label('delivery_name', '快递公司') !!}:&nbsp;
+                                    @if($delivery)
+                                        {!! Form::select('delivery_name',[
+                                            '顺丰快递'=>'顺丰快递',
+                                            'EMS(中国邮政)'=>'EMS(中国邮政)',
+                                            '申通快递'=>'申通快递',
+                                            '圆通快递'=>'圆通快递',
+                                            '中通快递'=>'中通快递',
+                                            '韵达快递'=>'韵达快递',
+                                            '百世汇通快递'=>'百世汇通快递',
+                                            '宅急送快递'=>'宅急送快递',
+                                            '天天快递'=>'天天快递',
+                                            '德邦物流'=>'德邦物流',
+                                            '新邦物流'=>'新邦物流',
+                                            '天地华宇'=>'天地华宇',
+                                            'DHL(中国)'=>'DHL(中国)',
+                                            'UPS(中国)'=>'UPS(中国)',
+                                            'TNT(中国)'=>'TNT(中国)',
+                                            'FEDEX(中国)'=>'FEDEX(中国)',
+                                            '全一快递'=>'全一快递',
+                                            '全峰快递'=>'全峰快递',
+                                            '盛辉物流'=>'盛辉物流',
+                                            '中铁快运'=>'中铁快运',
+                                            '其他物流'=>'其他物流'],
+                                        $delivery->delivery_name,['class'=>'form-control']) !!}
+                                    @else
+                                        {!! Form::select('delivery_name',['顺丰快递'=>'顺丰快递','其他物流'=>'其他物流'],'',['class'=>'form-control']) !!}
+                                    @endif
+                                </div>
+                                <div class="col-md-12" id="delivery_number_group">
+                                    {!! Form::label('delivery_number','运单号') !!}:&nbsp;
+                                    @if($delivery)
+                                        {!! Form::text('delivery_number',$delivery->delivery_number,['class'=>'form-control']) !!}
+                                    @else
+                                        {!! Form::text('delivery_number',null,['class'=>'form-control']) !!}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-footer">
+                            <button type="submit" class="btn btn-success btn-sm">
+                                保存发货信息
+                                &nbsp;<span class="glyphicon glyphicon-send"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
 
         <div class="panel panel-default">
             <div class="panel-body" style="font-size: 12px; color: #000;">
@@ -112,6 +196,21 @@
                             @endif
                             {{ $orderAddress->city+','+$orderAddress->state }},&nbsp;{{ $orderAddress->country }}<br>{{ trans('store.order_phone_num') }}:&nbsp;{{ $orderAddress->phone }}
                         </div>
+                         <br>
+                         @if(isset($delivery))
+                             <label>
+                                 <strong>
+                                     物流情况:
+                                 </strong>
+                             </label>
+                             <div>
+                                 @if($delivery->delivery_type == '')
+                                     不使用物流
+                                 @else
+                                    {{$delivery->delivery_name}}（{{$delivery->delivery_number}}）
+                                 @endif
+                             </div>
+                         @endif
                         @if ($order->rate)
                             <div>
                                 <label>{{ trans('store.order_rating_value') }}:</label>&nbsp;
@@ -119,7 +218,6 @@
                             </div>
                         @endif
                      </div>
-
                      <div class="col-md-6">
                         <label>
                             <strong>
@@ -262,7 +360,7 @@
 
                                 @if(isset($is_seller) && $detail->product->type != 'item' && $order->status == 'pending')
                                     <div class="col-md-1 text-right">
-                                       <a class="btn btn-info btn-sm" href="javascript: void(0)" ng-click="delivery('{{ $order->id }}', '{{ $detail->product>id }}')">{{ trans('store.delivery') }}</a>
+                                       <a class="btn btn-info btn-sm" href="javascript: void(0)" ng-click="delivery('{{ $order->id }}', '{{ $detail->product->id }}')">{{ trans('store.delivery') }}</a>
                                        <span ng-show="detail.status=='0'">{{ trans('store.dispatched') }}</span>
                                     </div>
                                 @else
@@ -379,5 +477,16 @@
                 }
             }]);
         })(angular.module("AntVel"));
+    </script>
+    <script>
+        $("#delivery_type").change(function() {
+            if($(this).val() == ""){
+                $("#delivery_name_group").hide();
+                $("#delivery_number_group").hide();
+            }else{
+                $("#delivery_name_group").show();
+                $("#delivery_number_group").show();
+            }
+        });
     </script>
 @stop

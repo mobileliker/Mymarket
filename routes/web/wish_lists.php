@@ -11,6 +11,15 @@ Route::group(['prefix' => 'wishes', 'roles' => array_keys(trans('globals.roles')
     //list
     Route::get('/', ['uses' => 'OrdersController@showWishList', 'as' => 'orders.show_wish_list']);
 
+    //shop
+    Route::get('shop','OrdersController@showWishShop');
+
+    //shop add
+    Route::get('shop/attention/add','OrdersController@attentionShopAdd');
+
+    //shop del
+    Route::get('shop/attention/del','OrdersController@attentionShopDel');
+
     //user directory
     Route::get('/directory', ['uses' => 'OrdersController@wishListDirectory', 'as' => 'orders.show_list_directory']);
 

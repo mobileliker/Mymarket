@@ -13,8 +13,8 @@ use App\Helpers\productsHelper;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\Company;
-use App\Product;
-use DB;
+use App\Product, App\Article;
+use DB, Cache;
 class HomeController extends Controller
 {
     public function index()
@@ -87,10 +87,11 @@ class HomeController extends Controller
         $navs = $this->classProduct();//分类级联菜单
 
         //新品推荐20
-        $newProduct = DB::table('products')->orderBy('created_at','desc')->limit(20)->get();
+        $newProduct = DB::table('products')->where('products.status','=',1)->orderBy('created_at','desc')->limit(20)->get();
 
         //热卖推荐20
         $sells = DB::table('products')
+                ->where('products.status','=',1)
                 ->join('order_details','products.id','=','order_details.product_id')
                 ->select('order_details.product_id','products.*',DB::raw('count(*) as num'))
                 ->groupBy('order_details.product_id')
@@ -107,6 +108,7 @@ class HomeController extends Controller
     static function classProduct(){
         $categories = DB::table('categories')
                 ->whereNull('categories.category_id')
+                ->where('categories.status','=',1)
                 ->orderBy('created_at','desc');
         $class = $categories->limit(6)->get();
         $navs = array();
@@ -123,6 +125,7 @@ class HomeController extends Controller
     public function classLc(){
         $categories = DB::table('categories')
                 ->whereNull('categories.category_id')
+                ->where('categories.status','=',1)
                 ->orderBy('created_at','desc');
         $class = $categories->limit(5)->get();
         $lcs = array();
@@ -135,6 +138,7 @@ class HomeController extends Controller
                 $lcs[$value->name][2] = DB::table('categories')
                 ->join('products','categories.id','=','products.category_id')
                 ->where('categories.category_id',$value->id)
+                ->where('products.status','=',1)
                 ->orderBy('products.created_at','desc')
                 ->select('products.*')
                 ->limit(8)->get();
@@ -154,5 +158,23 @@ class HomeController extends Controller
 
             $prod->save();
         }
+    }
+
+    public function slug($slug){
+
+        $article = Cache::rememberForever('article_'.$slug, function() use ($slug){
+            return Article::where('slug', $slug)->first();
+        });
+        
+        if($article == null){
+            abort(404);
+        }else{
+            if($article->category_id != null){
+                return view('szy.about', compact('article', 'labels'));
+            }else{
+                return view('szy.page.show', compact('article', 'labels'));
+            }
+        }
+
     }
 }

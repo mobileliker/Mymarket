@@ -1,0 +1,97 @@
+@import "common";
+@import "top";
+@import "orders-pay-header";
+@import "footer";
+
+.wrap{
+	width:1200px;margin:0 auto;
+	.content{
+		width:100%;
+		.success-tips{
+			width:100%;height:46px;line-height:48px;font-size:15px;margin-top:16px;margin-bottom:16px;color: #6f6f6f;
+			.top{
+				width:100%;height:30px;line-height:15px;
+				.left{float: left;width:1056px;height:25px;
+				}
+				.right{float:right;width:144px;height:30px;
+					span{color:#fa676e;font-weight: bold;}
+				}
+			}
+			.btm{
+				width:100%;height:14px;font-size:12px;line-height:14px;color:#95999a;
+				.left{
+					float:left;width:1104px;
+					em{color:#fa676e}
+				}
+				.right{
+					float:right;width:96px;color:#1dcd9f;position: relative;cursor: pointer;
+					em{display: inline-block;width: 0;height: 0;border-left: 4px solid transparent;border-right: 4px solid transparent;border-top: 8px solid #1dcd9f;position: absolute;top:5px;left:52px;}
+				}
+			}	
+		}
+		.pay-main{
+			width:1185px;box-shadow: 0 0 4px #ebf6f2;background:#e7f7f4;padding-top: 25px;padding-left: 15px;
+			.pay-way{
+				width:1165px;height:83px;border: 1px solid #b49dc1;border-radius: 4px;line-height:83px;margin-bottom:23px;
+				.pay-left{
+					float:left;width:1019px;margin-left: 26px;
+					.chk,.gs{vertical-align: middle;margin-top:-6px;}
+					.chk{margin-right: 15px;}
+					.card{font-size:15px;color:#121a1c;border-bottom:1px solid #ad5f4b;margin-right:37px;}
+					.shortcut{display:inline-block;width:34px;height:18px;background:#b49dc1;color:#fff;line-height:18px;text-align: center;margin-right:43px;}
+					em{color:#838383}
+
+				}
+				.pay-right{
+					em{color:#777777;}
+					span{color:#fa676e;font-weight:bold}
+				}
+			}
+			.other-way{
+				clear: both;margin-bottom:25px;
+				a{
+					display:inline-block;height:34px;background:#fff;color:#b49dc1;margin-right:16px;line-height:34px;text-align:center;font-size:16px;padding-left:19px;padding-right: 19px;
+				}
+				a:first-child{border:1px solid #b49dc1}
+				a:last-child{border:1px dashed #b49dc1}
+			}
+			.psd-inner{
+				height:115px;
+				.safe-tip{
+					height:39px;color:#030d0c;position: relative;
+					img{position: absolute;top:0px;left:0px;}
+					em{display:inline-block;height:16px;line-height:16px;position: absolute;top:0px;left:19px;}
+				}
+				.psd-title{height:23px;}
+				.psd{
+					height:35px;
+					.box,.forget{float:left;}
+					.box{
+						width: 190px;height: 30px;border:1px solid #ccc;line-height: 30px;margin-right:11px;
+						.pawDiv{
+							display: inline-block;line-height: 30px;width: 31px;height: 31px;margin-top: -2px;float: left;
+							.bod{
+								width: 30px;height: 20px;border-right: 1px solid #cccccc;margin-top: 6px;
+								input.paw{width:28px;height:20px;line-height: 20px;border:none;text-align: center;background:#e7f7f4}
+								input.paw:focus{outline:0;}
+							}
+							
+						}
+						.pawDiv:nth-child(6) .bod{border-right: none;}
+					}
+					.errorPoint{color: red;display: none;clear:both;}
+					.forget{
+						width:100px;
+						a{font-size:13px;color:#17adec;line-height:35px;}
+					}
+				}
+			}
+			.sure-pay{
+				margin-top:12px;
+				a{
+					display:inline-block;width:168px;height:38px;line-height:38px;text-align:center;color:#fff;font-size:19px;background:#30c3a7;
+				}
+			}
+		}
+	}
+}

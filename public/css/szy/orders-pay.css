@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .bg-green {
   background: #31C4A8; }
 
@@ -59,6 +58,21 @@
 .bd-orange {
   border-right: 2px solid #FFB24A; }
 
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
+
 .p-bg-green {
   background: #DEF9F4;
   color: #31C4A8; }
@@ -101,7 +115,233 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+a {
+  text-decoration: none; }
+
+input, select, button, a {
+  outline: none; }
+
+/* line 5, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+
+/* line 103, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none; }
+
+/* line 32, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+a {
+  text-decoration: none; }
+
+html, body {
+  font-size: 12px; }
+
+.right-fixed {
+  width: 46px;
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  z-index: 10000; }
+  .right-fixed .r-fixed-l {
+    width: 40px;
+    height: 100%;
+    float: left; }
+    .right-fixed .r-fixed-l .l-list {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      top: 45%; }
+      .right-fixed .r-fixed-l .l-list li {
+        width: 100%;
+        height: 34px;
+        margin-top: 3px;
+        background: #31C4A8; }
+        .right-fixed .r-fixed-l .l-list li a {
+          margin: 3px 3px; }
+        .right-fixed .r-fixed-l .l-list li img {
+          width: 60%;
+          height: 60%;
+          margin: 6px 6px; }
+      .right-fixed .r-fixed-l .l-list li:hover {
+        background: #2EAF98; }
+  .right-fixed .r-fixed-r {
+    width: 6px;
+    height: 100%;
+    background: #31C4A8;
+    float: left; }
+
+.bg-green {
+  background: #31C4A8; }
+
+.bg-red {
+  background: #F77872; }
+
+.bg-blue {
+  background: #50C1E9; }
+
+.bg-purple {
+  background: #B69BC6; }
+
+.bg-orange {
+  background: #FFB24A; }
+
+.z-green {
+  color: #31C4A8; }
+
+.z-red {
+  color: #F77872; }
+
+.z-blue {
+  color: #50C1E9; }
+
+.z-purple {
+  color: #B69BC6; }
+
+.z-orange {
+  color: #FFB24A; }
+
+.z-green:hover {
+  color: #DEF9F4; }
+
+.z-red:hover {
+  color: #FAD2D2; }
+
+.z-blue:hover {
+  color: #CDEFF9; }
+
+.z-purple:hover {
+  color: #F5EDFA; }
+
+.z-orange:hover {
+  color: #FCEBD9; }
+
+.bd-green {
+  border-right: 2px solid #31C4A8; }
+
+.bd-red {
+  border-right: 2px solid #F77872; }
+
+.bd-blue {
+  border-right: 2px solid #50C1E9; }
+
+.bd-purple {
+  border-right: 2px solid #B69BC6; }
+
+.bd-orange {
+  border-right: 2px solid #FFB24A; }
+
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
+
+.p-bg-green {
+  background: #DEF9F4;
+  color: #31C4A8; }
+
+.p-bg-red {
+  background: #FAD2D2;
+  color: #F77872; }
+
+.p-bg-blue {
+  background: #CDEFF9;
+  color: #50C1E9; }
+
+.p-bg-purple {
+  background: #F5EDFA;
+  color: #B69BC6; }
+
+.p-bg-orange {
+  background: #FCEBD9;
+  color: #FFB24A; }
+
+.hv-green, .hv-red, .hv-blue, .hv-purple, .hv-orange {
+  background: #ECF0F1; }
+
+.hv-green:hover {
+  background: #31C4A8; }
+
+.hv-red:hover {
+  background: #F77872; }
+
+.hv-blue:hover {
+  background: #50C1E9; }
+
+.hv-purple:hover {
+  background: #B69BC6; }
+
+.hv-orange:hover {
+  background: #FFB24A; }
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -237,65 +477,16 @@ html, body {
   height: 100%;
   float: right; }
   .header-nav2 li {
-    width: 62px;
     height: 100%;
     float: right;
     line-height: 30px;
     list-style-type: none;
     font-size: 12px;
-    color: #A5A5A5; }
+    color: #A5A5A5;
+    margin: 0px 4px 0px 4px; }
     .header-nav2 li a {
       font-size: 12px;
       color: #A5A5A5; }
-
-.wrap header {
-  width: 100%;
-  height: 101px;
-  background: #fff;
-  border-bottom: 1px solid #cecece; }
-  .wrap header .left, .wrap header .right {
-    float: left; }
-  .wrap header .left {
-    margin-top: 10px; }
-  .wrap header .right {
-    width: 486px;
-    float: right;
-    margin-top: 28px; }
-    .wrap header .right ul li {
-      float: left; }
-      .wrap header .right ul li .step_no {
-        position: relative;
-        width: 162px;
-        height: 5px; }
-      .wrap header .right ul li .step_no span {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        left: 71px;
-        top: -10px;
-        border-radius: 50%;
-        line-height: 20px;
-        text-align: center;
-        color: #fff; }
-      .wrap header .right ul li .step_name {
-        width: 162px;
-        height: 22px;
-        text-align: center;
-        line-height: 11px;
-        margin-top: 12px;
-        color: #D7D7D7; }
-      .wrap header .right ul li .step_first .step_name {
-        color: #2ec3a6; }
-
-.thin-color {
-  background: #95E0D1; }
-
-.deep-color {
-  background: #2ec3a6; }
-
-.default-color {
-  background: #cacaca; }
 
 .bg-green {
   background: #31C4A8; }
@@ -357,6 +548,21 @@ html, body {
 .bd-orange {
   border-right: 2px solid #FFB24A; }
 
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
+
 .p-bg-green {
   background: #DEF9F4;
   color: #31C4A8; }
@@ -399,7 +605,293 @@ html, body {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+a {
+  text-decoration: none; }
+
+input, select, button, a {
+  outline: none; }
+
+/* line 5, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+
+/* line 103, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none; }
+
+/* line 32, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+a {
+  text-decoration: none; }
+
+html, body {
+  font-size: 12px; }
+
+.right-fixed {
+  width: 46px;
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  z-index: 10000; }
+  .right-fixed .r-fixed-l {
+    width: 40px;
+    height: 100%;
+    float: left; }
+    .right-fixed .r-fixed-l .l-list {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      top: 45%; }
+      .right-fixed .r-fixed-l .l-list li {
+        width: 100%;
+        height: 34px;
+        margin-top: 3px;
+        background: #31C4A8; }
+        .right-fixed .r-fixed-l .l-list li a {
+          margin: 3px 3px; }
+        .right-fixed .r-fixed-l .l-list li img {
+          width: 60%;
+          height: 60%;
+          margin: 6px 6px; }
+      .right-fixed .r-fixed-l .l-list li:hover {
+        background: #2EAF98; }
+  .right-fixed .r-fixed-r {
+    width: 6px;
+    height: 100%;
+    background: #31C4A8;
+    float: left; }
+
+body {
+  width: 100%;
+  min-width: 1200px;
+  font-size: 12px; }
+
+.wrap header {
+  width: 100%;
+  height: 101px;
+  background: #fff;
+  border-bottom: 1px solid #cecece; }
+  .wrap header .left, .wrap header .right {
+    float: left; }
+  .wrap header .left {
+    margin-top: 10px; }
+  .wrap header .right {
+    width: 486px;
+    float: right;
+    margin-top: 28px; }
+    .wrap header .right ul li {
+      float: left; }
+      .wrap header .right ul li .step_no {
+        position: relative;
+        width: 162px;
+        height: 5px; }
+      .wrap header .right ul li .step_no span {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: 71px;
+        top: -10px;
+        border-radius: 50%;
+        line-height: 20px;
+        text-align: center;
+        color: #fff; }
+      .wrap header .right ul li .step_name {
+        width: 162px;
+        height: 22px;
+        text-align: center;
+        line-height: 11px;
+        margin-top: 12px; }
+
+.thin-color {
+  background: #95E0D1; }
+
+.deep-color {
+  background: #2ec3a6; }
+
+.default-color {
+  background: #cacaca; }
+
+.f-thin-color {
+  color: #95E0D1; }
+
+.f-deep-color {
+  color: #2ec3a6; }
+
+.f-default-color {
+  color: #cacaca; }
+
+.bg-green {
+  background: #31C4A8; }
+
+.bg-red {
+  background: #F77872; }
+
+.bg-blue {
+  background: #50C1E9; }
+
+.bg-purple {
+  background: #B69BC6; }
+
+.bg-orange {
+  background: #FFB24A; }
+
+.z-green {
+  color: #31C4A8; }
+
+.z-red {
+  color: #F77872; }
+
+.z-blue {
+  color: #50C1E9; }
+
+.z-purple {
+  color: #B69BC6; }
+
+.z-orange {
+  color: #FFB24A; }
+
+.z-green:hover {
+  color: #DEF9F4; }
+
+.z-red:hover {
+  color: #FAD2D2; }
+
+.z-blue:hover {
+  color: #CDEFF9; }
+
+.z-purple:hover {
+  color: #F5EDFA; }
+
+.z-orange:hover {
+  color: #FCEBD9; }
+
+.bd-green {
+  border-right: 2px solid #31C4A8; }
+
+.bd-red {
+  border-right: 2px solid #F77872; }
+
+.bd-blue {
+  border-right: 2px solid #50C1E9; }
+
+.bd-purple {
+  border-right: 2px solid #B69BC6; }
+
+.bd-orange {
+  border-right: 2px solid #FFB24A; }
+
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
+
+.p-bg-green {
+  background: #DEF9F4;
+  color: #31C4A8; }
+
+.p-bg-red {
+  background: #FAD2D2;
+  color: #F77872; }
+
+.p-bg-blue {
+  background: #CDEFF9;
+  color: #50C1E9; }
+
+.p-bg-purple {
+  background: #F5EDFA;
+  color: #B69BC6; }
+
+.p-bg-orange {
+  background: #FCEBD9;
+  color: #FFB24A; }
+
+.hv-green, .hv-red, .hv-blue, .hv-purple, .hv-orange {
+  background: #ECF0F1; }
+
+.hv-green:hover {
+  background: #31C4A8; }
+
+.hv-red:hover {
+  background: #F77872; }
+
+.hv-blue:hover {
+  background: #50C1E9; }
+
+.hv-purple:hover {
+  background: #B69BC6; }
+
+.hv-orange:hover {
+  background: #FFB24A; }
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -603,15 +1095,6 @@ html, body {
         .footer .footer-center .c-footer .f-r li:nth-child(5n+1) {
           margin-top: 0px; }
 
-body {
-  width: 100%;
-  min-width: 1200px;
-  font-size: 12px; }
-
-.nav {
-  width: 100%;
-  height: 36px; }
-
 .wrap {
   width: 1200px;
   margin: 0 auto; }
@@ -717,6 +1200,9 @@ body {
             width: 79px;
             height: 79px;
             margin-right: 8px; }
+            .wrap .content .order_item .order_itemInfo .info_detail .info_img img {
+              width: 75px;
+              height: 75px; }
           .wrap .content .order_item .order_itemInfo .info_detail .info_cell {
             width: 239px;
             height: 79px; }

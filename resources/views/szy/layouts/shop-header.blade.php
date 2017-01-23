@@ -6,8 +6,23 @@
 			<div class="header-nav-b">
 				<div class="header-nav-b1"><a href="shop/{{$id}}"><img src="{{$business->logo}}"></a></div>
 				<div class="header-nav-b2">
-					<span class="header-nav-b2-span1">店铺: &nbsp;<a href="javascript:void();">{{$business->business_name}}</a></span>
-					<span class="header-nav-b2-span2"><img src="/img/szy/inc/attention.png">&nbsp;<a href="">关注店铺</a></span>
+					{{--<div class="header-nav-b2-span1">店铺: {{$business->business_name}}</div>--}}
+						
+					<?php 
+						$result = App\UserBusiness::where('user_id',auth()->user()->id)
+												->where('business_id',$business->user_id)
+												->first();
+					?> 
+					<span class="header-nav-b2-span2 attention-edit" bid={{$business->user_id}} @if($result) state=1 @else state=0 @endif>
+						<img src="/img/szy/inc/attention.png">&nbsp;
+						<span href="">
+							@if($result)
+								取消关注
+							@else
+								关注商铺
+							@endif
+						</span>
+					</span>
 				</div>
 			</div>
 			<div  class="header-nav-right">
@@ -66,3 +81,49 @@
 	</div>
 </div>	
 
+
+@section('scripts')
+@parent
+<script type="text/javascript">
+
+	//店铺关注
+	$(".attention-edit").click(function(){
+		var state = $(this).attr('state');
+		var bid = $(this).attr('bid');
+
+		if (state>0) {
+			
+			delAttention(bid,$(this));
+		}else{
+			addAttention(bid,$(this));
+			
+		}
+	})
+
+	//关注商铺
+	function addAttention(bid,tis){
+		$.get("wishes/shop/attention/add?bid="+bid, function(result){
+			if (result) {
+				alert('关注成功！');
+				tis.find('span').html('取消关注');
+				tis.attr('state',1);
+			}else{
+				alert('关注失败！');
+			}
+        });
+	}
+
+	//取消关注商铺
+	function delAttention(bid,tis){
+		$.get("wishes/shop/attention/del?bid="+bid, function(result){
+			if (result) {
+				alert('取消关注成功！');
+				tis.find('span').html('关注商铺');
+				tis.attr('state',0);
+			}else{
+				alert('取消关注失败！');
+			}
+        });
+	}
+</script>
+@show

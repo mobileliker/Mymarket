@@ -44,11 +44,11 @@ return [
     'order_status'            => [
         'cancelled'             => '已取消', /*orden eliminada por el usuario*/
         'closed'                => '已关闭', /**/
-        'open'                  => '开放', /*orden abienta, en carrito, order,wish list*/
+        'open'                  => '待付款', /*orden abienta, en carrito, order,wish list*/
         'paid'                  => '已付款', /**/
-        'pending'               => '待办中', /**/
+        'pending'               => '待处理', /**/
         'received'              => '已收到', /**/
-        'sent'                  => '已发送', /**/
+        'sent'                  => '发货中', /**/
     ],
     'participant_status'    => [
         'cancelled'             => '已取消',

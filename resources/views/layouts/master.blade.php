@@ -26,6 +26,8 @@
 		{!! Html::style('/antvel-bower/font-awesome/css/font-awesome.min.css') !!}
 		{!! Html::style('/css/carousel.css') !!}
 		{!! Html::style('/css/angucomplete-alt.css') !!}
+		{!! Html::style('/css/szy/wishes-header.css') !!}
+		{!! Html::style('/css/szy/footer.css') !!}
 		{!! Html::style('/css/app.css') !!}
 	@show
 
@@ -35,15 +37,14 @@
 	<![endif]-->
 </head>
 <body>
-	{{--
-@section('header')
-	@include('partial.header')
-@show--}}
+
 <section class = "@yield('page_class', 'home')">
 
 	{{-- Navigation bar section --}}
 	@section('navigation')
-		@include('partial.navigation')
+		@include('szy.layouts.top')
+		@include('szy.layouts.wishes-header')
+		{{-- @include('partial.navigation') --}}
 	@show
 
 	{{-- Breadcrumbs section --}}
@@ -96,9 +97,11 @@
 </section>
 
 @section('footer')
-	<footer>
-		@include('partial.footer')
+	@include('szy.layouts.footer') 
+	{{--<footer>
+		 @include('partial.footer') 
 	</footer>
+	--}}
 @show
 
 {{-- Antvel - Bower Components --}}
@@ -156,6 +159,8 @@
 	{!! Html::script('/antvel-bower/angular-notify/dist/angular-notify.min.js') !!}
 	{!! Html::script('/antvel-bower/angular-local-storage/dist/angular-local-storage.min.js') !!}
 @show
+
+@yield('mm_script')
 
 </body>
 </html>

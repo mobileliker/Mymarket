@@ -59,6 +59,21 @@
 .bd-orange {
   border-right: 2px solid #FFB24A; }
 
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
+
 .p-bg-green {
   background: #DEF9F4;
   color: #31C4A8; }
@@ -101,7 +116,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -115,7 +130,233 @@ input, select, button, a {
 
 /* line 5, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
-h2, h3, h4, h5, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+
+/* line 103, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none; }
+
+/* line 32, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+a {
+  text-decoration: none; }
+
+html, body {
+  font-size: 12px; }
+
+.right-fixed {
+  width: 46px;
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  z-index: 10000; }
+  .right-fixed .r-fixed-l {
+    width: 40px;
+    height: 100%;
+    float: left; }
+    .right-fixed .r-fixed-l .l-list {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      top: 45%; }
+      .right-fixed .r-fixed-l .l-list li {
+        width: 100%;
+        height: 34px;
+        margin-top: 3px;
+        background: #31C4A8; }
+        .right-fixed .r-fixed-l .l-list li a {
+          margin: 3px 3px; }
+        .right-fixed .r-fixed-l .l-list li img {
+          width: 60%;
+          height: 60%;
+          margin: 6px 6px; }
+      .right-fixed .r-fixed-l .l-list li:hover {
+        background: #2EAF98; }
+  .right-fixed .r-fixed-r {
+    width: 6px;
+    height: 100%;
+    background: #31C4A8;
+    float: left; }
+
+.bg-green {
+  background: #31C4A8; }
+
+.bg-red {
+  background: #F77872; }
+
+.bg-blue {
+  background: #50C1E9; }
+
+.bg-purple {
+  background: #B69BC6; }
+
+.bg-orange {
+  background: #FFB24A; }
+
+.z-green {
+  color: #31C4A8; }
+
+.z-red {
+  color: #F77872; }
+
+.z-blue {
+  color: #50C1E9; }
+
+.z-purple {
+  color: #B69BC6; }
+
+.z-orange {
+  color: #FFB24A; }
+
+.z-green:hover {
+  color: #DEF9F4; }
+
+.z-red:hover {
+  color: #FAD2D2; }
+
+.z-blue:hover {
+  color: #CDEFF9; }
+
+.z-purple:hover {
+  color: #F5EDFA; }
+
+.z-orange:hover {
+  color: #FCEBD9; }
+
+.bd-green {
+  border-right: 2px solid #31C4A8; }
+
+.bd-red {
+  border-right: 2px solid #F77872; }
+
+.bd-blue {
+  border-right: 2px solid #50C1E9; }
+
+.bd-purple {
+  border-right: 2px solid #B69BC6; }
+
+.bd-orange {
+  border-right: 2px solid #FFB24A; }
+
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
+
+.p-bg-green {
+  background: #DEF9F4;
+  color: #31C4A8; }
+
+.p-bg-red {
+  background: #FAD2D2;
+  color: #F77872; }
+
+.p-bg-blue {
+  background: #CDEFF9;
+  color: #50C1E9; }
+
+.p-bg-purple {
+  background: #F5EDFA;
+  color: #B69BC6; }
+
+.p-bg-orange {
+  background: #FCEBD9;
+  color: #FFB24A; }
+
+.hv-green, .hv-red, .hv-blue, .hv-purple, .hv-orange {
+  background: #ECF0F1; }
+
+.hv-green:hover {
+  background: #31C4A8; }
+
+.hv-red:hover {
+  background: #F77872; }
+
+.hv-blue:hover {
+  background: #50C1E9; }
+
+.hv-purple:hover {
+  background: #B69BC6; }
+
+.hv-orange:hover {
+  background: #FFB24A; }
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: 'Microsoft YaHei'; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+a {
+  text-decoration: none; }
+
+input, select, button, a {
+  outline: none; }
+
+/* line 5, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -257,13 +498,14 @@ html, body {
   float: right; }
 
 .header-nav2 li {
-  width: 70px;
+  max-width: 70px;
   height: 100%;
   float: right;
   line-height: 35px;
   list-style-type: none;
   font-size: 14px;
-  color: white; }
+  color: white;
+  margin-left: 4px; }
 
 .header-nav2 li a {
   font-size: 14px;
@@ -277,11 +519,11 @@ html, body {
 .header-nav-b1 {
   height: 80%;
   width: 100%;
-  margin-top: 10%; }
+  padding-top: 40px; }
 
 .header-nav-b1 img {
-  height: 60%;
-  width: 100%; }
+  height: 62px;
+  width: 200px; }
 
 .header-nav-b2 {
   height: 20%;
@@ -478,32 +720,30 @@ html, body {
         top: -8px; }
       .menu-list li .right .hide-class {
         width: 400px;
-        min-height: 200px;
+        height: 75px;
         position: relative;
         background: white;
-        left: 135px;
+        left: 125px;
         display: none;
         z-index: 1000;
-        border: 1px solid #31C4A8;
-        border-radius: 5px;
-        border-bottom: 2px solid #31C4A8;
         text-align: left;
         padding: 10px; }
         .menu-list li .right .hide-class div {
-          width: 96%;
-          height: 90%;
+          width: 100%;
+          height: 100%;
           padding: 2px;
           position: absolute;
-          top: -5px;
-          overflow: hidden; }
+          top: 0px;
+          overflow: hidden;
+          line-height: 23px; }
           .menu-list li .right .hide-class div h5 {
             float: left;
             margin-left: 10px; }
           .menu-list li .right .hide-class div a {
-            color: #6A6A6A;
+            color: white;
             font-size: 15px; }
           .menu-list li .right .hide-class div a:hover {
-            color: #31C4A8; }
+            font-weight: bold; }
   .menu-list li:hover {
     background: white; }
     .menu-list li:hover .f-h, .menu-list li:hover .r-class a {
@@ -571,6 +811,21 @@ html, body {
 .bd-orange {
   border-right: 2px solid #FFB24A; }
 
+.bd5-left-green {
+  border-left: 5px solid #31C4A8; }
+
+.bd5-left-red {
+  border-left: 5px solid #F77872; }
+
+.bd5-left-blue {
+  border-left: 5px solid #50C1E9; }
+
+.bd5-left-purple {
+  border-left: 5px solid #B69BC6; }
+
+.bd5-left-orange {
+  border-left: 5px solid #FFB24A; }
+
 .p-bg-green {
   background: #DEF9F4;
   color: #31C4A8; }
@@ -613,7 +868,7 @@ html, body {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-family: '宋体'; }
+  font-family: 'Microsoft YaHei'; }
 
 body {
   margin: 0;
@@ -627,7 +882,7 @@ input, select, button, a {
 
 /* line 5, C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
-h2, h3, h4, h5, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -979,10 +1234,12 @@ html, body {
       bottom: 0px;
       background: #FFB24A;
       opacity: 0.9;
+      text-align: left;
+      padding: 0 8 0 8;
       line-height: 35px; }
       .price .picScroll-left .bd ul li .pic .desc a {
         color: white;
-        font-size: 15px;
+        font-size: 12px;
         font-weight: bold; }
   .price .picScroll-left .bd ul li .pic img {
     width: 220px;
@@ -1006,7 +1263,7 @@ html, body {
     .sell .title .left {
       width: 50%;
       height: 20px;
-      border-left: 5px solid #31C4A8;
+      border-left: 5px solid #FFB24A;
       float: left;
       color: #4D4D4D;
       font-size: 20px;
@@ -1028,7 +1285,7 @@ html, body {
       .sell .title .right .jt {
         width: 16px;
         height: 16px;
-        background: #31C4A8;
+        background: #FFB24A;
         float: right;
         color: white;
         line-height: 16px;
@@ -1098,12 +1355,13 @@ html, body {
       bottom: 40px;
       background: #FFB24A;
       opacity: 0.9;
-      line-height: 35px;
+      padding: 0 8 0 8;
+      line-height: 22px;
       text-align: left;
       overflow: hidden; }
       .sell .picScroll-left-two .bd ul li .pic .desc a {
         color: white;
-        font-size: 15px;
+        font-size: 12px;
         font-weight: bold; }
   .sell .picScroll-left-two .bd ul li .pic img {
     width: 100%;
@@ -1171,7 +1429,6 @@ html, body {
       font-size: 20px;
       font-weight: bold;
       line-height: 20px;
-      border-left: 5px solid #31C4A8;
       float: left;
       margin-top: 10px; }
     .product-class .title .right {
@@ -1186,10 +1443,11 @@ html, body {
       .product-class .title .right li {
         float: right;
         min-width: 40px;
-        padding: 0 8px;
+        padding: 0 8 0 0;
         height: 70%;
         line-height: 6px;
-        text-align: center; }
+        text-align: center;
+        margin-right: 8px; }
         .product-class .title .right li a {
           font-size: 12px; }
       .product-class .title .right li:nth-child(100n+1) {
@@ -1240,6 +1498,7 @@ html, body {
             position: absolute;
             top: 158px;
             opacity: 0.9;
+            padding: 0 10 0 10;
             line-height: 20px;
             text-align: left;
             overflow: hidden; }

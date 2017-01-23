@@ -18,12 +18,13 @@
 				@endif
 			</div>
 			<div class="header-nav2">
-				<li><a href="user/profile">账号设置</a></li>
+				<li><a href="about">帮助中心</a></li>
+				<li><a href="user/profile">账号设置</a>|</li>
 				<li><a href="user/address">收货地址</a>|</li>
 				<li><a href="wishes">我的关注</a>|</li>
 				<li><a href="user/orders">我的订单</a>|</li>
 				<li><a href="user/cart">购物车</a>|</li>
-				<li><a href="">我的消息</a>|</li>
+				{{--<li><a href="">我的消息</a>|</li>--}}
 				@if (auth()->check())
 					@if(auth::user()->role == 'admin' || auth::user()->role == 'business')
 					<li><a href="orders/usersOrders">我的销售</a>|</li>
@@ -44,7 +45,7 @@
 	<div class="header-c">
 		<div class="header-nav">
 			<div class="header-nav-b">
-				<div class="header-nav-b1"><a href="{{url('')}}"><img src="/img/szy/inc/logo.png"></a></div>
+				<div class="header-nav-b1"><a href="{{url('')}}"><img src="{{App\Company::find(1)->logo}}"></a></div>
 			</div>
 			<div  class="header-nav-right">
 				<div class="header-nav-right-l">
@@ -66,10 +67,16 @@
 
 					<div class="header-nav-right-l-div">
 						<b>热门搜索 :</b>
-					@foreach ($labels as $label)
+						<a href="products?search=苹果">苹果</a> 
+						<span>|</span>
+						<a href="products?search=火龙果">火龙果</a> 
+						<span>|</span>
+						<a href="products?search=西瓜">西瓜</a> 
+
+					{{-- @foreach ($labels as $label)
 						<a href="products?search={{$label}}">{{$label}}</a> 
 						<span>|</span>
-					@endforeach 
+					@endforeach --}}
 					</div>
 				</div>
 			</div>
@@ -90,7 +97,7 @@
 							<div class="f-h">></div>
 							<div class="x-class">@foreach ($nav[2] as $p){{$p->name}}&nbsp;@endforeach</div>
 							<div class="hide-class">
-								<div>
+								<div class="c-{{$nav[0]->color}}">
 									@foreach ($nav[2] as $pro)
 									<h5><a href="products?search={{$pro->name}}">{{$pro->name}}</a></h5>
 									@endforeach 

@@ -25,6 +25,8 @@
 </head>
 <body>
 
+@include('szy.layouts.top')
+
 @section('celerity')
 	@include('szy.layouts.celerity')
 @show
@@ -40,15 +42,21 @@
 	<div class="attent-main">
 		<div class="attent-main-title">
 			<ul class="nav-att">
-				<a href="" ><li class="goods">关注的商品</li></a>
-				<a href=""><li>关注的店铺</li></a>
+				<a href="wishes" ><li @if($wisheType =='product') class="goods" @endif >关注的商品</li></a>
+				<a href="wishes/shop"><li @if($wisheType =='shop') class="goods" @endif >关注的店铺</li></a>
 			</ul>
+			{{--
 			<div class="search-goods">
-				<input type="text" placeholder="请输入商品名称">
-				{{--<input type="text" placeholder="请输入店铺名称">--}}
-				<img src="" alt="" class="search">
+				@if($wisheType =='product')
+				<input type="text" placeholder=" 请输入商品名称">
+				@else
+				<input type="text" placeholder=" 请输入店铺名称">
+				@endif 
+				<a href=""><img src="/img/szy/inc/search1.png" alt="" class="search"></a>
 			</div>
+			--}}
 		</div>
+		{{--
 		<div class="goods-navigation">
 			<div class="navigation-inner">
 				<div class="navigation">
@@ -90,6 +98,7 @@
 				</div>
 			</div>
 		</div>
+		--}}
 		@section('content')
 
 		@show
