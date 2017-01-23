@@ -6,7 +6,7 @@
 			<div class="header-nav-b">
 				<div class="header-nav-b1"><a href="shop/{{$id}}"><img src="{{$business->logo}}"></a></div>
 				<div class="header-nav-b2">
-					<div class="header-nav-b2-span1">店铺: {{$business->business_name}}</div>
+					{{--<div class="header-nav-b2-span1">店铺: {{$business->business_name}}</div>--}}
 						
 					<?php 
 						$result = App\UserBusiness::where('user_id',auth()->user()->id)

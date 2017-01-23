@@ -17,4 +17,4 @@
 			window.location.href="products?search="+$("#text_search").val(); 
 		}
 	</script>
-@show
+@stop
