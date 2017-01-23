@@ -260,7 +260,7 @@ class ProductsController extends Controller
 
 
 
-        return view('szy/list', compact('filters', 'products', 'panel', 'listActual', 'search', 'refine', 'suggestions','sells','xzs','order','ade'));
+        return view('szy.list', compact('filters', 'products', 'panel', 'listActual', 'search', 'refine', 'suggestions','sells','xzs','order','ade'));
     }
 
     public function myProducts(Request $request)

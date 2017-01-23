@@ -180,12 +180,7 @@
                                         <a href="products/{{$product['id']}}" target="_blank"><img src="{{$product['features']['images'][0]}}" /></a>
                                     </div>  
                                     <div class="check">
-                                        <form action="user/orders/addTo/cart/{{$product['id']}}" method="POST">
-                                            <input name="_method" type="hidden" value="PUT">
-                                            {{ csrf_field() }}
-                                            <input type="submit" style="display:none" id="cart_submit">
-                                        </form>
-                                        <a href="javascript:void(0);" onclick="$('input[id=cart_submit]').click();">
+                                        <a href="javascript:void(0);" onclick="formCartAdd({{$product['id']}});">
                                             <div class="gwc glyphicon glyphicon-shopping-cart option"></div>
                                         </a>
                                         <a href="user/orders/addTo/wishlist/{{$product['id']}}">
@@ -202,6 +197,11 @@
             </div>
             @endif
         </div>
+        <form action="" method="POST" id="cartSubmit">
+            <input name="_method" type="hidden" value="PUT">
+            {{ csrf_field() }}
+            <input type="submit" style="display:none" >
+        </form>
     @include('szy.layouts.footer')
         
     </div>
@@ -216,6 +216,12 @@
     <script type="text/javascript">
         jQuery(".picScroll-left").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:true,vis:5});
 
+        //加入购物车
+        function formCartAdd(id){
+            $("#cartSubmit").attr('action','user/orders/addTo/cart/'+id);
+            $("#cartSubmit").submit();
+        }
+        
         //修改购物车 商品数量
         function productEditAmount(val,id){
             $.get("/user/orders/cartAmount?id="+id+"&amount="+val, function(result){

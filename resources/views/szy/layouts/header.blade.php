@@ -93,13 +93,13 @@
 						<div class="c-{{$nav[0]->color}}"></div>
 						<div class="img"><img src="{{$nav[0]->image}}"></div>
 						<div class="right">
-							<div class="r-class"><a href="products?category={{$nav[0]->name}}"><b>{{$nav[0]->name}}</b></a></div>
+							<div class="r-class"><a href="products?category={{$nav[0]->id}}"><b>{{$nav[0]->name}}</b></a></div>
 							<div class="f-h">></div>
 							<div class="x-class">@foreach ($nav[2] as $p){{$p->name}}&nbsp;@endforeach</div>
 							<div class="hide-class">
-								<div class="c-{{$nav[0]->color}}">
+								<div class="bd5-right-{{$nav[0]->color}}">
 									@foreach ($nav[2] as $pro)
-									<h5><a href="products?search={{$pro->name}}">{{$pro->name}}</a></h5>
+									<h5><a href="products?category={{$pro->id}}">{{$pro->name}}</a></h5>
 									@endforeach 
 								</div>
 							</div>
@@ -126,11 +126,15 @@
 	});
 	$(".menu-list").mouseleave(function(){
 		$(".menu-list").css('display','none');
+		$('.hide-class').css('display','none');
 	});
+
 	$(".menu-list li").mouseover(function(){
-		$(this).children('.right').children('.hide-class').show();
+		$(this).find('.hide-class').fadeIn(100);
 	}).mouseleave(function(){
-		$(this).children('.right').children('.hide-class').css('display','none');
+		$(this).find('.hide-class').css('display','none');
 	});
 </script>
 @show
+
+

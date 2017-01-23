@@ -64,17 +64,18 @@
             .img{height:85%;width:30%;float: left;
               img{width:20px;height:20px;margin-left:20px;margin-top:15px;}
             }
-            .right{height:100%;width:55%;float: left;text-align:left;
+            .right{height:100%;width:55%;float: left;text-align:left;position:relative;
               .r-class a,.f-h{color:$color2;font-size:$fontSizeMax;}
               .r-class{width:85%;height:50%;float:left;overflow:hidden;}
               .f-h{width:15%;height:50%;float:left;color:$color1;font-size:$fontSizeMax;font-weight:bold;}
               .x-class{width:100%;height:60%;float:left;color:$color1;font-size:$fontSizeMin;overflow:hidden;position:relative;top:-8px;}
-              .hide-class{width:400px;height:75px;position:relative;background:white;left:125px;display:none;z-index:1000;
+              .hide-class{width:400px;height:73px;position:absolute;background:white;left:134px;top:0px;display:none;z-index:1000;
                 text-align:left;padding:10px;
-                div{width:100%;height:100%;padding:2px;position:absolute;top:0px;overflow:hidden;line-height:23px;
-                  h5{float:left;margin-left:10px;}
-                  a{color:white;font-size:$fontSize;}
+                div{width:95%;height:100%;position:absolute;top:0px;overflow:hidden;line-height:24px;right:0px;
+                  h5{float:left;}
+                  a{color:$color1;font-size:$fontSize;border-left:1px solid $color1;height:20px;padding:0 8 0 8;}
                   a:hover{font-weight:bold;}
+                  h5:first-child{a{border:none;}}
                 }
               }
             }

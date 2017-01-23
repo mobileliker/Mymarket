@@ -235,12 +235,7 @@
 							<span><a href="products/{{$product['id']}}">{{$product['name']}}</a></span>
 							</div>
 							<div class="icons">
-		                        <form action="user/orders/addTo/cart/{{$product['id']}}" method="POST">
-		                            <input name="_method" type="hidden" value="PUT">
-		                            {{ csrf_field() }}
-		                            <input type="submit" style="display:none" id="cart_submit">
-		                        </form>
-		                        <a href="javascript:void(0);" onclick="$('input[id=cart_submit]').click();">
+		                        <a href="javascript:void(0);" onclick="formCartAdd({{$product['id']}});">
 		                            <div class="cz-san gwc glyphicon glyphicon-shopping-cart option"></div>
 		                        </a>
 		                        <a href="user/orders/addTo/wishlist/{{$product['id']}}">
@@ -329,12 +324,23 @@
 		</div>
 		</div>
 	</div>
+	<form action="" method="POST" id="cartSubmit">
+            <input name="_method" type="hidden" value="PUT">
+            {{ csrf_field() }}
+            <input type="submit" style="display:none" >
+    </form>
 @stop
 
 @section('scripts')
 
    @parent
 	<script type="text/javascript">
+
+		//加入购物车
+        function formCartAdd(id){
+            $("#cartSubmit").attr('action','user/orders/addTo/cart/'+id);
+            $("#cartSubmit").submit();
+        }
 
 		//替换和增加url参数与值
 		function changeURLPar(destiny, par, par_value) 
