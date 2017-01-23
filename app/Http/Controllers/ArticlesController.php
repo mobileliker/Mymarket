@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article, App\ArticleCategory;
 use Session, Redirect;
+use Cache;
 
 class ArticlesController extends Controller
 {
@@ -120,6 +121,7 @@ class ArticlesController extends Controller
             return Redirect::back();
         }else{
             if($article->delete()){
+                Cache::forget('article_'.$article->slug);
                 Session::push('message', '文章删除成功');
                 return Redirect::back();
             }else{
@@ -160,6 +162,9 @@ class ArticlesController extends Controller
         $article->sort = $sort;
 
         if($article->save()){
+            Cache::forget('article_'.$slug);
+            Cache::put('article_'.$slug, $article);
+
             if($id == -1) Session::push('message', '新增文章成功');
             else Session::push('message', '修改文章成功');
         }else{

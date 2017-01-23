@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Order;
 use App\Company;
 use App\Product, App\Article;
-use DB;
+use DB, Cache;
 class HomeController extends Controller
 {
     public function index()
@@ -162,7 +162,10 @@ class HomeController extends Controller
 
     public function slug($slug){
 
-        $article = Article::where('slug', $slug)->first();
+        $article = Cache::rememberForever('article_'.$slug, function() use ($slug){
+            return Article::where('slug', $slug)->first();
+        });
+        
         if($article == null){
             abort(404);
         }else{

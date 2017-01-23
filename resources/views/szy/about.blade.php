@@ -39,7 +39,7 @@
             {{--<h3>常见问题分类</h3>--}}
             <h3> 帮 助 中 心 </h3>
 
-            @foreach(App\ArticleCategory::all() as $key=>$category)
+            @foreach( Cache::rememberForever('product_categories', function(){ return App\ArticleCategory::all(); }) as $key=>$category)
                 <dl>
                     @if($category->id == $article->category_id)
                         <dt class="default-show">{{$category->display_name}}<span class="active"></span></dt>
@@ -48,7 +48,8 @@
                     @endif
                     <dd>
                         <ul>
-                            @foreach($category->articles as $article2)
+                            @foreach( Cache::rememberForever('article_category_'.$category->id, function() use ($category){ return $category->articles; }) as $article2)
+                            {{-- @foreach($category->articles as $article2) --}}
                                 @if($article2->id == $article->id)
                                 <li class="default-color">
                                 @else
