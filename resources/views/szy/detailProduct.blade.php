@@ -336,7 +336,8 @@
 			};
 		}
 	};
-	//数量计算价格
+	
+	// //数量计算价格
 	// $(".num-price-count").change(function(){
 	// 	var num = parseInt($(this).val());
 	// });

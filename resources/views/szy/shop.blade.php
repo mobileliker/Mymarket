@@ -97,13 +97,7 @@
 						<li>月成交<b>189</b>笔</li>
 						<li>评价 <b>158</b></li>
 						--}}
-
-					    <form action="user/orders/addTo/cart/{{$product->id}}" method="POST">
-                            <input name="_method" type="hidden" value="PUT">
-                            {{ csrf_field() }}
-                            <input type="submit" style="display:none" id="cart_submit">
-                        </form>
-						<li onclick="$('input[id=cart_submit]').click();">加入购物车</li>
+						<li onclick="formCartAdd({{$product->id}});">加入购物车</li>
 						<a href="products/{{$product->id}}"><li>查看商品</li></a>
 					</div>
 				</div>
@@ -119,6 +113,11 @@
 		</div>
 	</div>
 </div>
+        <form action="" method="POST" id="cartSubmit">
+            <input name="_method" type="hidden" value="PUT">
+            {{ csrf_field() }}
+            <input type="submit" style="display:none" >
+        </form>
 @stop
 
 @section('scripts')
@@ -126,6 +125,11 @@
 <script type="text/javascript">
 	jQuery(".slideBox").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true});
 
+	//加入购物车
+    function formCartAdd(id){
+        $("#cartSubmit").attr('action','user/orders/addTo/cart/'+id);
+        $("#cartSubmit").submit();
+    }
 	//排序搜索
 	$("#order_product li").click(function(){
 		var order = $(this).attr('val');

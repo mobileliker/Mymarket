@@ -73,6 +73,21 @@
 .bd5-left-orange {
   border-left: 5px solid #FFB24A; }
 
+.bd5-right-green {
+  border-right: 5px solid #31C4A8; }
+
+.bd5-right-red {
+  border-right: 5px solid #F77872; }
+
+.bd5-right-blue {
+  border-right: 5px solid #50C1E9; }
+
+.bd5-right-purple {
+  border-right: 5px solid #B69BC6; }
+
+.bd5-right-orange {
+  border-right: 5px solid #FFB24A; }
+
 .p-bg-green {
   background: #DEF9F4;
   color: #31C4A8; }
@@ -298,6 +313,21 @@ html, body {
 
 .bd5-left-orange {
   border-left: 5px solid #FFB24A; }
+
+.bd5-right-green {
+  border-right: 5px solid #31C4A8; }
+
+.bd5-right-red {
+  border-right: 5px solid #F77872; }
+
+.bd5-right-blue {
+  border-right: 5px solid #50C1E9; }
+
+.bd5-right-purple {
+  border-right: 5px solid #B69BC6; }
+
+.bd5-right-orange {
+  border-right: 5px solid #FFB24A; }
 
 .p-bg-green {
   background: #DEF9F4;
@@ -562,6 +592,21 @@ html, body {
 
 .bd5-left-orange {
   border-left: 5px solid #FFB24A; }
+
+.bd5-right-green {
+  border-right: 5px solid #31C4A8; }
+
+.bd5-right-red {
+  border-right: 5px solid #F77872; }
+
+.bd5-right-blue {
+  border-right: 5px solid #50C1E9; }
+
+.bd5-right-purple {
+  border-right: 5px solid #B69BC6; }
+
+.bd5-right-orange {
+  border-right: 5px solid #FFB24A; }
 
 .p-bg-green {
   background: #DEF9F4;
@@ -836,7 +881,8 @@ html, body {
             height: 100%;
             width: 55%;
             float: left;
-            text-align: left; }
+            text-align: left;
+            position: relative; }
             .line .center .vegetable_sort .menu-list li .right .r-class a, .line .center .vegetable_sort .menu-list li .right .f-h {
               color: #4D4D4D;
               font-size: 20px; }
@@ -863,30 +909,35 @@ html, body {
               top: -8px; }
             .line .center .vegetable_sort .menu-list li .right .hide-class {
               width: 400px;
-              height: 75px;
-              position: relative;
+              height: 73px;
+              position: absolute;
               background: white;
-              left: 125px;
+              left: 134px;
+              top: 0px;
               display: none;
               z-index: 1000;
               text-align: left;
               padding: 10px; }
               .line .center .vegetable_sort .menu-list li .right .hide-class div {
-                width: 100%;
+                width: 95%;
                 height: 100%;
-                padding: 2px;
                 position: absolute;
                 top: 0px;
                 overflow: hidden;
-                line-height: 23px; }
+                line-height: 24px;
+                right: 0px; }
                 .line .center .vegetable_sort .menu-list li .right .hide-class div h5 {
-                  float: left;
-                  margin-left: 10px; }
+                  float: left; }
                 .line .center .vegetable_sort .menu-list li .right .hide-class div a {
-                  color: white;
-                  font-size: 15px; }
+                  color: #6A6A6A;
+                  font-size: 15px;
+                  border-left: 1px solid #6A6A6A;
+                  height: 20px;
+                  padding: 0 8 0 8; }
                 .line .center .vegetable_sort .menu-list li .right .hide-class div a:hover {
                   font-weight: bold; }
+                .line .center .vegetable_sort .menu-list li .right .hide-class div h5:first-child a {
+                  border: none; }
         .line .center .vegetable_sort .menu-list li:hover {
           background: white; }
           .line .center .vegetable_sort .menu-list li:hover .f-h, .line .center .vegetable_sort .menu-list li:hover .r-class a {
@@ -968,6 +1019,21 @@ html, body {
 
 .bd5-left-orange {
   border-left: 5px solid #FFB24A; }
+
+.bd5-right-green {
+  border-right: 5px solid #31C4A8; }
+
+.bd5-right-red {
+  border-right: 5px solid #F77872; }
+
+.bd5-right-blue {
+  border-right: 5px solid #50C1E9; }
+
+.bd5-right-purple {
+  border-right: 5px solid #B69BC6; }
+
+.bd5-right-orange {
+  border-right: 5px solid #FFB24A; }
 
 .p-bg-green {
   background: #DEF9F4;
@@ -1403,6 +1469,7 @@ body {
     margin-left: 0px; }
   .main .mainsrp_pager {
     width: 100%;
+    height: 80px;
     clear: both; }
     .main .mainsrp_pager .inner {
       width: 750px;
@@ -1453,7 +1520,7 @@ body {
         color: #666666; }
   .main .mainsrp_related {
     width: 1147px;
-    height: 108px;
+    height: 138px;
     border: 1px solid #e5e5e5;
     background: #f6f6f6;
     margin-top: 50px;
