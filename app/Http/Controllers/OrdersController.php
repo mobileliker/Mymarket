@@ -18,6 +18,7 @@ use App\Log;
 use App\Notice;
 use App\Order;
 use App\OrderDetail;
+use App\UserBusiness;
 use App\Product;
 use App\Repositories\OrderRepository;
 use App\User;
@@ -536,10 +537,59 @@ class OrdersController extends Controller
                     ->join('users','businesses.user_id','=','users.id')
                     ->join('user_business','users.id','=','user_business.business_id')
                     ->where('user_business.user_id','=',auth()->user()->id)
+                    ->whereNull('user_business.deleted_at')
                     ->select('businesses.user_id','businesses.business_name','user_business.created_at','businesses.logo')
                     ->paginate(6);
  
         return view('szy.wishes-shop',compact('wisheType','businessCount'));
+    }
+
+    /**
+     * 添加关注店铺
+     *
+     * @param [string] $token is the var sent to users email to validate if the account belongs to him or not.
+     */
+    public function attentionShopAdd(Request $request)
+    {
+        $business_id = $request->input('bid');
+        $user_id = auth()->user()->id;
+        $user_business = new UserBusiness;
+
+        $result = $user_business->where('user_id',$user_id)->where('business_id',$business_id)->first();
+
+        //防止重复关注
+        if ($result) {
+           return  1;
+        }
+
+        $user_business->business_id = $business_id;
+        $user_business->user_id = $user_id;
+        
+        if ($user_business->save()) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    /**
+     * 取消关注店铺
+     *
+     * @param [string] $token is the var sent to users email to validate if the account belongs to him or not.
+     */
+    public function attentionShopDel(Request $request)
+    {
+        $business_id = $request->input('bid');
+        $user_id = auth()->user()->id;
+        $user_business = UserBusiness::where('user_id',$user_id)->where('business_id',$business_id);
+
+        $result = $user_business->first();
+
+        if (!$result) {
+           return  1;
+        }
+
+        return $user_business->delete();
     }
 
     /**
@@ -606,7 +656,7 @@ class OrdersController extends Controller
              * @var [type]
              */
             $cart = Order::ofType('cart')->where('user_id', $user->id)->with('details')->first();
-
+            $count = 0;
             $cartProducts = array();
             if (!empty($cart)) {
                 

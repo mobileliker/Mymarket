@@ -112,7 +112,7 @@
 							有货 &nbsp; 免邮费
 						</div>
 						<div class="fw">
-							服 务:由<a href="">{{$business->business_name}}</a>从{{$business->address}}提供发货,并提供售后服务
+							服 务:由<a href="shop/{{$business->user_id}}">{{$business->business_name}}</a>从{{$business->address}}提供发货,并提供售后服务
 							@if ($product->stock <= $product->low_stock)
 								<span class = "label label-warning">{{ trans('store.lowStock') }}</span>
 							@else
@@ -159,7 +159,7 @@
 		                </form>
 					</div>
 				</div>
-				{{--
+
 				<div class="serve">
 					<div class="title">
 						<a href="">{{$business->business_name}}</a>
@@ -176,9 +176,23 @@
 						<li><a href="" {{$business->phone}}><img src="/img/szy/inc/phone.png">联系卖家</a></li>
 						<li><a href="" {{$business->qq}}><img src="/img/szy/inc/consult.png"> 咨询客服</a></li>
 						<li><a href="shop/{{$business->user_id}}" ><img src="/img/szy/inc/shop.png"> 进店逛逛</a></li>
-						<li><a href="" ><img src="/img/szy/inc/attention.png"> 关注商铺</a></li>
+							<?php 
+								$result = App\UserBusiness::where('user_id',auth()->user()->id)
+												->where('business_id',$business->user_id)
+												->first();
+							?> 
+						<li class="attention-edit" bid={{$business->user_id}} @if($result) state=1 @else state=0 @endif>								
+							<img src="/img/szy/inc/attention.png">
+							<span >
+							@if($result)
+								取消关注
+							@else
+								关注商铺
+							@endif
+							</span>
+						</li>
 					</div>
-				</div>--}}
+				</div>
 			</div>
 		</div>
 		<div class="content">
@@ -254,7 +268,47 @@
 @section('scripts')
    @parent
 <script type="text/javascript">
-	
+
+	//店铺关注
+	$(".attention-edit").click(function(){
+		var state = $(this).attr('state');
+		var bid = $(this).attr('bid');
+
+		if (state>0) {
+			
+			delAttention(bid,$(this));
+		}else{
+			addAttention(bid,$(this));
+			
+		}
+	})
+
+	//关注商铺
+	function addAttention(bid,tis){
+		$.get("wishes/shop/attention/add?bid="+bid, function(result){
+			if (result) {
+				alert('关注成功！');
+				tis.find('span').html('取消关注');
+				tis.attr('state',1);
+			}else{
+				alert('关注失败！');
+			}
+        });
+	}
+
+	//取消关注商铺
+	function delAttention(bid,tis){
+		$.get("wishes/shop/attention/del?bid="+bid, function(result){
+			if (result) {
+				alert('取消关注成功！');
+				tis.find('span').html('关注商铺');
+				tis.attr('state',0);
+			}else{
+				alert('取消关注失败！');
+			}
+        });
+	}
+
 	//规格默认选中
 	$(".gg-defaultColor").css('border','1px solid #31C4A8');
 	$(".gg-defaultColor").css('border-bottom','2px solid #31C4A8');
