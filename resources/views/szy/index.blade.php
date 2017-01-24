@@ -114,7 +114,7 @@
             </div>
             <div class="right">
                 @foreach ($lc[1] as $l)
-                <li class="bd-{{$lc[0]->color}}"><a href="/products?category={{$l->name}}" class="z-{{$lc[0]->color}}">{{$l->name}}</a></li>
+                <li class="bd-{{$lc[0]->color}}"><a href="/products?category={{$l->id}}" class="z-{{$lc[0]->color}}">{{$l->name}}</a></li>
                 @endforeach
             </div>
         </div>
