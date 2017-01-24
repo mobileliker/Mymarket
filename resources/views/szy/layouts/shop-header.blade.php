@@ -9,12 +9,16 @@
 					{{--<div class="header-nav-b2-span1">店铺: {{$business->business_name}}</div>--}}
 						
 					<?php 
-						$result = App\UserBusiness::where('user_id',auth()->user()->id)
+						$result = false;
+						if (isset(auth()->user()->id)) {
+							$result = App\UserBusiness::where('user_id',auth()->user()->id)
 												->where('business_id',$business->user_id)
 												->first();
+						}
 					?> 
 					<span class="header-nav-b2-span2 attention-edit" bid={{$business->user_id}} @if($result) state=1 @else state=0 @endif>
 						<img src="/img/szy/inc/attention.png">&nbsp;
+					@if(isset(auth()->user()->id))
 						<span href="">
 							@if($result)
 								取消关注
@@ -22,6 +26,9 @@
 								关注商铺
 							@endif
 						</span>
+					@else
+						<span onclick="Login();">关注店铺</span>
+					@endif
 					</span>
 				</div>
 			</div>
@@ -85,6 +92,12 @@
 @section('scripts')
 @parent
 <script type="text/javascript">
+
+	//跳转登录
+	function Login(){
+		alert('请登录！');
+		window.location.href="login";
+	}
 
 	//店铺关注
 	$(".attention-edit").click(function(){

@@ -107,11 +107,11 @@ $priceBg:url('/img/szy/inc/bg3.png') no-repeat;
 					}
 				}
 				.lx{width:100%;min-height:80px;margin-top:15px;
-					li{width:45%;height:28px;float:left;line-height:30px;font-size:$fontSizeMin;color:$color1;text-align:center;
+					li{width:45%;height:28px;float:left;line-height:28px;font-size:$fontSizeMin;color:$color1;text-align:center;
 						border:1px solid $color3;margin-top:10px;margin-left:2px;cursor:pointer;
 						a{font-size:$fontSizeMin;color:$color1;}
 						a:hover{color:$defualtColor;}
-						img{width:16px;height:14px;position:relative;top:-3px;}
+						img{width:16px;height:14px;position:relative;top:3px;}
 					}
 					li:nth-child(2n+2){margin-left:10px;}
 				}		

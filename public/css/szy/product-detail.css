@@ -1616,7 +1616,7 @@ html, body {
             width: 45%;
             height: 28px;
             float: left;
-            line-height: 30px;
+            line-height: 28px;
             font-size: 12px;
             color: #6A6A6A;
             text-align: center;
@@ -1633,7 +1633,7 @@ html, body {
               width: 16px;
               height: 14px;
               position: relative;
-              top: -3px; }
+              top: 3px; }
           .details .product-padding .product .serve .lx li:nth-child(2n+2) {
             margin-left: 10px; }
 
