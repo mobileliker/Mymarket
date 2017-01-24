@@ -62,7 +62,7 @@
 					<div class="g-row">
 						<div class="head">
 							<h4>
-							<span class="title" title="品牌">
+							<span class="title" title="">
 								@if($key=='category' || $key=='conditions' ||$key=='brands')
 								{{ trans('globals.filters.'.$key) }}:
 								@else
@@ -116,36 +116,7 @@
 	                        @endif
 						</div>
 					</div>
-					@endforeach
-					{{-- 价格 --}}
-					<div class="g-row">
-						<div class="head">
-							<h4>
-							<span class="title" title="价格">
-								{{ trans('globals.filters.price_range') }}:
-							</span>
-							</h4>
-						</div>
-						<div class="body">
-							<div class="items">
-                                <form method="GET" action="/products" name="rangepriceForm" novalidate>
-                                	&nbsp;
-                                    <input class=" input-sm" type="number" value="{{ isset($refine['min']) ? $refine['min'] : '' }}" name="min" id="min" placeholder="{{ trans('globals.min_label') }}">
-                                    <input class=" input-sm" type="number" value="{{ isset($refine['max']) ? $refine['max'] : '' }}" name="max" id="max" placeholder="{{ trans('globals.max_label') }}">
-                                    <button type="submit" class="input-sm">确定</button>
-                      
-                                    @foreach ($refine as $key => $value)
-                                        @if (trim($value)!='' && $key != 'category_name' && $key != 'min' && $key != 'max')
-                                            <?php $value = $key == 'category' ? $value.'|'.urlencode($refine['category_name']) : $value; ?>
-                                            <input type="hidden" name="{{ $key }}" id="{{ $key }}" value="{{ $value }}">
-                                        @endif
-                                    @endforeach
-                                </form>
-							</div>
-						</div>
-					</div>
-
-					    <script type='text/ng-template' id="{{ $key }}-snippet" class="panel">
+						<script type='text/ng-template' id="{{ $key }}-snippet" class="panel">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button ng-click="$close(false)" type="button" class="close"><span aria-hidden="true">&times;</span></button>
@@ -181,6 +152,34 @@
                                 </div>
                             </div>
                         </script>
+					@endforeach
+					{{-- 价格 --}}
+					<div class="g-row">
+						<div class="head">
+							<h4>
+							<span class="title" title="价格">
+								{{ trans('globals.filters.price_range') }}:
+							</span>
+							</h4>
+						</div>
+						<div class="body">
+							<div class="items">
+                                <form method="GET" action="/products" name="rangepriceForm" novalidate>
+                                	&nbsp;
+                                    <input class=" input-sm" type="number" value="{{ isset($refine['min']) ? $refine['min'] : '' }}" name="min" id="min" placeholder="{{ trans('globals.min_label') }}">
+                                    <input class=" input-sm" type="number" value="{{ isset($refine['max']) ? $refine['max'] : '' }}" name="max" id="max" placeholder="{{ trans('globals.max_label') }}">
+                                    <button type="submit" class="input-sm">确定</button>
+                      
+                                    @foreach ($refine as $key => $value)
+                                        @if (trim($value)!='' && $key != 'category_name' && $key != 'min' && $key != 'max')
+                                            <?php $value = $key == 'category' ? $value.'|'.urlencode($refine['category_name']) : $value; ?>
+                                            <input type="hidden" name="{{ $key }}" id="{{ $key }}" value="{{ $value }}">
+                                        @endif
+                                    @endforeach
+                                </form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 

@@ -130,7 +130,7 @@
 	});
 
 	$(".menu-list li").mouseover(function(){
-		$(this).find('.hide-class').fadeIn(100);
+		$(this).find('.hide-class').show();
 	}).mouseleave(function(){
 		$(this).find('.hide-class').css('display','none');
 	});

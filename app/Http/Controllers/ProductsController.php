@@ -700,7 +700,7 @@ class ProductsController extends Controller
             $product->condition = $request->input('condition');
         }
         $product->status = $request->input('status');
-        if (!empty($request->input('products_group'))) {
+        if ($request->input('products_group')!='false') {
             $product->products_group = $request->input('products_group');
         }
         $product->description = $request->input('description');
