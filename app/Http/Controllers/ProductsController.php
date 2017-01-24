@@ -415,9 +415,10 @@ class ProductsController extends Controller
             $product->status = $request->input('status');
         }
         $product->save();
-
-        $product->products_group = $product->id;
-        $product->save();
+        // return $product->id;
+        $productNew = Product::find($product->id);
+        $productNew ->products_group = $product->id;
+        $productNew->save();
 
         $message = '';
         if ($request->input('type') != 'item') {
@@ -699,7 +700,9 @@ class ProductsController extends Controller
             $product->condition = $request->input('condition');
         }
         $product->status = $request->input('status');
-        $product->products_group = $request->input('products_group');
+        if (!empty($request->input('products_group'))) {
+            $product->products_group = $request->input('products_group');
+        }
         $product->description = $request->input('description');
         $product->bar_code = $request->input('bar_code');
         $product->brand = $request->input('brand');
