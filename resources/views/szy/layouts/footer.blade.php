@@ -76,30 +76,30 @@
 				</div>
 			</li>
 		</div>
-		<div class="c-footer">
-			<div class="f-l"><img src="/img/szy/szy-wechat.jpg"></div>
-			<div class="f-r">
-				<li>扫码关注我家菜市官方微信</li>
-				<li>
-					<a href="{{url('/page/about-us')}}">关于我们</a>
-					<a href="{{url('/page/legal-notice')}}">法律声明</a>
-					<a href="{{url('/page/protocol-of-usage')}}">使用协议</a>
-					<a href="{{url('/page/privacy-policy')}}">版权隐私</a>
-					<a href="{{url('/page/friendly-link')}}">友情链接</a>
-					<a href="{{url('/page/successful-case')}}">成功案列</a>
-					<a href="{{url('/page/memorabilia')}}">菜市大事记</a>
-					<a href="{{url('/page/production-library')}}">产品库</a>
-					<a href="{{url('/page/website-map')}}">网站地图</a>
-				</li>
-				<li>粤ICP备XXXXXXXX号-1 | Powered By SZY | 服务热线 : XXX-XXX-XXXX</li>
-				<li>互联网药品信息服务资格证书:(粤)-经营性-2014-XXXX</li>
-				<li>2011-207 SZY All Rights Resered 基于<a herf="http://github.com/antvel/antvle">Antvel</a>
-					<a href="http://www.cyberpolice.cn/wfjb/" target="_blank"><img src="/img/szy/inc/pq1.png">网络警察提醒你</a>
-					<a href="http://www.kxnet.cn/" target="_blank"><img src="/img/szy/inc/pq2.png">可信网站信用评估</a>
-					<a href="http://www.baic.gov.cn/" target="_blank"><img src="/img/szy/inc/pq3.png">经营性网站备案中心</a>
-					{{--<a href="http://www.cecdc.com/" target="_blank"><img src="/img/szy/inc/pq4.png">诚信网站</a>--}}
-				</li>
-			</div>
+		<div class="c-footer" style='position: relative'>
+                    <div class='f-l'><img src="/img/szy/szy-wechat.jpg"></div>
+                    <div class='f-r'>
+                        <li>扫码关注我家菜市官方微信</li>
+                        <li>
+                                <a href="{{url('/page/about-us')}}">关于我们</a>
+                                <a href="{{url('/page/legal-notice')}}">法律声明</a>
+                                <a href="{{url('/page/protocol-of-usage')}}">使用协议</a>
+                                <a href="{{url('/page/privacy-policy')}}">版权隐私</a>
+                                <a href="{{url('/page/friendly-link')}}">友情链接</a>
+                        </li>
+                        <li>
+                             <a href="{{url('/page/successful-case')}}">成功案列</a>
+                            <a href="{{url('/page/memorabilia')}}">菜市大事记</a>
+                            <a href="{{url('/page/production-library')}}">产品库</a>
+                            <a href="{{url('/page/website-map')}}">网站地图</a>
+                        </li>
+                        <li><a href="http://www.miitbeian.gov.cn">粤ICP备16082048号</a> | Powered By Life's garden Infomation Inc| 服务热线 : 020-86471420</li>
+                        <div style='font-size: 14px;color:#4D4D4D'>Copyright©2017 Life's garden Infomation Inc.All Right Reserved基于<a href="http://github.com/antvel/antvle">Antvel</a>
+                            <a href="http://www.cyberpolice.cn/wfjb/" target="_blank"><img src="/img/szy/inc/pq1.png">网络警察提醒你</a>
+                            <a href="http://www.kxnet.cn/" target="_blank"><img src="/img/szy/inc/pq2.png">可信网站信用评估</a>
+                            <a href="http://www.baic.gov.cn/" target="_blank"><img src="/img/szy/inc/pq3.png">经营性网站备案中心</a>
+                        </div>
+                    </div>
 		</div>
 	</div>
 </div>

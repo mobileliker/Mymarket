@@ -241,11 +241,15 @@ class UserController extends Controller
             return redirect()->back()->withErrors($v->errors())->withInput();
         }
 
+
         //user update
         \Session::flash('message', trans('user.saved'));
         $user->fill($request->all());
         $user->pic_url = $request->get('pic_url');
-        $user->password = bcrypt($request->get('password'));
+        if (!empty($request->get('password'))) {
+            $user->password = bcrypt($request->get('password')); 
+        }
+        
         $user->save();
 
         //bussiness update

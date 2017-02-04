@@ -101,6 +101,7 @@
 					<div class="delivery">
 						<div class="ps">
 							配送至:
+							@if(isset(auth()->user()->id))
 							<select>
 								<option>@if(!empty($addresDefault)){{$addresDefault->state}}{{$addresDefault->city}}@endif</option>
 								@if(!empty($address))
@@ -109,6 +110,9 @@
 									@endforeach
 								@endif
 							</select>
+							@else
+							<span><a href="login">请登录</a></span>
+							@endif
 							有货 &nbsp; 免邮费
 						</div>
 						<div class="fw">
@@ -173,23 +177,30 @@
 						</div>
 					</div>
 					<div class="lx">
-						<li><a href="" {{$business->phone}}><img src="/img/szy/inc/phone.png">联系卖家</a></li>
+						<li><a href="" {{$business->phone}}><img src="/img/szy/inc/phone.png"> 联系卖家</a></li>
 						<li><a href="" {{$business->qq}}><img src="/img/szy/inc/consult.png"> 咨询客服</a></li>
 						<li><a href="shop/{{$business->user_id}}" ><img src="/img/szy/inc/shop.png"> 进店逛逛</a></li>
 							<?php 
-								$result = App\UserBusiness::where('user_id',auth()->user()->id)
+								$result = false;
+								if (isset(auth()->user()->id)) {
+									$result = App\UserBusiness::where('user_id',auth()->user()->id)
 												->where('business_id',$business->user_id)
 												->first();
+								}
 							?> 
 						<li class="attention-edit" bid={{$business->user_id}} @if($result) state=1 @else state=0 @endif>								
 							<img src="/img/szy/inc/attention.png">
-							<span >
-							@if($result)
-								取消关注
+							@if(isset(auth()->user()->id))
+								<span >
+								@if($result)
+									取消关注
+								@else
+									关注商铺
+								@endif
+								</span>
 							@else
-								关注商铺
+								<span onclick="Login();">关注店铺</span>
 							@endif
-							</span>
 						</li>
 					</div>
 				</div>
@@ -268,6 +279,12 @@
 @section('scripts')
    @parent
 <script type="text/javascript">
+	
+	//跳转登录
+	function Login(){
+		alert('请登录！');
+		window.location.href="login";
+	}
 
 	//店铺关注
 	$(".attention-edit").click(function(){
@@ -281,7 +298,7 @@
 			addAttention(bid,$(this));
 			
 		}
-	})
+	});
 
 	//关注商铺
 	function addAttention(bid,tis){
@@ -336,7 +353,8 @@
 			};
 		}
 	};
-	//数量计算价格
+	
+	// //数量计算价格
 	// $(".num-price-count").change(function(){
 	// 	var num = parseInt($(this).val());
 	// });

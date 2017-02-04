@@ -33,7 +33,7 @@ $priceBg:url(../../img/szy/product-new.png) no-repeat;
 
 .price{
 	height:180px;width:$widthMin;margin:5 auto;padding-bottom:10px;
-	.img{width:19%;height:100%;float:left;background:$priceBg;}
+	.img{width:19%;height:100%;float:left;background:$priceBg;background-size:100%;}
 	.picScroll-left{ width:80%;  overflow:hidden; position:relative; left:1%;}
 	.picScroll-left .hd{ overflow:hidden;  height:30px; background:#f4f4f4; padding:0 10px;  }
 	.picScroll-left .hd .prev,.picScroll-left .hd .next{ display:block;  width:5px; height:9px; float:right;
@@ -70,16 +70,16 @@ $priceBg:url(../../img/szy/product-new.png) no-repeat;
 	height:262px;width:$widthMin;margin:10 auto;padding-bottom:40px;
 	.title{
 		width:100%;height:30px;
-		.left{width:50%;height:20px;border-left:5px solid #FFB24A;float:left;color:$color2;font-size:$fontSizeMax;margin-left:5px;}
-		.right{width:40%;height:20px;float:right;color:$color2;font-size:$fontSizeMax;margin-right:7px;
-			.wz{font-size:$fontSize;color:$color3;float:right;width:50px;height:20px;cursor:pointer;}
+		.left{width:50%;height:20px;border-left:5px solid #FFB24A;float:left;color:$color2;font-size:$fontSizeMax;}
+		.right{width:40%;height:20px;float:right;color:$color2;font-size:$fontSizeMax;
+			.wz{font-size:$fontSize;color:$color1;float:right;width:50px;height:20px;cursor:pointer;}
 			.jt{width:16px;height:16px;background:#FFB24A;float:right;color:white;line-height:16px;text-align:center;cursor:pointer;}
 		}
 	}
-	.picScroll-left-two{ width:1212px;  overflow:hidden; position:relative;}
+	.picScroll-left-two{ width:1200px;  overflow:hidden; position:relative;}
 	.picScroll-left-two .bd ul{ overflow:hidden; zoom:1;}
-	.picScroll-left-two .bd ul li{ 
-		margin-left:20px; float:left; _display:inline; overflow:hidden; text-align:center; border:1px solid #ccc;
+	.picScroll-left-two .bd ul li{ margin:0 11;
+		float:left; _display:inline; overflow:hidden; text-align:center; border:1px solid #ccc;
 		height:100%;position:relative;width:225px;
 		.check{
 			width:225px;height:40px;position:absolute;bottom:-2px;left:0px;z-index:1000;

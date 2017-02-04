@@ -77,12 +77,7 @@
                             <a href="products/{{$sell->id}}" target="_blank"><img src="{{json_decode($sell->features)->{'images'}[0]}}" /></a>
                         </div>  
                         <div class="check">
-                            <form action="user/orders/addTo/cart/{{$sell->id}}" method="POST">
-                                <input name="_method" type="hidden" value="PUT">
-                                {{ csrf_field() }}
-                                <input type="submit" style="display:none" id="cart_submit">
-                            </form>
-                            <a href="javascript:void(0);" onclick="$('input[id=cart_submit]').click();">
+                            <a href="javascript:void(0);" onclick="formCartAdd({{$sell->id}});">
                                 <div class="gwc glyphicon glyphicon-shopping-cart option"></div>
                             </a>
                             <a href="user/orders/addTo/wishlist/{{$sell->id}}">
@@ -119,7 +114,7 @@
             </div>
             <div class="right">
                 @foreach ($lc[1] as $l)
-                <li class="bd-{{$lc[0]->color}}"><a href="/products?category={{$l->name}}" class="z-{{$lc[0]->color}}">{{$l->name}}</a></li>
+                <li class="bd-{{$lc[0]->color}}"><a href="/products?category={{$l->id}}" class="z-{{$lc[0]->color}}">{{$l->name}}</a></li>
                 @endforeach
             </div>
         </div>
@@ -137,7 +132,7 @@
                         <a href="products/{{$lp->id}}" target="_blank"><img src="{{json_decode($lp->features)->{'images'}[0]}}" /></a>
                     </div>  
                     <div class="check">
-                        <a href="javascript:void(0);" onclick="$('input[id=cart_submit]').click();">
+                        <a href="javascript:void(0);" onclick="formCartAdd({{$lp->id}});">
                             <div class="gwc hv-{{$lc[0]->color}} glyphicon glyphicon-shopping-cart option"></div>
                         </a>
                         <a href="user/orders/addTo/wishlist/{{$lp->id}}">
@@ -154,7 +149,11 @@
     </div>
     @endforeach 
 
-
+    <form action="" method="POST" id="cartSubmit">
+            <input name="_method" type="hidden" value="PUT">
+            {{ csrf_field() }}
+            <input type="submit" style="display:none" >
+    </form>
 @stop {{-- end content --}}
 
 @section('scripts')
@@ -163,6 +162,12 @@
         jQuery(".slideBox").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true});
         jQuery(".picScroll-left").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:true,vis:4});
         jQuery(".picScroll-left-two").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:false,scroll:5,vis:5,easing:"easeOutBounce",delayTime:500});
+
+        //加入购物车
+        function formCartAdd(id){
+            $("#cartSubmit").attr('action','user/orders/addTo/cart/'+id);
+            $("#cartSubmit").submit();
+        }
 
         //导航GPS
         window.onscroll = function(){
