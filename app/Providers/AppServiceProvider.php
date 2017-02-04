@@ -5,6 +5,8 @@ namespace app\Providers;
 use App\Category;
 use App\Company;
 use Illuminate\Support\ServiceProvider;
+use App\Article, App\Observers\ArticleObserver;
+use App\ArticleCategory, App\Observers\ArticleCategoryObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,6 +41,10 @@ class AppServiceProvider extends ServiceProvider
 
             \View::share('main_company', $main_company);
             \View::share('categories_menu', $menu);
+
+
+            Article::observe(ArticleObserver::class);  //文章model观察者
+            ArticleCategory::observe(ArticleCategoryObserver::class);  //文章分类model观察者
         }
     }
 

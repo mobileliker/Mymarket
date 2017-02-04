@@ -121,7 +121,7 @@ class ArticlesController extends Controller
             return Redirect::back();
         }else{
             if($article->delete()){
-                Cache::forget('article_'.$article->slug);
+                //Cache::forget('article_'.$article->slug);
                 Session::push('message', '文章删除成功');
                 return Redirect::back();
             }else{
@@ -162,8 +162,8 @@ class ArticlesController extends Controller
         $article->sort = $sort;
 
         if($article->save()){
-            Cache::forget('article_'.$slug);
-            Cache::put('article_'.$slug, $article);
+            //Cache::forget('article_'.$slug);
+            //Cache::put('article_'.$slug, $article);
 
             if($id == -1) Session::push('message', '新增文章成功');
             else Session::push('message', '修改文章成功');
