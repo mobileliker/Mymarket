@@ -1,0 +1,201 @@
+.order-div{
+	width:1200px;
+	min-height:100px;
+	margin:10 auto;
+
+	.left{
+		width:160px;
+		height:200px;
+		float: left;
+		li{
+			width:80%;
+			height:30px;
+			line-height: 30px;
+			font-size:15px;
+			text-align: left;
+			float:right;
+			a{font-size:12px;}
+		}
+	}
+	.right{
+		width:1020px;
+		min-height: 100px;
+		float:right;
+		padding-bottom:10px;
+		.title{
+			width:100%;
+			height:40px;
+			background:#E7F7F4;
+			font-size:18px;
+			color:black;
+			line-height: 40px;
+			padding-left:20px; 
+		}
+		.order-type{
+			width:100%;
+			height:50px;
+			span{
+				height:30px;
+				line-height: 30px;
+				font-size:15px;
+				color:#6F6F6F;
+				cursor: pointer;display:block;float:left;
+				margin-right:40px;position:relative;top:15px;
+				.order-amount{position:absolute;height:18px;width:18px;font-size:2px;border-radius:8px;
+					background:#FEB149;top:5px;right:-20px;line-height:18px;text-align:center;color:white;}
+			}
+			span:hover{color:#12C974;}
+			span:nth-child(1){
+				margin-left:10px;
+				color:#12C974;
+				border-bottom:1px solid #12C974;
+			}
+			input{
+				width:160px;
+				height:25px;
+				border:1px solid #959595;
+				float: right;
+				margin-top:15px;
+				border-right:1px solid #D3D3D3;
+			}
+			.search{
+				width:30px;
+				height: 25px;
+				border:1px solid #959595;
+				border-left:none;
+				float: right;
+				margin-top:15px;
+				cursor: pointer;
+				img{
+					width:15px;
+					height:15px;
+					margin-left:6px;
+					margin-top:4px;
+				}
+			}
+		}
+		.order-title{
+			width:100%;
+			height:35px;
+			background:#F2F2F2;
+			div{
+				height:100%;
+				color:#6F6F6F;
+				font-size:12px;
+				line-height: 35px;
+				text-align: center;
+				float: left;
+			}
+			.t-product{
+				width:400px;
+			}
+			.t-user{
+				width:150px;
+			}
+			.t-business{
+				width:150px;
+			}
+			.t-price{
+				width:150px;
+			}
+			.t-operate{
+				width:150px;
+			}
+		}
+		.details{
+			width:100%;
+			border:1px solid #B9B9B9;
+				float:left;
+			margin-top:20px;
+			.date{
+				width:100%;
+				height:30px;
+				background:#F2F2F2;
+				line-height: 30px;
+				border-bottom:1px solid #DBDBDB;
+				span{
+					margin-left:15px;
+					font-size:13px;
+					color:#A0A0A0;
+					a{color:#12C974;}
+				}
+				.delete{float:right;margin-right:30px;font-size:12px;margin-top:10px;color:#5F5F5F;}
+				.delete:hover{color:#12C974;}
+			}
+			.product{
+				width:400px;
+				float:left;
+				li{width:400px;
+					height:90px;
+					border-top:1px solid #ccc;
+					border-right:1px solid #ccc;
+					padding:10 15 10 15;
+					.p-details{
+						width:370px;
+						height:70px;
+
+						img{
+							width:70px;
+							height:70px;
+							float: left;
+						}
+						.p-t{
+							width:220px;height:40px;overflow:hidden;line-height:20px;padding-left:5px;float: left;
+							a{color:#626262;font-size:13px;}
+						}
+						.p-gg{width:220px;height:40px;overflow:hidden;line-height:40px;margin-top:10px;
+							color:#AAAAAA;padding-left:5px;
+						}
+						.amount{width:30px;height:30px;line-height:60px;float:right;text-align:center;}
+					}
+				}
+				li:nth-child(1){
+					border-top:none;
+				}
+			}
+			.business{
+				width:150px;
+				text-align: center;
+				float:left;
+				line-height: 25px;
+				color:#626262;
+				padding-top:28px;
+
+			}
+			.user{
+				width:150px;
+				text-align: center;
+				float:left;
+				min-height:80px;
+				line-height: 25px;
+				color:#626262;
+				padding-top:28px;
+				span{color:#ccc;cursor:pointer;}
+
+			}
+			.price{
+				width:150px;
+				text-align: center;
+				float:left;
+				line-height: 25px;
+				color:#626262;
+				padding-top:28px;
+
+			}
+			.operate{
+				width:150px;
+				text-align: center;
+				float:left;
+				padding-top:28px;
+				color:#626262;
+				button{width:60px;height:22px;border:1px solid #DBDBDB;background:#F2F2F2;}
+			}
+		}
+		.null{width:100%;height:150px;color:#CCC;font-size:20px;line-height:150px;text-align:center;}
+		.page{width:100%;height:60px;text-align:center;float:left;margin-top:20px;}
+	}
+}
+
+.action-li{color:#31C4A8;}
+.default-li{color:#818181;}
+.order-hidden{display:none;}

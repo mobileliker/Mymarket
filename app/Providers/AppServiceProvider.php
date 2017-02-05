@@ -2,6 +2,8 @@
 
 namespace app\Providers;
 
+use App\Http\Controllers\User as Users;
+use App\User;
 use App\Category;
 use App\Company;
 use Illuminate\Support\ServiceProvider;
@@ -46,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
             Article::observe(ArticleObserver::class);  //文章model观察者
             ArticleCategory::observe(ArticleCategoryObserver::class);  //文章分类model观察者
         }
+        // User::observe(Users::class);
     }
 
     /**
