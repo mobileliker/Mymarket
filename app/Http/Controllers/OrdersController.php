@@ -1308,7 +1308,8 @@ class OrdersController extends Controller
          *
          * @var string
          */
-        $route = 'orders.pendingOrders';
+            $route = '/user/orders';
+        // $route = 'orders.pendingOrders';
 
         /*
          * $message
@@ -1325,10 +1326,12 @@ class OrdersController extends Controller
          *
          * @var [type]
          */
+
         $order = Order::where('id', $orderId)
             ->with('details')
             ->where('user_id', $user->id)
-            ->ofStatus('open')
+            // ->ofStatus('open')
+            ->whereIn('status',array('open','paid','pending'))
             ->select('id', 'status', 'user_id')
             ->first();
 
@@ -1339,7 +1342,8 @@ class OrdersController extends Controller
             $order = Order::where('id', $orderId)
                 ->with('details')
                 ->where('seller_id', $user->id)
-                ->ofStatus('open')
+                // ->ofStatus('open')
+                ->whereIn('status',array('open','paid','pending'))
                 ->select('id', 'status', 'user_id')
                 ->first();
         }
@@ -1470,7 +1474,8 @@ class OrdersController extends Controller
         //checks if the orders is own by the user and if it is on open status
         if ($order) {
             //Mails and notifications are now sent in the save method for the order
-            $order->status = 'closed';
+            // $order->status = 'closed';
+            $order->status = 'received';
             $order->end_date = DB::raw('NOW()');
             // $order->end_date = Carbon::now(); Esto lo cambie porque no me parece guardar la fecha de php en la bd...
             $order->save();
@@ -1512,6 +1517,14 @@ class OrdersController extends Controller
         } else {
             return redirect(route('orders.show_orders'));
         }
+    }
+
+    public function orderDelete($id){
+
+        $order = new Order;
+        // $order->delete($id);
+
+        return redirect(route('orders.show_orders'));
     }
 
     public function reports($type, $filter)
@@ -1573,6 +1586,9 @@ class OrdersController extends Controller
 
         $dateTo = $request->get('dateTo') ? $request->get('dateTo') : '';
 
+        $search = $request->get('search') ? $request->get('search') : '';
+
+
         if ($dateFrom == '' && isset($filter[0])) {
             $dateFrom = $filter[0];
         }
@@ -1585,10 +1601,15 @@ class OrdersController extends Controller
             where($where_field, $user->id)
             ->with('user.profile')
             ->ofType('order')
-            ->whereIn('status', ['open', 'pending', 'sent'])
+            // ->whereIn('status', ['open', 'pending', 'sent'])
             ->orderBy('created_at', 'desc')
-            ->ofDates($dateFrom, $dateTo)
-            ->paginate(20);
+            ->ofDates($dateFrom, $dateTo);
+
+        if(!empty($search)){
+            $openOrders = $openOrders->where('seller_id','like','%'.$search.'%');
+        }
+
+        $openOrders = $openOrders->paginate(10);
 
         $closedOrders = Order::
             where($where_field, $user->id)
@@ -1596,7 +1617,7 @@ class OrdersController extends Controller
             ->ofType('order')
             ->ofStatus('closed')
             ->ofDates($dateFrom, $dateTo)
-            ->paginate(20);
+            ->paginate(10);
 
         $cancelledOrders = Order::
             where($where_field, $user->id)
@@ -1604,7 +1625,23 @@ class OrdersController extends Controller
             ->ofType('order')
             ->ofStatus('cancelled')
             ->ofDates($dateFrom, $dateTo)
-            ->paginate(20);
+            ->paginate(10);
+
+        $pendingOrders = Order::
+            where($where_field, $user->id)
+            ->with('user.profile')
+            ->ofType('order')
+            ->ofStatus('pending')
+            ->ofDates($dateFrom, $dateTo)
+            ->paginate(10);
+
+        $sentOrders = Order::
+            where($where_field, $user->id)
+            ->with('user.profile')
+            ->ofType('order')
+            ->ofStatus('sent')
+            ->ofDates($dateFrom, $dateTo)
+            ->paginate(10);
 
         $unRate = Order::
             where($where_field, $user->id)
@@ -1614,7 +1651,7 @@ class OrdersController extends Controller
             ->whereIn('status', ['received', 'closed'])
             ->whereNull('rate')
             ->ofDates($dateFrom, $dateTo)
-            ->paginate(20);
+            ->paginate(10);
 
         $panel = [
             'left'   => ['width' => '2', 'class' => 'user-panel'],
@@ -1623,7 +1660,9 @@ class OrdersController extends Controller
 
         $select = $request->get('show') ? $request->get('show') : '';
 
-        return view('orders.sales', compact('panel', 'openOrders', 'closedOrders', 'cancelledOrders', 'select', 'unRate', 'dateFrom', 'dateTo'));
+        // return view('orders.sales',
+        return view('szy.myorder.order-list',
+         compact('panel', 'openOrders', 'sentOrders','closedOrders', 'cancelledOrders','pendingOrders', 'select', 'unRate', 'dateFrom', 'dateTo'));
     }
 
     /**
@@ -1739,7 +1778,9 @@ class OrdersController extends Controller
 
                 $delivery = $order->delivery;
 
-                return view('orders.detail', compact('delivery','user', 'panel', 'orderAddress', 'is_buyer', 'order', 'orderAddress', 'order_comments', 'totalItems', 'grandTotal'));
+                // return view('orders.detail', compact('delivery','user', 'panel', 'orderAddress', 'is_buyer', 'order', 'orderAddress', 'order_comments', 'totalItems', 'grandTotal'));
+                
+                return view('szy.myorder.order-details', compact('delivery','user', 'panel', 'orderAddress', 'is_buyer', 'order', 'orderAddress', 'order_comments', 'totalItems', 'grandTotal'));
             } else {
                 $order = Order::where('id', $id)->where('seller_id', $user->id)->first();
                 if ($order) {

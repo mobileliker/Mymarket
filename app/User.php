@@ -205,4 +205,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+
+    // public function observe(){
+        
+    // }
 }

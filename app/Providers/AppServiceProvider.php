@@ -2,6 +2,8 @@
 
 namespace app\Providers;
 
+use App\Http\Controllers\User as Users;
+use App\User;
 use App\Category;
 use App\Company;
 use Illuminate\Support\ServiceProvider;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
             \View::share('main_company', $main_company);
             \View::share('categories_menu', $menu);
         }
+        // User::observe(Users::class);
     }
 
     /**

@@ -72,6 +72,8 @@ Route::group(['prefix' => 'user', 'roles' => array_keys(trans('globals.roles')),
 
     Route::post('orders/pay/successful', 'OrdersController@orderSuccessful');//支付成功
 
+    Route::get('orders/delete/{id}','OrdersController@orderDelete');//删除订单
+
     //filtered by dates
     Route::post('orders', ['uses' => 'OrdersController@usersOrders', 'as' => 'orders.show_orders']);
 
