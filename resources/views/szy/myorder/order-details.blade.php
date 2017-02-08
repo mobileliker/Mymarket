@@ -15,7 +15,7 @@
 	<div class="order-details">
 		<div class="flow-img">
 			<div class="details-title">
-			您好！你的订单 53452345 
+			您好！订单 53452345 
 
 			@if($order->status=='cancelled')
 				处于取消状态...
@@ -34,7 +34,7 @@
 			@endif 
 
 			@if($order->status=='received')
-				已签收! <a href="">立即评价</a>
+				已签收! <a href="user/orders/comment/{{$order->id}}">立即评价</a>
 			@endif 
 
 			@if($order->status=='sent')
@@ -68,6 +68,32 @@
 				<a href="products/{{$detailsProduct->pid}}"  target="_black"><img src="{{json_decode($detailsProduct->features)->{'images'}[0]}}"></a>
 				<div class="pt-info1"><a href="products/{{$detailsProduct->pid}}"  target="_black">{{$detailsProduct->name}}</a></div>
 				<div class="pt-info2">×<b>{{$detailsProduct->quantity}}</b> &nbsp;&nbsp;&nbsp; ￥<b>{{$detailsProduct->price}}</b></div>
+				<div class="select-comment">
+					@if(empty($detailsProduct->reply))
+						<a href="javascript:void(0);" class="comment-reply" pid="{{$detailsProduct->id}}">评论回复</a>
+					@endif
+				</div>
+				<div class="show-comment">
+					{{$detailsProduct->rate_comment}}
+
+					<div class="max-image"><img src=""></div>
+
+					@if(!empty($detailsProduct->image))
+					<div class="cm-images">
+						@foreach(explode(',',$detailsProduct->image) as $img)
+						<img src="{{$img}}">
+						@endforeach
+					</div>
+					@endif
+				</div>
+				@if(!empty($detailsProduct->reply))
+				<div class="reply">
+					<p>评论回复:</p> 
+					<div class="reply-text">
+						{{$detailsProduct->reply}}
+					</div>
+				</div>
+				@endif
 			</div>
 			@endforeach	
 		</div>
@@ -119,7 +145,13 @@
 
 		<?php 
 			$address = App\Address::find($order->address_id);
-			$business = App\Business::where('user_id',$order->seller_id)->first();
+			$sellerRole = App\User::find($order->seller_id)->role;
+			if ($orderType=='myorder') {
+				$business = App\Business::where('user_id',$order->seller_id)->first();
+			}else{
+				$business = App\Business::where('user_id',$order->user_id)->first();
+			}
+
 		 ?>
 		<div class="order-products">
 			<div class="details-title">订单信息 </div>
@@ -129,10 +161,26 @@
 				<li>您的电话: {{$address->phone}}</li>
 			</div>
 			<div class="info-right">
-				<li>店铺: {{$business->business_name}}</li>
-				<li>负责人: {{$business->person}}</li>
-				<li>商家电话: {{$business->phone}}</li>
+				@if($sellerRole!='admin' && $sellerRole!='person')
+					<li>店铺: {{$business->business_name}}</li>
+					<li>负责人: {{$business->person}}</li>
+					<li>商家电话: {{$business->phone}}</li>
+				@else
+					<li>网站自营 (卖家)</li>
+				@endif
 			</div>
+		</div>
+	</div>
+
+	<div class="opt">
+		<div class="reply-opt">
+			<br>
+			<span> &nbsp;评论回复：</span>
+			<textarea cols=70 rows=8 >
+
+			</textarea>
+			<button onclick="replySubmit()" pid="" id="replySubmit">提交回复</button>
+			<button onclick="replyClear();">取消</button>
 		</div>
 	</div>
 @stop
@@ -140,6 +188,34 @@
 @section('scripts')
     @parent
     <script type="text/javascript">
+    	$(".cm-images img").click(function(){
+    		$(this).parent('.cm-images').siblings(".max-image").children("img").attr('src',$(this).attr('src'));
+    		$(this).parent('.cm-images').siblings(".max-image").show();
+    	});
+	$(".comment-reply").click(function(){
+		$(".opt").show();
+		$(".opt #replySubmit").attr('pid',$(this).attr('pid'));
+	});
+	function replyClear(){
+		$(".reply-opt textarea").val('');
+		$("#replySubmit").attr('pid','');
+		$(".opt").hide();
+	}
+	function replySubmit(){
+		$(".opt").hide();
+		var text = $(".reply-opt textarea").val();
+		var v = $("#replySubmit").attr('pid');
+		$.get("user/orders/commentReply", { id: v, reply: text },
+		  function(data){
+		    if(data){
+		    	alert('回复评论成功！');
+		    	$(".comment-reply[pid='"+v+"']").hide();
+		    	$(".comment-reply[pid='"+v+"']").parent('div').parent('div').append("<div class='reply'><p>评论回复:</p><div class='reply-text'>"+text+"</div></div>");
+		    }else{
+		    	alert('回复评论失败！');
+		    }
+		});
+	}
 
     </script>
 @show

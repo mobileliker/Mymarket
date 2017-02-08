@@ -28,7 +28,7 @@ Route::group(['roles' => ['business', 'nonprofit', 'admin'], 'middleware' => ['a
 
     Route::post('products/change/status/{id}', ['uses' => 'ProductsController@changeStatus', 'as' => 'products.change_status']);
 
-    Route::get('orders/usersOrders', ['uses' => 'OrdersController@usersOrders', 'as' => 'orders.pendingOrders']);
+    Route::get('orders/usersOrders', ['uses' => 'OrdersController@sellOrders', 'as' => 'orders.pendingOrders']);
 
     //filtered by dates
     Route::post('orders/usersOrders', ['uses' => 'OrdersController@usersOrders', 'as' => 'orders.pendingOrders']);

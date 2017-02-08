@@ -4,11 +4,13 @@ namespace app\Providers;
 
 use App\Http\Controllers\User as Users;
 use App\User;
+use App\OrderDetail;
 use App\Category;
 use App\Company;
 use Illuminate\Support\ServiceProvider;
 use App\Article, App\Observers\ArticleObserver;
 use App\ArticleCategory, App\Observers\ArticleCategoryObserver;
+use App\Observers\OrderDetailsObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,6 +49,8 @@ class AppServiceProvider extends ServiceProvider
 
             Article::observe(ArticleObserver::class);  //文章model观察者
             ArticleCategory::observe(ArticleCategoryObserver::class);  //文章分类model观察者
+            OrderDetail::observe(OrderDetailsObserver::class);  //订单商品model观察者
+
         }
         // User::observe(Users::class);
     }

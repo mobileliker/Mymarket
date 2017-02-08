@@ -9,6 +9,7 @@
 @stop
 
 @section('content')
+   @parent
 	<!-- 商品详情页内容 -->
 	<div class='details'>
 			<div class="product-edit-fixed">
@@ -52,7 +53,7 @@
 						<?php $num=0; ?>
 						@foreach($product->features['images'] as $image)
 							<?php $num++; ?>
-							@if($num<5)
+							@if($num<5 && $image!='')
 							<li><img src="{{$image}}"></li>
 							@endif
 						@endforeach
@@ -94,8 +95,8 @@
 							</div>
 						</div>
 						<div class="right">
-							<div class="pre">月销量 <b>1554</b></div>
-							<div class="next">累计评价 <b>1545</b></div>
+							<div class="pre">月销量 <b>{{ $sellCommentAmount}}</b></div>
+							<div class="next">累计评价 <b>{{ $allCommentAmount}}</b></div>
 						</div>
 					</div>
 					<div class="delivery">
@@ -116,7 +117,7 @@
 							有货 &nbsp; 免邮费
 						</div>
 						<div class="fw">
-							服 务:由<a href="shop/{{$business->user_id}}">{{$business->business_name}}</a>从{{$business->address}}提供发货,并提供售后服务
+							服 务:由<a href="shop/{{$business->user_id}}"  target="_blank">{{$business->business_name}}</a>从{{$business->address}}提供发货,并提供售后服务
 							@if ($product->stock <= $product->low_stock)
 								<span class = "label label-warning">{{ trans('store.lowStock') }}</span>
 							@else
@@ -166,18 +167,22 @@
 
 				<div class="serve">
 					<div class="title">
-						<a href="">{{$business->business_name}}</a>
+						<a href="shop/{{$business->user_id}}" target="_blank">{{$business->business_name}}</a>
 					</div>
 					<div class="zs">
-						<div class='lf'>9.65</div>
+						<div class='lf'>{{$product->count_rate*10}}%</div>
 						<div class="rt">
-							<li>商品评价 9.65 <img src="/img/szy/inc/jt-footer.png"></li>
-							<li>服务评价 9.65 <img src="/img/szy/inc/jt-footer.png"></li>
-							<li>物流评价 9.65 <img src="/img/szy/inc/jt-footer.png"></li>
+							<li>商品评价 {{$product->product_rate*10}}% <img src="/img/szy/inc/jt-top.png"></li>
+							<li>服务评价 {{$product->sever_rate*10}}% <img src="/img/szy/inc/jt-top.png"></li>
+							<li>物流评价 {{$product->delivery_rate*10}}% <img src="/img/szy/inc/jt-top.png"></li>
 						</div>
 					</div>
 					<div class="lx">
-						<li><a href="" {{$business->phone}}><img src="/img/szy/inc/phone.png"> 联系卖家</a></li>
+						<li onmouseover="overTel();" onmouseout="outTel();">
+							<a href="javascript:void(0);"  >
+							<img src="/img/szy/inc/phone.png"> 联系卖家</a>
+							<div class="tel">{{$business->phone}}</div>
+						</li>
 						<li><a href="" {{$business->qq}}><img src="/img/szy/inc/consult.png"> 咨询客服</a></li>
 						<li><a href="shop/{{$business->user_id}}" ><img src="/img/szy/inc/shop.png"> 进店逛逛</a></li>
 							<?php 
@@ -236,7 +241,8 @@
 			<div class="right">
 				<div class="desc">
 					<div class="d-title">
-						<div class="tt-t">商品详情</div>
+						<div class="tt-t" onclick="defaultShow(this);">商品详情</div>
+						<div class="tt-t" onclick="commentShow(this);">商品评价</div>
 					</div>
 					<div class="d-pp">
 						品牌名称: <a href="products?brands={{ ucwords($product->brand) }}">{{ ucwords($product->brand) }}</a>		
@@ -248,11 +254,11 @@
 						<li>生产日期: <span>{{$product->plan_date}}</span></li>
 						</div >
 						<div class="xx-san">
-					@foreach ($product->features as $key => $feature)
-						@if ($key != 'images' && $key=='重量')
-							<li>重量: <span>{{  ucwords( is_array($feature) ? implode(' ', $feature) : $feature ) }}</span></li>						
-						@endif
-					@endforeach
+						@foreach ($product->features as $key => $feature)
+							@if ($key != 'images' && $key=='重量')
+								<li>重量: <span>{{  ucwords( is_array($feature) ? implode(' ', $feature) : $feature ) }}</span></li>						
+							@endif
+						@endforeach
 						<li>产地: <span>{{$product->origin}}</span></li>
 						</div>
 						<div class="xx-san">
@@ -271,6 +277,22 @@
 						{!! $product->desc_img !!}
 					</div>
 				</div>
+
+				<div class="comment">
+					<div class="comment-type">
+						<li ctype="all">全部评论({{ $allCommentAmount}})</li>
+						<li ctype="image">晒图({{ $imageCommentAmount}})</li>
+						<li ctype="good">好评({{ $goodCommentAmount}})</li>
+						<li ctype="common">中评({{ $commonCommentAmount}})</li>
+						<li ctype="bad">差评({{ $badCommentAmount}})</li>
+					</div>
+						<div class="comment-center" id="result">
+						</div>
+						<div class="comment-null"></div>
+						<div class="page" id="page">
+
+						</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -278,8 +300,121 @@
 
 @section('scripts')
    @parent
+
+{!! Html::script('/js/szy/jquery-3.1.1.min.js') !!}
+{!! Html::script('/js/szy/jquery.tmpl.min.js') !!}
+{!! Html::script('/js/szy/common.js') !!}
+{!! Html::script('/js/szy/layer.js') !!}
+
+<!-- 数据加载模板 -->
+<script id="demo" type="text/x-jquery-tmpl">
+		<div class="comment-left">
+			<div class="user-info">
+				<li><img src="${userpic}"></li>
+				<li>${username}</li>
+			</div>
+			<div class="wjx">
+			@{{if rate==2 }}
+			★
+			@{{/if}}
+			@{{if rate==4}}
+			★★
+			@{{/if}}
+			@{{if rate==6}}
+			★★★
+			@{{/if}}
+			@{{if rate==8}}
+			★★★★
+			@{{/if}}
+			@{{if rate==10}}
+			★★★★★
+			@{{/if}}
+			</div>
+		</div>
+		<div class="comment-right">
+			<div class="cm-text">
+				${rate_comment}
+			</div>
+			<div class="cm-imageMax">
+				<img src="" >
+			</div>
+
+			@{{if image!=null }}
+			<div class="cm-image">
+                @{{each(i, data) image}}
+					<img src= "${data}" class="minImage" onclick="maxImage(this)">
+                @{{/each}}
+			</div>
+			@{{/if}}
+			<div class="date">${date}</div>
+		</div>
+</script>
+
 <script type="text/javascript">
 	
+	function commentData(ctype){
+	    var comment = new Paging(['result', 'demo', 'comments', 'page']);
+
+        //获取分页后的列表项
+        var params = {
+            "pid": {{$product->id}},
+            'ctype':ctype
+        };
+        easyAjax.queryWithParams('products/comment', params, function (ret) {
+            comment.flashPaginator(ret);
+            if (!ret['comments']['data'].length) {
+            	$(".comment-null").html('等你来抢沙发哟~');
+            	$(".comment-null").show();
+            	$(".comment-center").hide();
+            }else{
+            	$(".comment-null").hide();
+            	$(".comment-center").show();
+            }
+        });
+	}
+
+	$(".comment-type li").click(function(){
+		var ctype = $(this).attr('ctype');
+		$(".comment-type li").css('color','white');
+		$(".comment-type li").css('background','#31C4A8');
+		$(this).css('color','#31C4A8');
+		$(this).css('background','white');
+		commentData(ctype);
+	});
+
+	function defaultShow(th){
+		$this = $(th);
+		$this.next('div').css('background','#EDEDED');
+		$this.next('div').css('border-top','none');
+		$this.css('background','white');
+		$this.css('border-top','3px solid #31C4A8');
+		$(".comment").hide();
+		$(".desc-img").show();
+	}
+	function commentShow(th){
+		$this = $(th);
+		$this.prev('div').css('background','#EDEDED');
+		$this.prev('div').css('border-top','0px solid white');
+		$this.css('background','white');
+		$this.css('border-top','3px solid #31C4A8');
+		$(".comment").show();
+		$(".desc-img").hide();
+		commentData(null);
+	}
+
+	// 评论小图变大图显示
+	function maxImage(th){
+		$this = $(th);
+		$this.parent('div').siblings('.cm-imageMax').children("img").attr('src',$this.attr('src'));
+		$this.parent('div').siblings('.cm-imageMax').show();
+	}
+
+	function overTel(){
+		$(".tel").show();
+	}
+	function outTel(){
+		$(".tel").css('display','none');
+	}
 	//跳转登录
 	function Login(){
 		alert('请登录！');

@@ -43,7 +43,10 @@
 <div class="order-div">
     <div class="left">           
         <li>订单中心</li>
-        <li><a href="user/orders" class="action-li">我的订单</a></li>
+        <li><a href="user/orders" @if($orderType=='myorder')class="action-li"@else class='default-li'@endif>我的订单</a></li>
+        @if(auth::user()->role=='admin' || auth::user()->role=='business')
+        <li><a href="orders/usersOrders" @if($orderType=='sellorder')class="action-li"@else class='default-li'@endif>我的销售</a></li>
+        @endif
         <li><a href="" class="default-li">团购订单</a></li>
         <li>关注中心</li>
         <li><a href="wishes" class="default-li">关注的商品</a></li>

@@ -88,13 +88,22 @@
 	<h6>网站图片</h6>
 </div>--}}
 <div class="row">
-	<div class="col-md-12">
-			<label class="control-label">网站Logo:</label>
+	<div class="col-md-6">
+			<label class="control-label">网站主Logo:</label>
       		<input class='upload-pic' type="file" id="pic_logo" name="logo" style="display:none">
       		@if(!empty($company->logo))
 			<img src="{{$company->logo}}" alt="点击" class="thumbnail" onclick="$('input[id=pic_logo]').click();" width="140px" height="140px" style="cursor:pointer">
 			@else
 			<img src="img/no-img.png" alt="点击" class="thumbnail" onclick="$('input[id=pic_logo]').click();" width="140px" height="140px" style="cursor:pointer">
+			@endif
+	</div>
+	<div class="col-md-6">
+			<label class="control-label">网站副Logo:</label>
+      		<input class='upload-pic' type="file" id="pic_logo2" name="logo2" style="display:none">
+      		@if(!empty($company->logo2))
+			<img src="{{$company->logo2}}" alt="点击" class="thumbnail" onclick="$('input[id=pic_logo2]').click();" width="140px" height="140px" style="cursor:pointer">
+			@else
+			<img src="img/no-img.png" alt="点击" class="thumbnail" onclick="$('input[id=pic_logo2]').click();" width="140px" height="140px" style="cursor:pointer">
 			@endif
 	</div>
 	<label class="control-label"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站轮播图:</label>

@@ -62,7 +62,11 @@ class AboutController extends Controller
         //return view('szy.about', compact('tab'));
 
         $article = Article::whereNotNull('category_id')->first();
-        return Redirect::to('/page/'.$article->slug);
+
+        if($article != null)
+            return Redirect::to('/page/'.$article->slug);
+        else
+            abort(404);
     }
 
     public function refunds()

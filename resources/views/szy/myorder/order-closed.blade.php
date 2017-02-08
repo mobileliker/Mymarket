@@ -1,5 +1,5 @@
-@if(isset($unRate[0]))
-    @foreach($unRate as $openOrder)
+@if(isset($closedOrders[0]))
+    @foreach($closedOrders as $openOrder)
     <div class="details">
         <div class="date">
             <span>{{$openOrder->created_at}}</span>
@@ -57,7 +57,7 @@
             @endif
         </div>
         <div class="business">
-            @if($openOrder->status=='received')待评价 @endif
+            @if($openOrder->status=='closed')已完成 @endif
             <br>
             <a href="user/orders/show/{{$openOrder->id}},{{$orderType}}">订单详情</a>
         </div>
@@ -69,22 +69,15 @@
         <div class="price">总额 ￥{{$priceCount}} <br> 微信支付</div>
         <div class="operate">
             <?php 
-            if ($openOrder->status=='sent') {
-                    $delivery = App\Delivery::where('order_id',$openOrder->id)->first();
-                    $deliveryTime = strtotime($delivery->created_at);
-                    $countTime = $deliveryTime + 15*24*3600;
-                    $syTime = $countTime - time();
-                    $day = intval($syTime/(24*3600));
-                    $h = intval($syTime%(24*3600)/3600);
-                }
+                $order = App\Order::find($openOrder->id);
+                $cancellDate = date('Y-m-d',strtotime($order->updated_at));
             ?>
-            @if($openOrder->status=='sent')
-            <span>还剩{{$day}}天{{$h}}小时</span>
-            @endif
+
+                <span>完成日期 {{$cancellDate}}</span>
             <br>
             <br>
-            @if($openOrder->status=='received')
-                <button onclick="evaluate({{$openOrder->id}});">评价</button>
+            @if($openOrder->status=='closed')
+                <a href="user/orders/show/{{$openOrder->id}},{{$orderType}}"><button>查看详情</button></a>
             @endif
         </div>
     </div>

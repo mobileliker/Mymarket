@@ -14,7 +14,7 @@
     @foreach($orderinfos as $sellerid => $orderinfo)
     <div class="success-tips">
         <span>支付成功！订单号:</span>
-        <em>{{$sellerid}}</em>
+        <em>{{$orderinfo->order_number}}</em>
         <span>已成功生成，我们会尽快送达您的手中!</span>
     </div>
     <div class="order">
@@ -70,7 +70,9 @@
 @section('scripts')
     @parent
     <script type="text/javascript">
-
+        if({{$checkSubmit}}){
+            alert('你已提交过订单！');
+        }
 
     </script>
-@show
+@stop

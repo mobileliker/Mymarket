@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use DB;
+use App\Http\Paging as Page;
 
 class ProductsController extends Controller
 {
@@ -505,7 +506,7 @@ class ProductsController extends Controller
             'id', 'category_id', 'user_id', 'name', 'description',
             'price', 'stock', 'features', 'condition', 'rate_val',
             'rate_count', 'low_stock', 'status', 'type', 'tags', 'products_group', 'brand','origin',
-            'plan_date','pack','quality_time','import','price_raw','desc_img'
+            'plan_date','pack','quality_time','import','price_raw','desc_img','product_rate','count_rate','sever_rate','delivery_rate'
         ])->with([
             'group' => function ($query) {
                 $query->select(['id', 'products_group', 'features']);
@@ -595,12 +596,115 @@ class ProductsController extends Controller
             //店铺信息
             $business = Business::where('user_id',$product->user_id)->first();
 
+            //评论数量统计
+            $allCommentAmount = OrderDetail::where('product_id','=',$product->id)
+                        ->join('orders','order_details.order_id','=','orders.id')
+                        ->where('orders.type','=','order')
+                        ->whereNotNull('order_details.rate_comment')
+                        ->count();
+            $imageCommentAmount = OrderDetail::where('product_id','=',$product->id)
+                        ->join('orders','order_details.order_id','=','orders.id')
+                        ->where('orders.type','=','order')
+                        ->whereNotNull('order_details.rate_comment')
+                        ->whereNotNull('order_details.image')
+                        ->count();
+            $goodCommentAmount = OrderDetail::where('product_id','=',$product->id)
+                        ->join('orders','order_details.order_id','=','orders.id')
+                        ->where('orders.type','=','order')
+                        ->whereNotNull('order_details.rate_comment')
+                        ->where('order_details.rate','>',6)
+                        ->count();
+            $commonCommentAmount = OrderDetail::where('product_id','=',$product->id)
+                        ->join('orders','order_details.order_id','=','orders.id')
+                        ->where('orders.type','=','order')
+                        ->whereNotNull('order_details.rate_comment')
+                        ->where('order_details.rate','=',6)
+                        ->count();
+            $badCommentAmount =  OrderDetail::where('product_id','=',$product->id)
+                        ->join('orders','order_details.order_id','=','orders.id')
+                        ->where('orders.type','=','order')
+                        ->whereNotNull('order_details.rate_comment')
+                        ->where('order_details.rate','<',6)
+                        ->count();
+            //月销量统计
+            $mothTime = date('Y-m-d H:i:s',time()-30*24*3600);
+            $sellCommentAmount = OrderDetail::where('product_id','=',$product->id)
+                        ->join('orders','order_details.order_id','=','orders.id')
+                        ->where('orders.type','=','order')
+                        ->whereIn('orders.status',array('close','received','sent'))
+                        ->where('orders.updated_at','>',$mothTime)
+                        ->count();
+
             return view('szy.detailProduct', compact('product', 'panel', 'allWishes', 'reviews', 'business',
-                'freeproductId', 'features', 'suggestions','sells','addresDefault','address','productCS')
+                'freeproductId', 'features', 'suggestions','sells','addresDefault','address','productCS','sellCommentAmount',
+                'allCommentAmount','imageCommentAmount','goodCommentAmount','commonCommentAmount','badCommentAmount')
             );
         } else {
             return redirect(route('products'));
         }
+    }
+
+    public function commentQuery(Request $request){
+
+        $request->flash();//request保存
+
+        //获取条件数据对象
+        $params = $request->input('params');
+        $id = $params['pid'];
+        $ctype = $params['ctype']?$params['ctype']:"";
+        $nid = $request->input('pid');
+        $nctype = $request->input('ctype');
+
+        if (!empty($nid)) {
+           $id = $nid;
+        }
+        if (!empty($nctype)) {
+            $ctype = $nctype;
+        }
+
+        //翻页保持条件
+        if(!isset($params)){
+            $params = array();
+            if (!empty($request->all())) {
+                $params = $request->all();
+            }
+         }
+
+        //全部评论
+        $comments = OrderDetail::where('product_id','=',$id)
+                    ->join('orders','order_details.order_id','=','orders.id')
+                    ->join('users','orders.user_id','=','users.id')
+                    ->where('orders.type','=','order')
+                    ->whereNotNull('order_details.rate_comment');
+
+        $commentType = $ctype;
+
+        if ($commentType=='image') {
+           $comments = $comments->whereNotNull('order_details.image');        
+        }            
+        if ($commentType=='good') {
+           $comments = $comments->where('order_details.rate','>',6);        
+        }    
+        if ($commentType=='common') {
+           $comments = $comments->where('order_details.rate','=',6);               
+        }    
+        if ($commentType=='bad') {
+           $comments = $comments->where('order_details.rate','<',6);             
+        }    
+
+        $comments = $comments->select(
+                        'users.nickname as username',
+                        'users.pic_url as userpic',
+                        'order_details.updated_at as date',
+                        'order_details.rate',
+                        'order_details.rate_comment',
+                        'order_details.image',
+                        'order_details.reply')
+                    ->groupBy('order_details.id')
+                    ->orderBy('order_details.updated_at','desc')
+                    ->paginate(20);
+
+        return Page::pagin('products/comment','comments',$comments,$params);
     }
 
     /**

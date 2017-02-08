@@ -15,19 +15,31 @@
         我的订单
     </div>
     <?php 
-        $amountAll = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->count();
-        $amountPending = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->ofStatus('pending')->count();
-        $amountSent = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->ofStatus('sent')->count();
-        $amountReceived = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->whereIn('status', ['received', 'closed'])->count();
-        $amountCancelled = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->ofStatus('cancelled')->count();
+        if ($orderType=='myorder') {
+            $amountAll = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->count();
+            $amountOpen = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->ofStatus('open')->count();
+            $amountClosed = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->ofStatus('closed')->count();
+            $amountSent = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->ofStatus('sent')->count();
+            $amountReceived = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->whereIn('status', ['received', 'closed'])->count();
+            $amountCancelled = App\Order::where('user_id', \Auth::user()->id)->ofType('order')->ofStatus('cancelled')->count();
+        }else{
+            $amountAll = App\Order::where('seller_id', \Auth::user()->id)->ofType('order')->count();
+            $amountOpen = App\Order::where('seller_id', \Auth::user()->id)->ofType('order')->ofStatus('open')->count();
+            $amountClosed = App\Order::where('seller_id', \Auth::user()->id)->ofType('order')->ofStatus('closed')->count();
+            $amountSent = App\Order::where('seller_id', \Auth::user()->id)->ofType('order')->ofStatus('sent')->count();
+            $amountReceived = App\Order::where('seller_id', \Auth::user()->id)->ofType('order')->whereIn('status', ['received', 'closed'])->count();
+            $amountCancelled = App\Order::where('seller_id', \Auth::user()->id)->ofType('order')->ofStatus('cancelled')->count(); 
+        }
     ?>
 
     <div class="order-type">
         <span onclick="orderAll();">全部订单 <div class="order-amount">{{$amountAll}}</div></span>
-        <span onclick="orderPending();">待付款 <div class="order-amount">{{$amountPending}}</div></span>
+        {{--<span onclick="orderPending();">待处理 <div class="order-amount">{{$amountPending}}</div></span>--}}
+        <span onclick="orderOpen();">待付款 <div class="order-amount">{{$amountOpen}}</div></span>
         <span onclick="orderSent();">待收货 <div class="order-amount">{{$amountSent}}</div></span>
         <span onclick="orderReceived();">待评价 <div class="order-amount">{{$amountReceived}}</div></span>
         <span onclick="orderCancelled();">已取消 <div class="order-amount">{{$amountCancelled}}</div></span>
+        <span onclick="orderClosed();">已完成 <div class="order-amount">{{$amountClosed}}</div></span>
         
         <div class="search" onclick="searchs();"><img src="img/szy/inc/search1.png"></div>
         <input type="text" id="search" name="" @if(isset($_GET['search']))value="{{$_GET['search']}}"@endif placeholder=" 输入订单号">
@@ -64,7 +76,11 @@
        @include('szy.myorder.order-cancelled')   
         <div class="page">{{$cancelledOrders->links()}}</div>                 
     </div>
-    
+
+    <div id="orderClosed" class="order-hidden">
+       @include('szy.myorder.order-closed')   
+        <div class="page">{{$closedOrders->links()}}</div>                 
+    </div>
 @stop {{-- end content --}}
 
 @section('scripts')
@@ -81,14 +97,13 @@
         $(".order-type span").eq(0).css('border-bottom','1px solid #12C974');
     }
     //显示待付款
-    function orderPending(){
+    function orderOpen(){
         $(".order-hidden").css('display','none');
         $("#orderPending").show();
         $(".order-type span").css('color','#6F6F6F');
         $(".order-type span").eq(1).css('color','#12C974');
         $(".order-type span").css('border-bottom','none');
         $(".order-type span").eq(1).css('border-bottom','1px solid #12C974');
-
     }
         //显示待收货
     function orderSent(){
@@ -98,7 +113,6 @@
         $(".order-type span").eq(2).css('color','#12C974');
         $(".order-type span").css('border-bottom','none');
         $(".order-type span").eq(2).css('border-bottom','1px solid #12C974');
-
     }
         //显示待评价
     function orderReceived(){
@@ -108,7 +122,6 @@
         $(".order-type span").eq(3).css('color','#12C974');
         $(".order-type span").css('border-bottom','none');
         $(".order-type span").eq(3).css('border-bottom','1px solid #12C974');
-
     }
         //显示已取消
     function orderCancelled(){
@@ -118,16 +131,24 @@
         $(".order-type span").eq(4).css('color','#12C974');
         $(".order-type span").css('border-bottom','none');
         $(".order-type span").eq(4).css('border-bottom','1px solid #12C974');
-
+    }
+    //显示已完成
+    function orderClosed(){
+        $(".order-hidden").css('display','none');
+        $("#orderClosed").show();
+        $(".order-type span").css('color','#6F6F6F');
+        $(".order-type span").eq(5).css('color','#12C974');
+        $(".order-type span").css('border-bottom','none');
+        $(".order-type span").eq(5).css('border-bottom','1px solid #12C974');
     }
     /** 所有订单 **/
         //付款
         function pay(id){
-            window.location.href = ""+id;
+            // window.location.href = ""+id;
         }
         //评价
         function evaluate(id){
-            window.location.href = "user/orders/close/"+id;
+            window.location.href = "user/orders/comment/"+id;
         }
         //收货
         function sent(id){
@@ -145,7 +166,11 @@
         function searchs(){
             var val = $("#search").val();
             if (val!="") {
-                window.location.href = "user/orders?search="+val;
+                if ('{{$orderType}}'=='myorder') {
+                    window.location.href = "user/orders?search="+val;
+                }else{
+                    window.location.href = "orders/usersOrders?search="+val;
+                }
             }else{
                 alert('请输入订单号！');
             }

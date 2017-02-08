@@ -74,6 +74,7 @@ Route::group(['prefix' => 'user', 'roles' => array_keys(trans('globals.roles')),
 
     Route::get('orders/delete/{id}','OrdersController@orderDelete');//删除订单
 
+
     //filtered by dates
     Route::post('orders', ['uses' => 'OrdersController@usersOrders', 'as' => 'orders.show_orders']);
 
@@ -98,6 +99,8 @@ Route::group(['prefix' => 'user', 'roles' => array_keys(trans('globals.roles')),
     Route::get('orders/comment/{order_id}', ['uses' => 'OrdersController@commentOrder', 'as' => 'orders.comment']);
 
     Route::post('orders/storeComment', ['uses' => 'OrdersController@storeComment', 'as' => 'orders.store_comment']);
+
+    Route::get('orders/commentReply', 'OrdersController@commentReply');
 
     Route::get('orders/delete/{order_id}/{type}', ['uses' => 'OrdersController@destroy', 'as' => 'orders.delete']);
 

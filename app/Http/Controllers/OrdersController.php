@@ -1050,7 +1050,6 @@ class OrdersController extends Controller
             }
         }
 
-
         $cart = Order::ofType('cart')->ofUser($user->id)->select('id')->first();
 
         $cartDetail = $cart ? OrderDetail::where('order_id', $cart->id)->get() : [];
@@ -1113,6 +1112,19 @@ class OrdersController extends Controller
         return view('szy.pay',compact('payPlan'));
     }
 
+    public function number(){
+
+        $countOrder = Order::orderBy('id','desc')->first();
+
+        if (empty($countOrder)) {
+           $count = 0;
+        }else{
+            $count = $countOrder->id;
+        }
+
+        return 'wjcs'.rand(10,99).substr(date("Y"),2).date("m").date('d').$count.rand(10,99);
+    }
+
     /**
      * 交易完成
      *
@@ -1126,6 +1138,7 @@ class OrdersController extends Controller
         $paytype = $request->input('paytype');
         $remarks = $request->input('remarks');
         $details_ids = explode(',',$request->input('details_ids'));
+        $checkSubmit = 0;
 
         //查询user id
         $data = DB::table('products')->join('order_details','products.id','=','order_details.product_id')
@@ -1139,28 +1152,35 @@ class OrdersController extends Controller
         }       
 
         //查询第一个订单状态
-        $firstOrder = OrderDetail::find($details_ids[0])->select('order_id')->first();
-        $sellerCheck = Order::where('type','order')->where('id',$firstOrder->order_id)->where('status','open')->first();
+        $firstOrder = OrderDetail::find($details_ids[0]);
+        if ($firstOrder!="") {
+            $sellerCheck = Order::where('type','order')->where('status','paid')->find($firstOrder->order_id);
 
-        //判断是否为第一次提交
-        if (empty($sellerCheck)) {
-            //操作订单 
-            foreach ($products as $sellerid => $product) {
-               $orders = new Order;
-               $orders->address_id = $address_id;
-               $orders->description = $remarks;
-               $orders->status = 'open';
-               $orders->type = 'order';
-               $orders->seller_id = $sellerid;
-               $orders->user_id = auth()->user()->id;
-               if ($orders->save()) {
-                   foreach ($product as $id) {
-                      $order_details = OrderDetail::find($id);
-                      $order_details->order_id = $orders->id;
-                      $order_details->save();
-                   }
-               }
+            //判断是否为第一次提交
+            if (empty($sellerCheck)) {
+                //操作订单 
+                foreach ($products as $sellerid => $product) {
+                    $orders = new Order;
+                    $orders->address_id = $address_id;
+                    $orders->description = $remarks;
+                    $orders->status = 'paid';
+                    $orders->order_number = $this->number();
+                    $orders->type = 'order';
+                    $orders->seller_id = $sellerid;
+                    $orders->user_id = auth()->user()->id;
+                    if ($orders->save()) {
+                        foreach ($product as $id) {
+                            $order_details = OrderDetail::find($id);
+                            $order_details->order_id = $orders->id;
+                            $order_details->save();
+                        }
+                    }
+                }
+            }else{
+                $checkSubmit = 1;
             }
+        }else{
+            abort(404);
         }
 
         //查询订单信息
@@ -1173,14 +1193,14 @@ class OrdersController extends Controller
                             ->where('order_details.id','=',$product[0])
                             ->where('businesses.user_id','=',$sellerid)
                             ->groupBy('orders.id')
-                            ->select('businesses.*','orders.id as order_id','addresses.state','addresses.city','addresses.line1')
+                            ->select('businesses.*','orders.id as order_id','addresses.state','addresses.city','addresses.line1','orders.order_number')
                             ->first();
         }
 
         //支付进度
         $payPlan = 3;
 
-        return view('szy.pay-successful', compact('orderinfos','paytype','payPlan'));
+        return view('szy.pay-successful', compact('orderinfos','paytype','payPlan','checkSubmit'));
     }
 
     /**
@@ -1576,9 +1596,28 @@ class OrdersController extends Controller
      */
     public function usersOrders(Request $request)
     {
-        $user = \Auth::user();
+        return $this->pubOrders($request,'user_id');
+        // $where_field = $user->role == 'person' ? 'user_id' : 'seller_id';
+    }
 
-        $where_field = $user->role == 'person' ? 'user_id' : 'seller_id';
+        /**
+     * Shows the seller wich orders he/she has pending.
+     *
+     * @return view
+     */
+    public function sellOrders(Request $request)
+    {
+        return $this->pubOrders($request,'seller_id');
+    }
+
+            /**
+     * Shows the seller wich orders he/she has pending.
+     *
+     * @return view
+     */
+    public function pubOrders(Request $request,$where_field)
+    {
+        $user = \Auth::user();
 
         $filter = $request->get('filter') ? explode('*', $request->get('filter')) : [];
 
@@ -1588,6 +1627,11 @@ class OrdersController extends Controller
 
         $search = $request->get('search') ? $request->get('search') : '';
 
+        if ($where_field=='user_id') {
+            $orderType = 'myorder';
+        }else{
+            $orderType = 'sellorder';
+        }
 
         if ($dateFrom == '' && isset($filter[0])) {
             $dateFrom = $filter[0];
@@ -1597,19 +1641,18 @@ class OrdersController extends Controller
             $dateTo = $filter[1];
         }
 
-        $openOrders = Order::
-            where($where_field, $user->id)
+        $allOrders = Order::
+            where($where_field,$user->id)
             ->with('user.profile')
             ->ofType('order')
-            // ->whereIn('status', ['open', 'pending', 'sent'])
             ->orderBy('created_at', 'desc')
             ->ofDates($dateFrom, $dateTo);
 
         if(!empty($search)){
-            $openOrders = $openOrders->where('seller_id','like','%'.$search.'%');
+            $allOrders = $allOrders->where('order_number','like','%'.$search.'%');
         }
 
-        $openOrders = $openOrders->paginate(10);
+        $allOrders = $allOrders->paginate(10);
 
         $closedOrders = Order::
             where($where_field, $user->id)
@@ -1632,6 +1675,14 @@ class OrdersController extends Controller
             ->with('user.profile')
             ->ofType('order')
             ->ofStatus('pending')
+            ->ofDates($dateFrom, $dateTo)
+            ->paginate(10);
+
+        $openOrders = Order::
+            where($where_field, $user->id)
+            ->with('user.profile')
+            ->ofType('order')
+            ->ofStatus('open')
             ->ofDates($dateFrom, $dateTo)
             ->paginate(10);
 
@@ -1662,9 +1713,9 @@ class OrdersController extends Controller
 
         // return view('orders.sales',
         return view('szy.myorder.order-list',
-         compact('panel', 'openOrders', 'sentOrders','closedOrders', 'cancelledOrders','pendingOrders', 'select', 'unRate', 'dateFrom', 'dateTo'));
+         compact('panel', 'allOrders', 'sentOrders',"openOrders",'closedOrders', 'cancelledOrders',
+            'pendingOrders', 'select', 'unRate', 'dateFrom', 'dateTo','orderType'));
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -1753,19 +1804,29 @@ class OrdersController extends Controller
     /**
      *   @return view
      */
-    public function showOrder($id)
+    public function showOrder($ids)
     {
         $panel = [
             'left'   => ['width' => '2', 'class' => 'user-panel'],
             'center' => ['width' => '10'],
         ];
+        $id = explode(',',$ids)[0];
+        $orderType = explode(',',$ids)[1];
 
         $user = \Auth::user();
         if ($user) {
-            $order = Order::
+
+            if ($orderType=='sellorder') {
+                $order = Order::
+                where('id', $id)->where('seller_id', $user->id)
+                ->with('details')
+                ->first();
+            }else{
+                $order = Order::
                 where('id', $id)->where('user_id', $user->id)
                 ->with('details')
                 ->first();
+            }
 
             if ($order) {
                 $orderAddress = Address::find($order->address_id);
@@ -1780,7 +1841,8 @@ class OrdersController extends Controller
 
                 // return view('orders.detail', compact('delivery','user', 'panel', 'orderAddress', 'is_buyer', 'order', 'orderAddress', 'order_comments', 'totalItems', 'grandTotal'));
                 
-                return view('szy.myorder.order-details', compact('delivery','user', 'panel', 'orderAddress', 'is_buyer', 'order', 'orderAddress', 'order_comments', 'totalItems', 'grandTotal'));
+                return view('szy.myorder.order-details', compact('delivery','user', 'panel', 'orderAddress', 
+                    'is_buyer', 'order', 'orderAddress', 'order_comments', 'totalItems', 'grandTotal','orderType'));
             } else {
                 $order = Order::where('id', $id)->where('seller_id', $user->id)->first();
                 if ($order) {
@@ -1832,7 +1894,8 @@ class OrdersController extends Controller
 
         $delivery = $order->delivery;
 
-        return view('orders.detail', compact('user', 'is_seller', 'panel', 'orderAddress', 'order', 'order_comments', 'totalItems', 'grandTotal', 'delivery'));
+        return view('orders.detail', compact('user', 'is_seller', 'panel', 'orderAddress',
+            'order', 'order_comments', 'totalItems', 'grandTotal', 'delivery'));
     }
 
     /**
@@ -1932,9 +1995,107 @@ class OrdersController extends Controller
      */
     public function commentOrder($order_id)
     {
-        return view('orders.partial.comment_input', compact('order_id'));
+        if (empty($order_id)) {
+            abort(404);
+        }else{
+            $order = Order::find($order_id);
+            $orderDetailCheck = OrderDetail::where('order_id',$order_id)->whereNotNull('rate_comment')->select('id')->first();
+            $orderProductFirsts = Order::where('orders.id',$order_id)->whereNull('order_details.rate_comment')
+                                    ->join('order_details','orders.id','=','order_details.order_id')
+                                    ->join('products','order_details.product_id','=','products.id')
+                                    ->select('orders.*','order_details.id as details_id',
+                                            'products.id as pid',
+                                            'products.name',
+                                            'products.price',
+                                            'products.features')
+                                    ->get();
+        }
+        return view('szy.myorder.order-comment', compact('orderProductFirsts','order','orderDetailCheck'));
+        // return view('orders.partial.comment_input', compact('order_id'));
     }
 
+
+    //评论保存
+    public function storeComment(Request $request){
+        $data = $request->input('data');
+        $order_id = $request->input('order_id');
+        $sever = $request->input('sever')?$request->input('sever'):'';
+        $delivery = $request->input('delivery')?$request->input('delivery'):'';
+
+        if ($sever!='' || $delivery!='') {
+            $order = Order::find($order_id);
+            $order->sever_rate = $sever*2;
+            $order->delivery_rate = $delivery*2;
+            $order->save();
+        }
+
+        foreach ($data as $did => $value) {
+            $content = '';
+            $product = '';
+            foreach ($value as $k => $v) {
+                if ($k=="'product'") {
+                   $product = $v;
+                }
+                if ($k=="'content'") {
+                   $content = $v;
+                }
+            }
+            if ($content!='') {
+                $orderDetails = OrderDetail::find($did);
+                $orderDetails->rate = $product*2;
+                $orderDetails->rate_comment = $content;
+                $result = $this->uploadPic($request,'images'.$did);
+                if ($result!='false') {
+                    $images = implode(',',$result);
+                    $orderDetails->image = $images;
+                }
+                $orderDetails->save();
+            }
+        }
+
+        //判断该订单是否完成
+        $orderDetailCheck = OrderDetail::where('order_id',$order_id)->whereNull('rate_comment')->select('id')->first();
+        if (empty($orderDetailCheck)) {
+            $order = Order::find($order_id);
+            $order->status = 'closed';
+            $order->save();
+            return redirect()->route('orders.show_orders');
+        }
+        return redirect()->route('orders.comment',$order_id);
+    }
+
+    //图片上传
+    public function uploadPic(Request $request,$name)
+    {   
+        $path = 'upload/comment/';
+
+        $file = $request->file($name);
+        $arr = array();
+        if ($request->hasFile($name)) {
+            foreach ($file as $value) {
+                    $filename = 'comment'.time().rand(1,10000);
+                    $Extension = $value->getClientOriginalExtension();
+                    $value->move($path, $filename.'.'.$Extension);
+                    $arr[] = $path.$filename.'.'.$Extension; //原图路径加名称
+            }            
+        }else{
+            return 'false';
+        } 
+        return $arr;
+    }
+
+    //评论回复
+    public function commentReply(Request $request){
+        $id = $request->input('id');
+        $reply = $request->input('reply');
+        $order = OrderDetail::find($id);
+        $order->reply = $reply;
+        if ($order->save()) {
+            return 'true';
+        }else{
+            return 'false';
+        }
+    }
     /**
      *   function to action to deliver virtual products.
      *
@@ -1942,57 +2103,57 @@ class OrdersController extends Controller
      *
      *   @return json    message error or message success
      */
-    public function storeComment(Request $request)
-    {
-        $order_id = $request->get('order_id');
-        $text = $request->get('comment_text');
-        $user = \Auth::user();
-        if ($user) {
-            $order = Order::find($order_id);
-            //Checks if the order belongs to the current user, or if the user is the seller of the order
-            if (($order->user_id == $user->id) || ($order->seller_id == $user->id)) {
-                $data = [
-                    'user_id'        => $user->id,
-                    'action_type_id' => 3,
-                    'source_id'      => $order_id,
-                    'comment'        => $text,
-                ];
+    // public function storeComment(Request $request)
+    // {
+    //     $order_id = $request->get('order_id');
+    //     $text = $request->get('comment_text');
+    //     $user = \Auth::user();
+    //     if ($user) {
+    //         $order = Order::find($order_id);
+    //         //Checks if the order belongs to the current user, or if the user is the seller of the order
+    //         if (($order->user_id == $user->id) || ($order->seller_id == $user->id)) {
+    //             $data = [
+    //                 'user_id'        => $user->id,
+    //                 'action_type_id' => 3,
+    //                 'source_id'      => $order_id,
+    //                 'comment'        => $text,
+    //             ];
 
-                $new_comment = Comment::create($data);
+    //             $new_comment = Comment::create($data);
 
-                if ($order->user_id == $user->id) {
-                    $mail_subject = trans('email.order_commented.comment_from_user');
-                    $seller_user = User::find($order->seller_id);
-                    $email = $seller_user->email;
-                }
-                if ($order->seller_id == $user->id) {
-                    $mail_subject = trans('email.order_commented.comment_from_seller');
-                    $buyer_user = User::find($order->user_id);
-                    $email = $buyer_user->email;
-                }
+    //             if ($order->user_id == $user->id) {
+    //                 $mail_subject = trans('email.order_commented.comment_from_user');
+    //                 $seller_user = User::find($order->seller_id);
+    //                 $email = $seller_user->email;
+    //             }
+    //             if ($order->seller_id == $user->id) {
+    //                 $mail_subject = trans('email.order_commented.comment_from_seller');
+    //                 $buyer_user = User::find($order->user_id);
+    //                 $email = $buyer_user->email;
+    //             }
 
-                $data = [
-                    'order_id'      => $order_id,
-                    'subject'       => $mail_subject,
-                    'email_message' => $mail_subject,
-                    'email'         => $email,
-                    'comment'       => $text,
-                    'title'         => $mail_subject,
-                ];
+    //             $data = [
+    //                 'order_id'      => $order_id,
+    //                 'subject'       => $mail_subject,
+    //                 'email_message' => $mail_subject,
+    //                 'email'         => $email,
+    //                 'comment'       => $text,
+    //                 'title'         => $mail_subject,
+    //             ];
 
-                Mail::queue('emails.order_comment', $data, function ($message) use ($user, $data) {
-                    $message->to($data['email'])->subject($data['subject']);
-                });
-            } else {
-                return \Response::json(['success' => false, 'order_id' => $order_id], 200);
-            }
-        } else {
-            return \Response::json(['success' => false, 'order_id' => $order_id], 200);
-        }
-        Session::push('message', trans('store.create_comment_modal.added_order_comment'));
+    //             Mail::queue('emails.order_comment', $data, function ($message) use ($user, $data) {
+    //                 $message->to($data['email'])->subject($data['subject']);
+    //             });
+    //         } else {
+    //             return \Response::json(['success' => false, 'order_id' => $order_id], 200);
+    //         }
+    //     } else {
+    //         return \Response::json(['success' => false, 'order_id' => $order_id], 200);
+    //     }
+    //     Session::push('message', trans('store.create_comment_modal.added_order_comment'));
 
-        return \Response::json(['success' => true, 'order_id' => $order_id], 200);
-    }
+    //     return \Response::json(['success' => true, 'order_id' => $order_id], 200);
+    // }
 
     /**
      *   function to action to rate both the order and its content.

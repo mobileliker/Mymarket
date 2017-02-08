@@ -6,6 +6,8 @@ Route::get('search/', 'ProductsController@searchAll');
 
 Route::get('products/{id}', ['uses' => 'ProductsController@show', 'as' => 'products.show']);
 
+Route::get('c/products/comment/query', 'ProductsController@commentQuery');
+
 Route::resource('productsoffers', 'ProductOffersController');
 
 

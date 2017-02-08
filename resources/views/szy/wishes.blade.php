@@ -36,10 +36,10 @@
 			@if ($hasWishList)
                 @foreach ($cart->details as $detail)
 				<div class="goods-detail">
-					<img src="{{ $detail->product->features['images'][0] }}" alt="">
+					<a href="products/{{$detail->product->id}}"><img src="{{ $detail->product->features['images'][0] }}" alt=""></a>
 					<div class="goods-select">
 						{{--<input type="checkbox" name="select_all" value="true">--}}
-						<span>{{ $detail->product->name }}</span>
+						<a href="products/{{$detail->product->id}}"><span>{{ $detail->product->name }}</span></a>
 					</div>
 					<div class="goods-price">
 						<span>￥{{ $detail->price }}</span>

@@ -100,18 +100,21 @@ $priceBg:url('/img/szy/inc/bg3.png') no-repeat;
 				.zs{width:100%;height:100px;border-bottom:1px dashed $color3;
 					.lf{width:45%;height:100%;line-height:100px;font-size:30px;color:#4B985D;text-align:center;float:left;}
 					.rt{width:55%;height:100%;float:left;
-						li{width:100%;height:25%;float:left;line-height:30px;font-size:$fontSizeMin;color:$color1;text-align:center;
+						li{width:100%;height:25%;float:left;line-height:30px;font-size:$fontSizeMin;color:$color1;text-align:left;
 							img{width:10px;height:12px;}
 						}
 						li:nth-child(1){margin-top:10px;}
 					}
 				}
 				.lx{width:100%;min-height:80px;margin-top:15px;
-					li{width:45%;height:28px;float:left;line-height:28px;font-size:$fontSizeMin;color:$color1;text-align:center;
+					li{width:45%;height:28px;float:left;line-height:28px;font-size:$fontSizeMin;color:$color1;text-align:center;position:relative;
 						border:1px solid $color3;margin-top:10px;margin-left:2px;cursor:pointer;
 						a{font-size:$fontSizeMin;color:$color1;}
 						a:hover{color:$defualtColor;}
 						img{width:16px;height:14px;position:relative;top:3px;}
+						.tel{height:28px;background:white;border:1px solid $color3;text-align:center;padding:0 5;z-index:1000;
+							position:absolute;left:-88px;top:-28px;line-height:28px;font-size:13px;display:none;
+						}
 					}
 					li:nth-child(2n+2){margin-left:10px;}
 				}		
@@ -186,10 +189,11 @@ $priceBg:url('/img/szy/inc/bg3.png') no-repeat;
 			width:100%;min-height:240px;border:1px solid $color3;border-radius:2px;
 			.d-title{
 				width:100%;height:35px;background:$color5;
-				.tt-t{width:90px;height:108%;border-top:3px solid $defualtColor;
-					background:white;position:relative;top:-3px;
-					font-size:$fontSize;color:$color2;text-align:center;line-height:36px;
+				.tt-t{width:90px;height:108%;float:left;
+					position:relative;top:-3px;cursor:pointer;
+					font-size:$fontSize;color:$color2;text-align:center;line-height:42px;
 				}
+				.tt-t:nth-child(1){background:white;border-top:3px solid $defualtColor;}
 			}
 			.d-pp{width:98%;height:50px;margin-top:10px;float:right;
 				border-bottom:1px dashed $color3;line-height:50px;
@@ -223,6 +227,41 @@ $priceBg:url('/img/szy/inc/bg3.png') no-repeat;
 			.img-center{
 				width:84%;min-height:400px;margin:20px 0px 20px 70px;
 				img{width:100%;}
+			}
+		}
+		.comment{
+			width:100%;border:1px solid $color3;min-height:300px;margin-top:20px;float:left;display:none;
+			margin-bottom:20px;
+			.comment-center{
+				width:100%;min-height:200px;margin:20px auto;border-top:1px dashed $color5;padding:15px;display:none;
+				.comment-left{
+					width:130px;min-height:200px;float:left;
+					.user-info{width:100%;height:60px;
+						li{height:30px;width:100%;color:$color1;font-size:12px;text-align:center;line-height:30px;
+							img{width:30px;height:30px;border-radius:15px;}
+						}
+					}
+					.wjx{width:100%;height:30px;text-align:center;color:$defualtColor;font-size:15px;line-height:30px;}
+				}
+				.comment-right{width:780px;min-height:200px;float:right;
+					.cm-text{font-size:15px;color:$color1;line-height:25px;width:100%;min-height:25px;}
+					.cm-imageMax{width:100%;max-height:300px;margin:10 0;display:none;
+						img{max-height:300px;max-width:300px;border:none;}
+					}
+					.cm-image{height:50px;width:90%;margin-top:10px;
+						img{height:50px;width:50px;cursor:pointer;margin-right:10px;}
+					}
+					.date{width:100%;height:30px;line-height:30px;font-size:13px;color:$color3;margin-top:10px;}
+				}
+			}
+			.page{width:100%;min-height:50px;text-align:center;}
+			.comment-null{width:100%;height:300px;font-size:22px;color:$color5;text-align:center;line-height:300px;display:none;}
+			.comment-center:nth-child(1){border-top:none;}
+			.comment-type{height:36px;width:100%;
+				li{height:100%;line-height:36px;padding:0 12px;background:$defualtColor;color:white;
+					float:left;cursor:pointer;margin-left:1px;text-align:center;font-size:13px;
+					a{font-size:13px;color:white;}}
+				li:nth-child(1){background:white;a{color:$defualtColor;}color:$defualtColor;margin-left:0px;}
 			}
 		}
 	}

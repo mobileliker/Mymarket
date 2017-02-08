@@ -1,10 +1,25 @@
-@if(isset($pendingOrders[0]))
-    @foreach($pendingOrders as $openOrder)
+@if(isset($openOrders[0]))
+    @foreach($openOrders as $openOrder)
     <div class="details">
         <div class="date">
             <span>{{$openOrder->created_at}}</span>
-            <span>订单编号: <a href="user/orders/show/{{$openOrder->id}}">{{$openOrder->seller_id}}</a></span>
-            <span><a href="shop/{{$openOrder->seller_id}}"><?php echo App\Business::where('user_id',$openOrder->seller_id)->first()->business_name; ?></a></span>
+            <span>订单编号: <a href="user/orders/show/{{$openOrder->id}}">{{$openOrder->order_number}}</a></span>
+            <span>
+                <?php 
+                    $role = App\User::find($openOrder->seller_id)->role;
+                ?>
+                @if($role!='admin')
+                    @if($orderType=='myorder')
+                    <a href="shop/{{$openOrder->seller_id}}">
+                    <?php echo App\Business::where('user_id',$openOrder->seller_id)->first()->business_name; ?>
+                    </a>
+                    @else
+                    购买用户:<?php echo App\User::find($openOrder->user_id)->nickname; ?>
+                    @endif
+                @else
+                    平台自营
+                @endif
+            </span>
             <a href="javascript:void(0);" class="glyphicon glyphicon-trash delete"></a>
         </div>
         <?php 
@@ -42,15 +57,9 @@
             @endif
         </div>
         <div class="business">
-            @if($openOrder->status=='cancelled')已取消 @endif
-            @if($openOrder->status=='sent')已发货 @endif
-            @if($openOrder->status=='paid')已付款 @endif
             @if($openOrder->status=='open')待付款 @endif
-            @if($openOrder->status=='pending')待处理 @endif
-            @if($openOrder->status=='received')待评价 @endif
-            @if($openOrder->status=='closed')已完成 @endif
             <br>
-            <a href="user/orders/show/{{$openOrder->id}}">订单详情</a>
+            <a href="user/orders/show/{{$openOrder->id}},{{$orderType}}">订单详情</a>
         </div>
         <div class="user">
             <?php echo App\Address::where('id',$openOrder->address_id)->first()->name_contact; ?>
@@ -60,26 +69,14 @@
         <div class="price">总额 ￥{{$priceCount}} <br> 微信支付</div>
         <div class="operate">
             <?php 
-                $delivery = App\Delivery::where('order_id',$openOrder->id)->first();
-                $deliveryTime = strtotime($delivery->created_at);
-                $countTime = $deliveryTime + 15*24*3600;
-                $syTime = $countTime - time();
-                $day = intval($syTime/(24*3600));
-                $h = intval($syTime%(24*3600)/3600);
+                $order = App\Order::find($openOrder->id);
+                $openDate = date('Y-m-d',strtotime($order->updated_at));
             ?>
-            <span>还剩{{$day}}天{{$h}}小时</span>
+            <span>下单时间 {{$openDate}}</span>
             <br>
             <br>
-            @if($openOrder->status=='cancelled' || $openOrder->status=='open')
-                <button onclick="pay({{$openOrder->id}});">付款</button>
-            @endif
-            @if($openOrder->status=='received')
-                <button onclick="evaluate({{$openOrder->id}});">评价</button>
-            @endif
-            @if($openOrder->status=='sent')
-                <button onclick="sent({{$openOrder->id}});">收货</button>
-            @endif
-            @if($openOrder->status=='pending' || $openOrder->status=='paid' || $openOrder->status=='open')
+            @if($openOrder->status=='open')
+                <button onclick="">付款</button>
                 <button onclick="clears({{$openOrder->id}});">取消订单</button>
             @endif
         </div>

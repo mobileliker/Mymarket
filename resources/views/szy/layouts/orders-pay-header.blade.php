@@ -1,5 +1,5 @@
 	<header>
-		<a href=""><img src="/img/szy/inc/logo2.png" alt="" class="left"></a>
+		<a href=""><img src="{{App\Company::find(1)->logo2}}" alt="" class="left"></a>
 		<div class="right">
 			<ul>
 				<li>

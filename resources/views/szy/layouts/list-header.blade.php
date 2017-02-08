@@ -1,7 +1,7 @@
 
 @include('szy.layouts.top')
 	<div class="top">
-		<a href="{{url('')}}"><img src="img/szy/inc/logo2.png" alt="" class="logo"></a>
+		<a href="{{url('')}}"><img src="{{App\Company::find(1)->logo2}}" alt="" class="logo"></a>
 		<div class="search">
 			<input type="text" id="home_search" value="@if(isset($_GET['search'])){{$_GET['search']}}@endif">
 			<button type="button" onclick="search();">搜索</button>

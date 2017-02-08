@@ -113,6 +113,14 @@ class CompanyController extends Controller
             $data['logo'] = $logo;
         }
 
+        $logo2 = $this->uploadPic($request,'logo2');
+        if ($logo2!='false') {
+            if (file_exists($company->logo2)) {
+                unlink($company->logo2);
+            }
+            $company->logo2 = $logo2;
+        }
+
         $lbs = $this->uploadPic($request,'lbphoto');
 
         if ($lbs!='false') {
