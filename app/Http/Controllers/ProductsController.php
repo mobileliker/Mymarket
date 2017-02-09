@@ -631,8 +631,8 @@ class ProductsController extends Controller
             $sellCommentAmount = OrderDetail::where('product_id','=',$product->id)
                         ->join('orders','order_details.order_id','=','orders.id')
                         ->where('orders.type','=','order')
-                        ->whereIn('orders.status',array('close','received','sent'))
-                        ->where('orders.updated_at','>',$mothTime)
+                        ->whereIn('orders.status',array('closed','received','sent'))
+                        ->where('order_details.updated_at','>',$mothTime)
                         ->count();
 
             return view('szy.detailProduct', compact('product', 'panel', 'allWishes', 'reviews', 'business',

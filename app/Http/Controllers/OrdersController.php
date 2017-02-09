@@ -1678,6 +1678,14 @@ class OrdersController extends Controller
             ->ofDates($dateFrom, $dateTo)
             ->paginate(10);
 
+        $paidOrders = Order::
+            where($where_field, $user->id)
+            ->with('user.profile')
+            ->ofType('order')
+            ->ofStatus('paid')
+            ->ofDates($dateFrom, $dateTo)
+            ->paginate(10);
+
         $openOrders = Order::
             where($where_field, $user->id)
             ->with('user.profile')
@@ -1699,7 +1707,7 @@ class OrdersController extends Controller
             ->with('details')
             ->with('user.profile')
             ->ofType('order')
-            ->whereIn('status', ['received', 'closed'])
+            ->whereIn('status', ['received'])
             ->whereNull('rate')
             ->ofDates($dateFrom, $dateTo)
             ->paginate(10);
@@ -1714,7 +1722,7 @@ class OrdersController extends Controller
         // return view('orders.sales',
         return view('szy.myorder.order-list',
          compact('panel', 'allOrders', 'sentOrders',"openOrders",'closedOrders', 'cancelledOrders',
-            'pendingOrders', 'select', 'unRate', 'dateFrom', 'dateTo','orderType'));
+            'pendingOrders', 'select', 'unRate', 'dateFrom', 'dateTo','orderType','paidOrders'));
     }
     /**
      * Remove the specified resource from storage.

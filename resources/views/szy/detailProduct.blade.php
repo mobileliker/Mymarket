@@ -193,20 +193,30 @@
 												->first();
 								}
 							?> 
-						<li class="attention-edit" bid={{$business->user_id}} @if($result) state=1 @else state=0 @endif>								
-							<img src="/img/szy/inc/attention.png">
+
 							@if(isset(auth()->user()->id))
-								<span >
-								@if($result)
-									取消关注
+								@if($business->user_id!=auth()->user()->id)						
+									<li class="attention-edit" bid={{$business->user_id}} @if($result) state=1 @else state=0 @endif>								
+										<img src="/img/szy/inc/attention.png">
+										<span >
+										@if($result)
+											取消关注
+										@else
+											关注商铺
+										@endif
+										</span>
+									</li>
 								@else
-									关注商铺
+									<li onclick><img src="/img/szy/inc/attention.png">
+									<span style="text-decoration:line-through;color:#ccc;">关注店铺</span>
+									</li>
 								@endif
-								</span>
 							@else
+								<li><img src="/img/szy/inc/attention.png">
 								<span onclick="Login();">关注店铺</span>
+								</li>
 							@endif
-						</li>
+						
 					</div>
 				</div>
 			</div>

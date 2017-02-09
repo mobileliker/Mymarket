@@ -16,20 +16,30 @@
 												->first();
 						}
 					?> 
-					<span class="header-nav-b2-span2 attention-edit" bid={{$business->user_id}} @if($result) state=1 @else state=0 @endif>
-						<img src="/img/szy/inc/attention.png">&nbsp;
 					@if(isset(auth()->user()->id))
-						<span href="">
-							@if($result)
-								取消关注
-							@else
-								关注商铺
-							@endif
-						</span>
+						@if($business->user_id!=auth()->user()->id)	
+							<span class="header-nav-b2-span2 attention-edit" bid={{$business->user_id}} @if($result) state=1 @else state=0 @endif>
+								<img src="/img/szy/inc/attention.png">&nbsp;
+								<span >
+									@if($result)
+										取消关注
+									@else
+										关注商铺
+									@endif
+								</span>
+							</span>
+						@else
+							<span class="header-nav-b2-span2"><img src="/img/szy/inc/attention.png">&nbsp;
+							<span style="text-decoration:line-through;color:#ccc;">关注店铺</span>
+							</span>
+						@endif
 					@else
-						<span onclick="Login();">关注店铺</span>
+						<span class="header-nav-b2-span2">
+							<img src="/img/szy/inc/attention.png">&nbsp;
+							<span onclick="Login();">关注店铺</span>
+						</span>
 					@endif
-					</span>
+					
 				</div>
 			</div>
 			<div  class="header-nav-right">
