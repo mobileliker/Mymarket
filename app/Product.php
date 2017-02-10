@@ -110,7 +110,7 @@ class Product extends Model
                 $name = str_replace("\\",'_',trim(json_encode(trim($seed[0],'"')),'"'));
 
                 if (preg_match("/[\x7f-\xff]/", $seed[1])) { 
-                    $seed[1] = str_replace("\\",'_',json_encode($seed[1]),'"');
+                    $seed[1] = str_replace("\\",'_',json_encode($seed[1]));
                 }
                 $value = $seed[1];
                 $seed = '"'.$name.'"'.':'.'"'.$value.'"';
