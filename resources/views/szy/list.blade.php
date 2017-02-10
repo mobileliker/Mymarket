@@ -78,18 +78,27 @@
                                 @foreach ($filter as $id => $item)
                                     <?php if (4<$i++){ break; } ?>
                                         <a href="/products?{{ \Utility::getUrlQueryString($refine, 'category', urlencode($item['id'].'|'.$item['name'])) }}">
-                                            {{ ucfirst($item['name']) }} <small><span class="badge">{{ $item['qty'] }}</span></small>
+                                           {{ ucfirst($item['name']) }} <small><span class="badge">{{ $item['qty'] }}</span></small>
                                         </a>
                                 @endforeach
 
                             @else
+                            	@if($key!='conditions' && $key!='brands')
+	                                @foreach ($filter as $item => $count)
+	                                    <?php if (4<$i++){ break; } ?>
+                                            <a href="/products?{{ \Utility::getUrlQueryString($refine, 'search', $key.':'.$item) }}" >
+	                                          {{ ucfirst($item) }} <span class="badge">{{ $count }}</span>
+	                                        </a>
+	                                @endforeach
+                                @else
+	                                @foreach ($filter as $item => $count)
+	                                    <?php if (4<$i++){ break; } ?>
+	                                        <a href="/products?{{ \Utility::getUrlQueryString($refine, $key, urlencode($item)) }}">
+	                                          {{ ucfirst($item) }} <span class="badge">{{ $count }}</span>
+	                                        </a>
 
-                                @foreach ($filter as $item => $count)
-                                    <?php if (4<$i++){ break; } ?>
-                                        <a href="/products?{{ \Utility::getUrlQueryString($refine, $key, urlencode($item)) }}">
-                                          {{ ucfirst($item) }} <span class="badge">{{ $count }}</span>
-                                        </a>
-                                @endforeach
+	                                @endforeach
+                                @endif
                             @endif
 							</div>
 						</div>
@@ -136,7 +145,7 @@
                                             @else
                                                 @foreach ($filter as $item => $count)
                                                 <li class="text-capitalize  col-xs-12 col-sm-4 col-md-4">
-                                                    <a href="/products?{{ \Utility::getUrlQueryString($refine, $key, urlencode($item)) }}" >
+                                                    <a href="/products?{{ \Utility::getUrlQueryString($refine, 'search', $key.':'.$item) }}" >
                                                         {{ $item }} <span class="badge">{{ $count }}</span>
                                                     </a>
                                                 </li>

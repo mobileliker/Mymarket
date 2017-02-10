@@ -72,7 +72,7 @@ class ProductsController extends Controller
          */
         $order = $request->input('order');
         $ade = $request->input('ade');
-        $refine = \Utility::requestToArrayUnique($request->except(['order','ade']));
+        $refine = \Utility::requestToArrayUnique($request->except(['order','ade','search']));
 
         /**
          * $search
@@ -82,6 +82,7 @@ class ProductsController extends Controller
          */
 
         $search = $request->get('search');
+        // return Product::search($search);
 
         //相关产品 搜索框
         if (empty($search)) {
@@ -115,7 +116,6 @@ class ProductsController extends Controller
                 ->orderBy('num','desc')
                 ->limit(5)->get();
         }else{
-
             $xzs = DB::table('products')
                 ->where('products.status','=',1)
                 ->join('categories','products.category_id','=','categories.id')
@@ -135,7 +135,6 @@ class ProductsController extends Controller
          * @var [type]
          */
         $products = Product::select('id', 'category_id', 'name', 'price', 'description', 'condition', 'brand', 'rate_val', 'type', 'features', 'parent_id', 'tags')
-            // $products = DB::table('products')
             ->search($search)
             ->refine($refine)
             ->free()
@@ -634,6 +633,7 @@ class ProductsController extends Controller
                         ->whereIn('orders.status',array('closed','received','sent'))
                         ->where('order_details.updated_at','>',$mothTime)
                         ->count();
+
 
             return view('szy.detailProduct', compact('product', 'panel', 'allWishes', 'reviews', 'business',
                 'freeproductId', 'features', 'suggestions','sells','addresDefault','address','productCS','sellCommentAmount',
