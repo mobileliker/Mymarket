@@ -27,7 +27,6 @@ class Paging
     {
 
         $uri = 'c' . '/' . $module . '/query';
-
         $data->setPath($uri);//设置url
 
         $page = 1;//默认为第一页
