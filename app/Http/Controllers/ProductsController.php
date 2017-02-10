@@ -72,7 +72,8 @@ class ProductsController extends Controller
          */
         $order = $request->input('order');
         $ade = $request->input('ade');
-        $refine = \Utility::requestToArrayUnique($request->except(['order','ade','search']));
+        $specification = $request->input('specification');
+        $refine = \Utility::requestToArrayUnique($request->except(['order','ade','search','specification']));
 
         /**
          * $search
@@ -82,7 +83,7 @@ class ProductsController extends Controller
          */
 
         $search = $request->get('search');
-        // return Product::search($search);
+    
 
         //相关产品 搜索框
         if (empty($search)) {
@@ -136,6 +137,7 @@ class ProductsController extends Controller
          */
         $products = Product::select('id', 'category_id', 'name', 'price', 'description', 'condition', 'brand', 'rate_val', 'type', 'features', 'parent_id', 'tags')
             ->search($search)
+            ->specification($specification)
             ->refine($refine)
             ->free()
             ->actives();
