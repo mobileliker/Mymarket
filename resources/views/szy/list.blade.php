@@ -86,7 +86,7 @@
                             	@if($key!='conditions' && $key!='brands')
 	                                @foreach ($filter as $item => $count)
 	                                    <?php if (4<$i++){ break; } ?>
-                                            <a href="/products?{{ \Utility::getUrlQueryString($refine, 'search', $key.':'.$item) }}" >
+                                            <a href="/products?{{ \Utility::getUrlQueryString($refine, 'specification', $key.':'.$item) }}" >
 	                                          {{ ucfirst($item) }} <span class="badge">{{ $count }}</span>
 	                                        </a>
 	                                @endforeach
@@ -145,7 +145,7 @@
                                             @else
                                                 @foreach ($filter as $item => $count)
                                                 <li class="text-capitalize  col-xs-12 col-sm-4 col-md-4">
-                                                    <a href="/products?{{ \Utility::getUrlQueryString($refine, 'search', $key.':'.$item) }}" >
+                                                    <a href="/products?{{ \Utility::getUrlQueryString($refine, 'specification', $key.':'.$item) }}" >
                                                         {{ $item }} <span class="badge">{{ $count }}</span>
                                                     </a>
                                                 </li>

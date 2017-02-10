@@ -102,8 +102,9 @@ class Product extends Model
         return $query->where('status', 0);
     }
 
-    public function scopeSearch($query, $seed)
+    public function scopeSpecification($query, $seed)
     {
+
         if ($seed!="") {
             $seed = explode(':', $seed);
             if (isset($seed[1])) {
@@ -117,8 +118,13 @@ class Product extends Model
             }else{
                 $seed = $seed[0];
             }
+            return $query->where('features', 'like', '%'.$seed.'%');
         }
+        return $query;
+    }
 
+    public function scopeSearch($query, $seed)
+    {
         return $query->where('name', 'like', '%'.$seed.'%')
             ->orWhere('description', 'like', '%'.$seed.'%')
             ->orWhere('features', 'like', '%'.$seed.'%')
