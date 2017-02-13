@@ -400,6 +400,7 @@
 		$this.css('border-top','3px solid #31C4A8');
 		$(".comment").hide();
 		$(".desc-img").show();
+         window.scrollTo(0,700);
 	}
 	function commentShow(th){
 		$this = $(th);
@@ -410,6 +411,7 @@
 		$(".comment").show();
 		$(".desc-img").hide();
 		commentData(null);
+        window.scrollTo(0,700);
 	}
 
 	// 评论小图变大图显示

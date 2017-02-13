@@ -781,7 +781,8 @@ html, body {
       height: 39px;
       border: 3px solid #3eceb5;
       outline: none;
-      font-size: 15px; }
+      font-size: 15px;
+      color: #acacac; }
     .top .search button {
       width: 98px;
       height: 37px;

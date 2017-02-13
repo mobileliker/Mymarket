@@ -145,7 +145,11 @@
                                             @else
                                                 @foreach ($filter as $item => $count)
                                                 <li class="text-capitalize  col-xs-12 col-sm-4 col-md-4">
+                                                	@if($key!='brands'&& $key!='conditions')
                                                     <a href="/products?{{ \Utility::getUrlQueryString($refine, 'specification', $key.':'.$item) }}" >
+                                                	@else
+                                                    <a href="/products?{{ \Utility::getUrlQueryString($refine, $key, $item) }}" >
+                                                	@endif
                                                         {{ $item }} <span class="badge">{{ $count }}</span>
                                                     </a>
                                                 </li>
