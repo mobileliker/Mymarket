@@ -135,12 +135,13 @@ class ProductsController extends Controller
          *
          * @var [type]
          */
+        // return Product::specification($specification);
         $products = Product::select('id', 'category_id', 'name', 'price', 'description', 'condition', 'brand', 'rate_val', 'type', 'features', 'parent_id', 'tags')
             ->search($search)
             ->specification($specification)
-            ->refine($refine)
-            ->free()
-            ->actives();
+            ->refine($refine);
+            // ->free()
+            // ->actives();
             // ->orderBy('rate_val', 'desc');
 
         //排序字段

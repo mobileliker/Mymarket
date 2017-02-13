@@ -107,18 +107,15 @@ class Product extends Model
 
         if ($seed!="") {
             $seed = explode(':', $seed);
-            if (isset($seed[1])) {
-                $name = str_replace("\\",'_',trim(json_encode(trim($seed[0],'"')),'"'));
+            $name = str_replace("\\",'_',trim(json_encode(trim($seed[0],'"')),'"'));
 
+            if (isset($seed[1])) {
                 if (preg_match("/[\x7f-\xff]/", $seed[1])) { 
                     $seed[1] = str_replace("\\",'_',json_encode($seed[1]));
                 }
                 $value = $seed[1];
-                $seed = '"'.$name.'"'.':'.'"'.$value.'"';
-            }else{
-                $seed = $seed[0];
             }
-            return $query->where('features', 'like', '%'.$seed.'%');
+            return $query->where('features', 'like', '%'.$name.'%')->where('features', 'like', '%'.$value.'%');
         }
         return $query;
     }
