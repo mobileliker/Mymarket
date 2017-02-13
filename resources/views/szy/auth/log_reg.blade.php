@@ -41,7 +41,8 @@
  		</div>
  	</div>
  	<div class="footer">
- 		&copy;版权所有2016-2020广州生之源信息技术有限公司 粤ICP备12570346
+ 		<span style="font-size:25px;position:relative;top:6px;">&copy;</span>
+ 		<span style="font-size:13px;">2017广州生之源信息技术有限公司</span>
  	</div>
  </div>
 
