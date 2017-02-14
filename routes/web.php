@@ -12,9 +12,20 @@
 | @author  Gustavo Ocanto <gustavoocanto@gmail.com>
 |
 */
+// home
+
+
 
 Auth::routes();
 
+//小程序测试路由
+Route::group(['namespace' => 'wxapp'], function () {
+    Route::get('ceshi1', 'UserController@index');
+});
+
+Route::group(['namespace' => 'wxapp','middleware' => ['auth', 'roles']], function () {
+    Route::get('ceshi2', 'UserController@index2');
+});
         // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
         // Route::post('login', 'Auth\LoginController@login');
         // Route::post('logout', 'Auth\LoginController@logout');
