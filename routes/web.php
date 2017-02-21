@@ -54,6 +54,9 @@ Route::group(['prefix' => 'business', 'roles' => array_keys(trans('globals.roles
 
 Route::get('page/{slug}', 'HomeController@slug');
 
+//微信 小程序 routes
+require __DIR__.'/web/miniapp.php';
+
 //users routes
 require __DIR__.'/web/users.php';
 

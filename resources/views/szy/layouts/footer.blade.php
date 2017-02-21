@@ -93,7 +93,7 @@
                             <a href="{{url('/page/production-library')}}">产品库</a>
                             <a href="{{url('/page/website-map')}}">网站地图</a>
                         </li>
-                        <li><a href="http://www.miitbeian.gov.cn">粤ICP备16082048号</a> | Powered By Life's garden Infomation Inc| 服务热线 : 020-86471420</li>
+                        <li><a href="http://www.miitbeian.gov.cn">粤ICP备16082048号-3</a> | Powered By Life's garden Infomation Inc| 服务热线 : 020-86471420</li>
                         <div style='font-size: 14px;color:#4D4D4D'>Copyright©2017 Life's garden Infomation Inc.All Right Reserved基于<a href="http://github.com/antvel/antvle">Antvel</a>
                             <a href="http://www.cyberpolice.cn/wfjb/" target="_blank"><img src="/img/szy/inc/pq1.png">网络警察提醒你</a>
                             <a href="http://www.kxnet.cn/" target="_blank"><img src="/img/szy/inc/pq2.png">可信网站信用评估</a>

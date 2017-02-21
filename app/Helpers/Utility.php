@@ -2,6 +2,7 @@
 
 namespace app\Helpers;
 
+use App\Order;
 /**
  * Antvel - Utilities Functions Helper.
  *
@@ -30,6 +31,20 @@ class Utility
         $x_display .= $x_parts[$x_count_parts - 1];
 
         return $x_display;
+    }
+
+    //订单号生成方法
+    public static function number(){
+
+        $countOrder = Order::orderBy('id','desc')->first();
+
+        if (empty($countOrder)) {
+           $count = 0;
+        }else{
+            $count = $countOrder->id;
+        }
+
+        return 'wjcs'.rand(10,99).substr(date("Y"),2).date("m").date('d').$count.rand(10,99);
     }
 
     /**

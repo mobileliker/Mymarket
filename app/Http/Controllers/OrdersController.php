@@ -1112,18 +1112,19 @@ class OrdersController extends Controller
         return view('szy.pay',compact('payPlan'));
     }
 
-    public function number(){
+    // //订单号生成方法 (改到Utility)
+    // public function number(){
 
-        $countOrder = Order::orderBy('id','desc')->first();
+    //     $countOrder = Order::orderBy('id','desc')->first();
 
-        if (empty($countOrder)) {
-           $count = 0;
-        }else{
-            $count = $countOrder->id;
-        }
+    //     if (empty($countOrder)) {
+    //        $count = 0;
+    //     }else{
+    //         $count = $countOrder->id;
+    //     }
 
-        return 'wjcs'.rand(10,99).substr(date("Y"),2).date("m").date('d').$count.rand(10,99);
-    }
+    //     return 'wjcs'.rand(10,99).substr(date("Y"),2).date("m").date('d').$count.rand(10,99);
+    // }
 
     /**
      * 交易完成
@@ -1164,7 +1165,7 @@ class OrdersController extends Controller
                     $orders->address_id = $address_id;
                     $orders->description = $remarks;
                     $orders->status = 'paid';
-                    $orders->order_number = $this->number();
+                    $orders->order_number = \Utility::number();
                     $orders->type = 'order';
                     $orders->seller_id = $sellerid;
                     $orders->user_id = auth()->user()->id;
