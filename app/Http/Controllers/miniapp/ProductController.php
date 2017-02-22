@@ -150,17 +150,4 @@ class ProductController extends Controller
 		return  response()->json($details);
 	}
 
-	//确认订单数据接口
-	public function orderAff(Request $request){
-
-		$product_id = $request->input('product_id');//商品id
-		$user_id = \Auth::user()->id;//买家id
-
-		$product = Product::find($product_id);
-		$address = Address::where('user_id',$user_id)->where('default',1)->first();
-		$arr = [$product,$address];
-
-		return response()->json($arr);
-	}
-
 }

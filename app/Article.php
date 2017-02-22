@@ -12,6 +12,7 @@ class Article extends Model
      * @var array
      */
     protected $touches = ['category'];
+    protected $table = 'articles';
 
     //
     public function category()

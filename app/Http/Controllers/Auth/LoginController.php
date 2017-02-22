@@ -70,8 +70,18 @@ class LoginController extends Controller
         $this->validate($request, $this->rules());
         
         $credentials = $this->credentials($request);
+        $wx = !empty($_POST['wx'])?$_POST['wx']:'';//是否为微信小程序传参数过来
+
         if ($this->guard()->attempt($credentials, $request->has('remember'))) {
+
+            if ($wx!='' && $wx=='miniapp') {
+                return response()->json('true');//小程序未登录返回的参数
+            }
             return redirect($this->redirectTo);
+        }
+
+        if ($wx!='' && $wx=='miniapp') {
+            return response()->json('false');//小程序未登录返回的参数
         }
         $this->incrementLoginAttempts($request);
         return $this->sendFailedLoginResponse($request);
