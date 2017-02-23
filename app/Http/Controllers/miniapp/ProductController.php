@@ -31,6 +31,7 @@ class ProductController extends Controller
 
 		$field = '';
 		$field = !empty($request->input('field'))?$request->input('field'):$field;
+		$text = !empty($request->input('text'))?$request->input('text'):'';
 		$order = !empty($request->input('order'))?$request->input('order'):$order;
 		$start_price = !empty($request->input('start_price'))?$request->input('start_price'):'';
 		$brand = !empty($request->input('brand'))?$request->input('brand'):'';
@@ -51,6 +52,9 @@ class ProductController extends Controller
 			$orderName = 'products.price';
 		}
 
+		if ($text!='') {
+			$products = $products->where('products.name','like','%'.$text.'%');
+		}
 		if ($start_price!='') {
 			$products = $products->where('products.price','>=',$start_price);
 		}
