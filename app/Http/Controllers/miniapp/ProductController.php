@@ -31,15 +31,15 @@ class ProductController extends Controller
 		$sell = 'false';
 		$price = 'false';
 		$order = !empty($request->input('order'))?$request->input('order'):$order;
-		$sell = !empty($request->input('sell'))?'true':$sell;
-		$price = !empty($request->input('price'))?'true':$price;
+		$sell = !empty($request->input('sell'))?'true':'false';
+		$price = !empty($request->input('price'))?'true':'false';
 		$start_price = !empty($request->input('start_price'))?$request->input('start_price'):'';
 		$brand = !empty($request->input('brand'))?$request->input('brand'):'';
 		$end_price = !empty($request->input('end_price'))?$request->input('end_price'):'';
 
 
 		$products = Product::leftJoin('order_details','products.id','=','order_details.product_id')
-				->where('products.status','=',1);
+				->where('products.status','=',1)->whereNotNull('order_details.rate');
 
 		if ($sell!='false') {
 			$orderName = 'num';
@@ -80,12 +80,15 @@ class ProductController extends Controller
 		$commentfirst = $comments->first();//第一条最新评论
 		$goodrate = ($product->product_rate*10).'%';//好评率		
 
+		$pre = '/<img.*?src="(.*?)".*?>/';
+		preg_match_all($pre,$product->desc_img,$arr);
 
 		$details['product'] = $product;//商品详情
 		$details['category'] = $category;//规格
 		$details['ratecount'] = $ratecount;//评论总数
 		$details['commentfirst'] = $commentfirst;//第一条最新评论
 		$details['goodrate'] = $goodrate;//好评率
+		$details['desc_img'] = $arr[1];//商品大图详情
 
 		return  response()->json($details);
 	}

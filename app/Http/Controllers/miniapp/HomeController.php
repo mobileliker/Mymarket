@@ -23,6 +23,7 @@ class HomeController extends Controller
 		$product = Product::where('status','=',1)
 				->where('condition','=','new')
 				->orderBy('created_at','desc')
+				->select('id','name','features','price','description')
 				->limit(10)
 				->distinct()
 				->get();
