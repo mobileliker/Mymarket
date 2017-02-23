@@ -31,15 +31,18 @@ class ProductController extends Controller
 		$sell = 'false';
 		$price = 'false';
 		$order = !empty($request->input('order'))?$request->input('order'):$order;
-		$sell = !empty($request->input('sell'))?'true':'false';
-		$price = !empty($request->input('price'))?'true':'false';
+		$sell = !empty($request->input('sell'))?'true':$sell;
+		$price = !empty($request->input('price'))?'true':$price;
 		$start_price = !empty($request->input('start_price'))?$request->input('start_price'):'';
 		$brand = !empty($request->input('brand'))?$request->input('brand'):'';
 		$end_price = !empty($request->input('end_price'))?$request->input('end_price'):'';
 
 
-		$products = Product::leftJoin('order_details','products.id','=','order_details.product_id')
-				->where('products.status','=',1)->whereNotNull('order_details.rate');
+		$products = Product::where('products.status','=',1)
+			->leftJoin('order_details',function($join){
+				$join->on('products.id','=','order_details.product_id')->whereNotNull('order_details.rate');
+			});
+
 
 		if ($sell!='false') {
 			$orderName = 'num';
