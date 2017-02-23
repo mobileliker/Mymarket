@@ -30,7 +30,7 @@ class ProductController extends Controller
 		$order = 'desc';
 
 		$field = '';
-		$filed = !empty($request->input('filed'))?$request->input('filed'):$filed;
+		$field = !empty($request->input('field'))?$request->input('field'):$field;
 		$order = !empty($request->input('order'))?$request->input('order'):$order;
 		$start_price = !empty($request->input('start_price'))?$request->input('start_price'):'';
 		$brand = !empty($request->input('brand'))?$request->input('brand'):'';
