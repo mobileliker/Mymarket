@@ -96,6 +96,7 @@ class ProductController extends Controller
 		$details['category'] = $category;//规格
 		$details['ratecount'] = $ratecount;//评论总数
 		$details['commentfirst'] = $commentfirst;//第一条最新评论
+		$details['commentfirst-img'] = explode(',',$commentfirst->image);//第一条最新评论
 		$details['goodrate'] = $goodrate;//好评率
 		$details['desc_img'] = $arr[1];//商品大图详情
 
