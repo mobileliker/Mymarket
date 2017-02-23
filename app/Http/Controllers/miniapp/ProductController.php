@@ -69,7 +69,9 @@ class ProductController extends Controller
 				->orderBy($orderName,$order)
                 ->groupBy('products.id')
 				->paginate(10);
-
+		$products = $products->appends(['field'=>$field,
+										'text'=>$text,'order'=>$order,'brand'=>$brand,'start_price'=>$start_price,'end_price'=>$end_price])
+										->links();
 		return  response()->json($products);
 	}
 
