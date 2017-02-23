@@ -28,11 +28,10 @@ class ProductController extends Controller
 	public function index(Request $request){
 		$orderName = 'products.product_rate';
 		$order = 'desc';
-		$sell = 'false';
-		$price = 'false';
+
+		$field = '';
+		$filed = !empty($request->input('filed'))?$request->input('filed'):$filed;
 		$order = !empty($request->input('order'))?$request->input('order'):$order;
-		$sell = !empty($request->input('sell'))?'true':$sell;
-		$price = !empty($request->input('price'))?'true':$price;
 		$start_price = !empty($request->input('start_price'))?$request->input('start_price'):'';
 		$brand = !empty($request->input('brand'))?$request->input('brand'):'';
 		$end_price = !empty($request->input('end_price'))?$request->input('end_price'):'';
@@ -44,11 +43,11 @@ class ProductController extends Controller
 			});
 
 
-		if ($sell!='false') {
+		if ($field=='sell') {
 			$orderName = 'num';
 		}
 
-		if ($price!='false') {
+		if ($field=='price') {
 			$orderName = 'products.price';
 		}
 
