@@ -26,6 +26,7 @@ class ProductController extends Controller
 {	
 	//列表页数据
 	public function index(Request $request){
+
 		$orderName = 'products.product_rate';
 		$order = 'desc';
 
@@ -67,7 +68,7 @@ class ProductController extends Controller
 		$products = $products->select('order_details.id as did','products.*',DB::raw("count('order_details.id') as num"))
 				->orderBy($orderName,$order)
                 ->groupBy('products.id')
-				->get();
+				->paginate(10);
 
 		return  response()->json($products);
 	}
