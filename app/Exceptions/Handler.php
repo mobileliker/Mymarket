@@ -62,7 +62,8 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+            return response()->json('noauth');//小程序未登录返回的参数
+            // return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
         $wx = !empty($_GET['wx'])?$_GET['wx']:'';//是否有微信小程序传参数过来
