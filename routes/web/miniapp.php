@@ -6,6 +6,9 @@ Route::group(['prefix' => 'miniapp','namespace' => 'miniapp'], function () {
 	Route::get('/home', 'HomeController@index');
 	Route::get('/', 'HomeController@index');
 
+	Route::get('/gettoken', 'LoginController@gettoken');//获取token
+	Route::post('/login', 'LoginController@login');//登录
+
 	Route::get('/list', 'ProductController@index');//列表页
 	Route::get('/product/{id}', 'ProductController@product');//商品详情页
 	Route::get('/product/comment/{id}', 'ProductController@comment');//商品评论详情页
