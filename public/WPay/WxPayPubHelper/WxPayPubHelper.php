@@ -167,11 +167,12 @@ class Common_util_pub
 		curl_setopt($ch, CURLOPT_POST, TRUE);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		//运行curl
-//          curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); 
+//          curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
         $data = curl_exec($ch);
-        var_dump($ch);
-        var_dump($data); 
+        var_dump(curl_error($ch));
+//        var_dump($ch);
+//        var_dump($data); 
         exit;
 		//返回结果
 		if($data)
