@@ -139,7 +139,7 @@ class Common_util_pub
 	 */
 	public function xmlToArray($xml)
 	{		
-        //将XML转为array        
+        //将XML转为array    
         $array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);		
 		return $array_data;
 	}
@@ -296,7 +296,7 @@ class Wxpay_client_pub extends Common_util_pub
 	 * 	作用：获取结果，默认不使用证书
 	 */
 	function getResult() 
-	{		
+	{	
 		$this->postXml();
 		$this->result = $this->xmlToArray($this->response);
 		return $this->result;
