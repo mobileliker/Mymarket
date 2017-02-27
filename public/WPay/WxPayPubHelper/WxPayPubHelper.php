@@ -149,14 +149,6 @@ class Common_util_pub
 	 */
 	public function postXmlCurl($xml,$url,$second=90)
 	{
-            if(! function_exists('curl_init')) 
-            {
-                var_dump('curl 不可用');
-            }
-            else {
-                var_dump('可用');
-            }
-            exit;
         //初始化curl
        	$ch = curl_init();
         
@@ -176,9 +168,10 @@ class Common_util_pub
 		curl_setopt($ch, CURLOPT_POST, TRUE);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		//运行curl
-          curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); 
+//          curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); 
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
         $data = curl_exec($ch);
+        var_dump($th);
         var_dump($data); 
         exit;
 		//返回结果
