@@ -168,7 +168,7 @@ class Common_util_pub
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		//运行curl
         $data = curl_exec($ch);
-		curl_close($ch);
+		
 		//返回结果
 		if($data)
 		{
@@ -178,6 +178,7 @@ class Common_util_pub
 		else 
 		{ 
 			$error = curl_errno($ch);
+                        curl_close($ch);
 			echo "curl出错，错误码:$error"."<br>"; 
 			echo "<a href='http://curl.haxx.se/libcurl/c/libcurl-errors.html'>错误原因查询</a></br>";
 			curl_close($ch);
