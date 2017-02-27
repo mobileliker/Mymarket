@@ -340,3 +340,13 @@ wx201409031022268cc5b4edfb0252613548
 <xml><return_code><![CDATA[SUCCESS]]></return_code><result_code><![CDATA[SUCCESS]]></result_code><prepay_id><![CDATA[wx20140903162940b63acbb4080058230339]]></prepay_id><appid><![CDATA[wxf5b5e87a6a0fde94]]></appid><mch_id>10000097</mch_id><nonce_str><![CDATA[2ascp4pcb25dij722ezwxviks3xi4v91]]></nonce_str><sign><![CDATA[B8C8C4C177139892DF5C64E7521FEE0C]]></sign></xml>
 
 
+执行日期：2017-02-27-10�?M�?S
+【接收到的native通知】:
+
+
+
+执行日期：2017-02-27-10�?M�?S
+【返回微信的native响应】:
+<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[签名失败]]></return_msg></xml>
+
+
