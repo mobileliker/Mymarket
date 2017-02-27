@@ -1,4 +1,5 @@
 <?php
+header("Content-Type: text/html; charset=utf-8");
 /**
  * 微信支付帮助库
  * ====================================================
@@ -127,11 +128,13 @@ class Common_util_pub
         	 	$xml.="<".$key.">".$val."</".$key.">"; 
 
         	 }
-        	 else
-        	 	$xml.="<".$key."><![CDATA[".$val."]]></".$key.">";  
+        	 else{
+				 $xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
+			}
+        	 	  
         }
         $xml.="</xml>";
-        return $xml; 
+        return $xml;
     }
 	
 	/**
@@ -139,7 +142,7 @@ class Common_util_pub
 	 */
 	public function xmlToArray($xml)
 	{		
-        //将XML转为array    
+        //将XML转为array        
         $array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);		
 		return $array_data;
 	}
@@ -147,29 +150,31 @@ class Common_util_pub
 	/**
 	 * 	作用：以post方式提交xml到对应的接口url
 	 */
-	public function postXmlCurl($xml,$url,$second=200)
-	{
-        //初始化curl
+	public function postXmlCurl($xml,$url,$second=30)
+	{	
+
+        //初始化curl        
        	$ch = curl_init();
-        //设置超时
-//        curl_setopt($ch, CURLOPT_PROXY, $second);
+		//设置超时
+		curl_setopt($ch, CURLOPT_TIMEOUT, $second);
         //这里设置代理，如果有的话
         //curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
         //curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
         curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
-	//设置header
-	curl_setopt($ch, CURLOPT_HEADER, FALSE);
-//		//要求结果为字符串且输出到屏幕上
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-//		//post提交方式
+		//设置header
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		//要求结果为字符串且输出到屏幕上
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		//post提交方式
 		curl_setopt($ch, CURLOPT_POST, TRUE);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		//运行curl
-
         $data = curl_exec($ch);
+		//curl_close($ch);
 		//返回结果
+
 		if($data)
 		{
 			curl_close($ch);
@@ -178,7 +183,6 @@ class Common_util_pub
 		else 
 		{ 
 			$error = curl_errno($ch);
-                        curl_close($ch);
 			echo "curl出错，错误码:$error"."<br>"; 
 			echo "<a href='http://curl.haxx.se/libcurl/c/libcurl-errors.html'>错误原因查询</a></br>";
 			curl_close($ch);
@@ -265,12 +269,12 @@ class Wxpay_client_pub extends Common_util_pub
 	 * 	作用：设置标配的请求参数，生成签名，生成接口参数xml
 	 */
 	function createXml()
-	{
+	{ 
 	   	$this->parameters["appid"] = WxPayConf_pub::APPID;//公众账号ID
 	   	$this->parameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
 	    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
 	    $this->parameters["sign"] = $this->getSign($this->parameters);//签名
-	    return  $this->arrayToXml($this->parameters);
+		return  $this->arrayToXml($this->parameters);
 	}
 	
 	/**
@@ -297,7 +301,7 @@ class Wxpay_client_pub extends Common_util_pub
 	 * 	作用：获取结果，默认不使用证书
 	 */
 	function getResult() 
-	{	
+	{		
 		$this->postXml();
 		$this->result = $this->xmlToArray($this->response);
 		return $this->result;
@@ -322,7 +326,7 @@ class UnifiedOrder_pub extends Wxpay_client_pub
 	 * 生成接口参数xml
 	 */
 	function createXml()
-	{
+	{ 
 		try
 		{
 			//检测必填参数
@@ -337,16 +341,20 @@ class UnifiedOrder_pub extends Wxpay_client_pub
 				throw new SDKRuntimeException("缺少统一支付接口必填参数notify_url！"."<br>");
 			}elseif ($this->parameters["trade_type"] == null) {
 				throw new SDKRuntimeException("缺少统一支付接口必填参数trade_type！"."<br>");
-			}elseif ($this->parameters["trade_type"] == "JSAPI" &&
+			}
+			/*elseif ($this->parameters["trade_type"] == "JSAPI" &&
 				$this->parameters["openid"] == NULL){
 				throw new SDKRuntimeException("统一支付接口中，缺少必填参数openid！trade_type为JSAPI时，openid为必填参数！"."<br>");
-			}
+			}*/
 		   	$this->parameters["appid"] = WxPayConf_pub::APPID;//公众账号ID
 		   	$this->parameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
+
 		   	$this->parameters["spbill_create_ip"] = $_SERVER['REMOTE_ADDR'];//终端ip	    
 		    $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
 		    $this->parameters["sign"] = $this->getSign($this->parameters);//签名
-		    return  $this->arrayToXml($this->parameters);
+		    return $this->arrayToXml($this->parameters);
+			//$xml=$this->createXml($new);
+			//return $xml;
 		}catch (SDKRuntimeException $e)
 		{
 			die($e->errorMessage());
@@ -787,7 +795,7 @@ class JsApi_pub extends Common_util_pub
 	 */
 	function createOauthUrlForCode($redirectUrl)
 	{
-		$urlObj["appid"] = WxPayConf_pub::APPID;
+		$urlObj["appid"] = WxPayConf_pub::SUB_APPID;
 		$urlObj["redirect_uri"] = "$redirectUrl";
 		$urlObj["response_type"] = "code";
 		$urlObj["scope"] = "snsapi_base";
@@ -801,8 +809,8 @@ class JsApi_pub extends Common_util_pub
 	 */
 	function createOauthUrlForOpenid()
 	{
-		$urlObj["appid"] = WxPayConf_pub::APPID;
-		$urlObj["secret"] = WxPayConf_pub::APPSECRET;
+		$urlObj["appid"] = WxPayConf_pub::SUB_APPID;
+		$urlObj["secret"] = WxPayConf_pub::SUB_APPSECRET;
 		$urlObj["code"] = $this->code;
 		$urlObj["grant_type"] = "authorization_code";
 		$bizString = $this->formatBizQueryParaMap($urlObj, false);
@@ -819,7 +827,7 @@ class JsApi_pub extends Common_util_pub
         //初始化curl
        	$ch = curl_init();
 		//设置超时
-		curl_setopt($ch, CURLOP_TIMEOUT, $this->curl_timeout);
+		curl_setopt($ch, CURLOPT_TIMEOUT, $this->curl_timeout);
 		curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
         curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);

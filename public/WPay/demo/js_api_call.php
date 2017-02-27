@@ -19,7 +19,7 @@
 	{
 		//触发微信返回code码
 		$url = $jsApi->createOauthUrlForCode(WxPayConf_pub::JS_API_CALL_URL);
-		Header("Location: $url"); 
+		Header("Location: $url");
 	}else
 	{
 		//获取code码，以获取openid
@@ -39,17 +39,19 @@
 	//noncestr已填,商户无需重复填写
 	//spbill_create_ip已填,商户无需重复填写
 	//sign已填,商户无需重复填写
-	$unifiedOrder->setParameter("openid","$openid");//商品描述
-	$unifiedOrder->setParameter("body","贡献一分钱");//商品描述
+	//$openid='oFHrCw4OyfuZU4w7BEWuZ19MZAO0';
+	$unifiedOrder->setParameter("sub_openid","$openid");//商品描述
+	$unifiedOrder->setParameter("body","1fen");//商品描述
 	//自定义订单号，此处仅作举例
-	$timeStamp = time();
-	$out_trade_no = WxPayConf_pub::APPID."$timeStamp";
+	$timeStamp = 'order'.time();
+	$out_trade_no = "$timeStamp";
 	$unifiedOrder->setParameter("out_trade_no","$out_trade_no");//商户订单号 
 	$unifiedOrder->setParameter("total_fee","1");//总金额
 	$unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
 	$unifiedOrder->setParameter("trade_type","JSAPI");//交易类型
 	//非必填参数，商户可根据实际情况选填
-	//$unifiedOrder->setParameter("sub_mch_id","XXXX");//子商户号  
+	//$unifiedOrder->setParameter("sub_appid","wx86fd95a1de52c079");//子商户号 
+	$unifiedOrder->setParameter("sub_mch_id","1357847602");//子商户号  
 	//$unifiedOrder->setParameter("device_info","XXXX");//设备号 
 	//$unifiedOrder->setParameter("attach","XXXX");//附加数据 
 	//$unifiedOrder->setParameter("time_start","XXXX");//交易起始时间
