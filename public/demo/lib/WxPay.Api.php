@@ -24,7 +24,7 @@ class WxPayApi
 	public static function unifiedOrder($inputObj, $timeOut = 6)
 	{
 		$url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-                
+                return 23;
 		//检测必填参数
 		if(!$inputObj->IsOut_trade_noSet()) {
 			throw new WxPayException("缺少统一支付接口必填参数out_trade_no！");
