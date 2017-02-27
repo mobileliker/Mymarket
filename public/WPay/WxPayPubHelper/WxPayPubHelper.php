@@ -169,8 +169,8 @@ class Common_util_pub
 		//运行curl
 //          curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-        $data = curl_exec($ch);
         var_dump(curl_error($ch));
+        $data = curl_exec($ch);
 //        var_dump($ch);
 //        var_dump($data); 
         exit;
