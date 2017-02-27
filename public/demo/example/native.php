@@ -1,7 +1,6 @@
 <?php
 ini_set('date.timezone','Asia/Shanghai');
 //error_reporting(E_ERROR);
-
 require_once "../lib/WxPay.Api.php";
 require_once "WxPay.NativePay.php";
 require_once 'log.php';
@@ -27,7 +26,6 @@ require_once 'log.php';
  * 3、支付完成之后，微信服务器会通知支付成功
  * 4、在支付成功通知中需要查单确认是否真正支付成功（见：notify.php）
  */
-return 11;
 $input = new WxPayUnifiedOrder();
 $notify=new NativePay();
 $input->SetBody("test");
@@ -41,8 +39,8 @@ $input->SetNotify_url("http://www.caishi360.com/demo/example/native_notify.php")
 $input->SetTrade_type("NATIVE");
 $input->SetProduct_id("123456789");
 $result = $notify->GetPayUrl($input);
-$url2 = $result["code_url"];
-return $result;
+$url2 = $result["return_code"];
+echo $result['return_msg'];
 ?>
 
 <html>
