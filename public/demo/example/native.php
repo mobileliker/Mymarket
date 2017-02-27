@@ -27,6 +27,7 @@ require_once 'log.php';
  * 3、支付完成之后，微信服务器会通知支付成功
  * 4、在支付成功通知中需要查单确认是否真正支付成功（见：notify.php）
  */
+return 11;
 $input = new WxPayUnifiedOrder();
 $notify=new NativePay();
 $input->SetBody("test");
