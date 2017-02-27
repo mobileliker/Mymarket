@@ -162,17 +162,19 @@ class Common_util_pub
 		//设置header
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
 		//要求结果为字符串且输出到屏幕上
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 		//post提交方式
 		curl_setopt($ch, CURLOPT_POST, TRUE);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		//运行curl
 //          curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-        var_dump(curl_error($ch));
+//        var_dump(curl_error($ch));
+//        var_dump(curl_setopt($ch, CURLOPT_RETURNTRANSFER,1));
         $data = curl_exec($ch);
 //        var_dump($ch);
-//        var_dump($data); 
+        var_dump(curl_errno($ch)); 
+        var_dump(curl_error($ch)); 
         exit;
 		//返回结果
 		if($data)
