@@ -12,10 +12,10 @@ class WxPayConf_pub
 	const MCHID = '1436923502';//服务商的
 	//商户支付密钥Key。审核通过后，在微信发送的邮件中查看
 	const KEY = '18523976023wojiacaishi1436923502';//服务商的
-
-	const SUB_APPID = 'wxc7fff49b8014b010';//子商户的
-	//JSAPI接口中获取openid，审核后在公众平台开启开发模式后可查看
-	const SUB_APPSECRET = '67d151eb043e364b6806bc70a4061bce';//子商户的
+        const APPSECRET = 'd51412dfc8029f44b1ac00d284d43a02';
+//	const SUB_APPID = 'wxc7fff49b8014b010';//子商户的
+//	//JSAPI接口中获取openid，审核后在公众平台开启开发模式后可查看
+//	const SUB_APPSECRET = '67d151eb043e364b6806bc70a4061bce';//子商户的
 	
 	//=======【JSAPI路径设置】===================================
 	//获取access_token过程中的跳转uri，通过跳转将code传入jsapi支付页面

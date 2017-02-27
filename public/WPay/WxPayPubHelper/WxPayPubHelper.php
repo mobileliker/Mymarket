@@ -795,7 +795,7 @@ class JsApi_pub extends Common_util_pub
 	 */
 	function createOauthUrlForCode($redirectUrl)
 	{
-		$urlObj["appid"] = WxPayConf_pub::SUB_APPID;
+		$urlObj["appid"] = WxPayConf_pub::APPID;
 		$urlObj["redirect_uri"] = "$redirectUrl";
 		$urlObj["response_type"] = "code";
 		$urlObj["scope"] = "snsapi_base";
@@ -809,8 +809,9 @@ class JsApi_pub extends Common_util_pub
 	 */
 	function createOauthUrlForOpenid()
 	{
-		$urlObj["appid"] = WxPayConf_pub::SUB_APPID;
-		$urlObj["secret"] = WxPayConf_pub::SUB_APPSECRET;
+		$urlObj["appid"] = WxPayConf_pub::APPID;
+//		$urlObj["secret"] = WxPayConf_pub::SUB_APPSECRET;
+                $urlObj["secret"] = WxPayConf_pub::APPSECRET;
 		$urlObj["code"] = $this->code;
 		$urlObj["grant_type"] = "authorization_code";
 		$bizString = $this->formatBizQueryParaMap($urlObj, false);
