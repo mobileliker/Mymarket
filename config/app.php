@@ -228,6 +228,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
+        Overtrue\LaravelWechat\ServiceProvider::class,
 
         /*
          * Providers only for developers
@@ -302,6 +303,7 @@ return [
 
         'Menu'      => App\Helpers\Menu::class,
         'Utility'   => App\Helpers\Utility::class,
+        'Wechat' => Overtrue\LaravelWechat\Facade::class,
     ],
 
 ];
