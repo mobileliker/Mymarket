@@ -47,10 +47,11 @@ class NativePay
 	 */
 	public function GetPayUrl($input)
 	{
-		if($input->GetTrade_type() == "NATIVE")
-		{
-                    $result = WxPayApi::unifiedOrder($input);
-                    return $result;
-		}
+            return 66;
+            if($input->GetTrade_type() == "NATIVE")
+            {
+                $result = WxPayApi::unifiedOrder($input);
+                return $result;
+            }
 	}
 }
