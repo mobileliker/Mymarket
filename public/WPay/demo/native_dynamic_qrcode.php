@@ -57,8 +57,6 @@
 		//商户自行增加处理流程
 		//......
 	}
-        $unifiedOrderResult["code_url"]="44444";
-        $code_url="5555";
 
 ?>
 

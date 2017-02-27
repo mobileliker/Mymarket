@@ -147,7 +147,7 @@ class Common_util_pub
 	/**
 	 * 	作用：以post方式提交xml到对应的接口url
 	 */
-	public function postXmlCurl($xml,$url,$second=30)
+	public function postXmlCurl($xml,$url,$second=90)
 	{		
         //初始化curl        
        	$ch = curl_init();
