@@ -38,9 +38,9 @@
 	
 	//获取统一支付接口结果
 	$unifiedOrderResult = $unifiedOrder->getResult();
-        var_dump($unifiedOrderResult);
+	echo $unifiedOrderResult['return_code'];
+        echo $unifiedOrderResult['code_url'];
         exit;
-	
 	//商户根据实际情况设置相应的处理流程
 	if ($unifiedOrderResult["return_code"] == "FAIL") 
 	{
