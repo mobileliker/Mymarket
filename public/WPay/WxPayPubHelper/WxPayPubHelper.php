@@ -151,9 +151,8 @@ class Common_util_pub
 	{
         //初始化curl
        	$ch = curl_init();
-        
-		//设置超时
-		curl_setopt($ch, CURLOPT_PROXY, $second);
+        //设置超时
+        curl_setopt($ch, CURLOPT_PROXY, $second);
         //这里设置代理，如果有的话
         //curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
         //curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
@@ -171,7 +170,7 @@ class Common_util_pub
 //          curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:')); 
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
         $data = curl_exec($ch);
-        var_dump($th);
+        var_dump($ch);
         var_dump($data); 
         exit;
 		//返回结果
