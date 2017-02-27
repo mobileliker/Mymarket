@@ -6,8 +6,11 @@ Route::group(['prefix' => 'miniapp','namespace' => 'miniapp'], function () {
 	Route::get('/home', 'HomeController@index');
 	Route::get('/', 'HomeController@index');
 
+	Route::get('/getopenid', 'LoginController@getOpenid');//获取openid
 	Route::get('/gettoken', 'LoginController@gettoken');//获取token
+	Route::get('/loginauthuser', 'LoginController@loginAutoUser');//判断是否登录
 	Route::post('/login', 'LoginController@login');//登录
+	Route::get('/layout', 'LoginController@layout');//退出登录
 
 	Route::get('/list', 'ProductController@index');//列表页
 	Route::get('/product/{id}', 'ProductController@product');//商品详情页
@@ -16,16 +19,24 @@ Route::group(['prefix' => 'miniapp','namespace' => 'miniapp'], function () {
 	Route::get('/help', 'ArticleController@index');//帮助中心首页
 	Route::get('/help/content/{id}', 'ArticleController@articleContent');//帮助中心内容
 
+	//解密openid
+	Route::get('/decode', 'DecodeController@index');
+
 	//登录后可访问的接口
-	Route::group(['middleware' => 'auth'], function () {
+	// Route::group(['middleware' => 'auth'], function () {
 
 		Route::post('/order/pay', 'OrderController@pay');//商品支付接口
-		Route::resource('/order', 'OrderController');//订单增删改查（create商品生成订单、store保存订单、update更改订单状态、delete删除订单）
+
+		Route::post('/order/create', 'OrderController@create');//create商品生成订单
+		Route::post('/order/store', 'OrderController@store');//store保存订单
+		Route::post('/order/update', 'OrderController@update');//update更改订单状态
+		Route::get('/order/delete/{id}', 'OrderController@destory');//delete删除订单
+		Route::get('/order', 'OrderController@index');//订单查询
 		Route::get('/order/details/{id}', 'OrderController@order_details');//订单详情
 
 		Route::get('/address/default/{id}', 'AddressController@default');//用户默认地址修改
 		Route::resource('/address', 'AddressController');//地址增删改查
-	});
+	// });
 });
 
 
