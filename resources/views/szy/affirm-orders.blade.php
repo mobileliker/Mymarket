@@ -42,7 +42,7 @@
                     <ul check="false" id="payType">
                         <li paytype='-1'><a href="javascript:void(0);">线下支付</a></li>
                         {{--<li paytype=''><a href="javascript:void(0);">在线支付</a></li>--}}
-                        {{--<li paytype=''><a href="javascript:void(0);">微信支付</a></li>--}}
+                        <li paytype=''><a href="javascript:void(0);">微信支付</a></li>
                         {{--<li paytype=''><a href="javascript:void(0);">支付宝支付</a></li>--}}
                         {{--<li paytype=''><a href="javascript:void(0);">货到付款</a></li>--}}
                     </ul>
