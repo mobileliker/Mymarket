@@ -18,5 +18,9 @@ class VerifyCsrfToken extends BaseVerifier
         'miniapp/order/update',
         'miniapp/order/store',
         'miniapp/order/create',
+        'miniapp/address',
+        'miniapp/address/update',
+        'miniapp/address/store',
+        'miniapp/address/create',
     ];
 }
