@@ -35,7 +35,11 @@ Route::group(['prefix' => 'miniapp','namespace' => 'miniapp'], function () {
 		Route::get('/order/details/{id}', 'OrderController@order_details');//订单详情
 
 		Route::get('/address/default/{id}', 'AddressController@default');//用户默认地址修改
-		Route::resource('/address', 'AddressController');//地址增删改查
+		Route::post('/address/store', 'AddressController@store');//store保存地址
+		Route::post('/address/update', 'AddressController@update');//update编辑地址
+		Route::get('/address/delete/{id}', 'AddressController@destory');//delete删除地址
+		Route::get('/address/edit/{id}', 'AddressController@edit');//delete删除地址
+		Route::get('/address', 'AddressController@index');//地址查询
 	// });
 });
 

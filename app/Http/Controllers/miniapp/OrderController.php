@@ -119,13 +119,28 @@ class OrderController extends Controller
 	//确认订单数据接口
 	public function create(Request $request){
 
-		$product_id = $request->input('product_id');//商品id
 		$user_id = \Utility::openidUser($request);
 		if ($user_id == 'false') {
 			return response()->json('false');
 		}
 
-		$product = Product::find($product_id);
+		$product_id = $request->input('product_id');//商品id
+		$amount = $request->input('amount');//商品数量
+
+		$product = Product::select('features','price','id','name')->find($product_id);
+
+		$delivery_price = 0;//运输价格
+
+		if ($amount!='' && $amount>1) {
+			$allproductprice = $product->price * $amount;//商品总价
+			$allprice = $allproductprice + $delivery_price;//最终价格（包含物流费）
+			$product->allprice = $allprice;
+			$product->allproductprice = $allproductprice;
+		}else{
+			$product->allprice = $product->price+$delivery_price;//最终价格
+			$product->allproductprice = $product->price;//商品价格
+		}
+
 		$address = Address::where('user_id',$user_id)->where('default',1)->first();
 
 		return response()->json(['product'=>$product,'address'=>$address]);

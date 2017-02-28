@@ -38,5 +38,5 @@ class Address extends Model
         'state',
     ];
 
-    protected $hidden = ['id'];
+    // protected $hidden = ['id'];
 }
