@@ -66,11 +66,6 @@ class Handler extends ExceptionHandler
             // return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        $wx = !empty($_GET['wx'])?$_GET['wx']:'';//是否有微信小程序传参数过来
-
-        if ($wx!='' && $wx=='miniapp') {
-            return response()->json('noauth');//小程序未登录返回的参数
-        }
         return redirect()->guest('login');
     }
 }

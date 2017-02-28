@@ -28,9 +28,14 @@ class OrderController extends Controller
 	//订单查询
 	public function index(Request $request){
 
+		$user_id = \Utility::openidUser($request);
+		if ($user_id == 'false') {
+			return response()->json('false');
+		}
+
 		$status = !empty($request->input('status'))?$request->input('status'):'';
 
-		$orders = Order::where('orders.user_id','=',\Auth::user()->id);
+		$orders = Order::where('orders.user_id','=',$user_id);
 
 		if ($status!='') {
 			$orders = $orders ->where('orders.status','=',$status);
@@ -43,31 +48,61 @@ class OrderController extends Controller
 			foreach ($orders as $k => $order) {
 				$order_details = OrderDetail::where('order_details.order_id','=',$order->id)
 								->join('products','order_details.product_id','=','products.id')
-								->select('products.*','order_details.quantity','order_details.price as detail_price')->get();
-				$arr[$k]['order'] =  $order;
-				$arr[$k]['products'] = $order_details;
+								->select('products.name','products.price','products.features','products.description',
+									'order_details.quantity','order_details.price as detail_price')
+								->get();
+
+				$all_price = 0;		
+				if ($order_details!="" && isset($order_details[0])) {
+					foreach ($order_details as $key => $order_detail) {
+						$order_details[$key]->image = json_decode($order_detail->features)->{'images'}[0];
+						$all_price += $order_detail->price;
+					}
+					$arr[$k]['order'] =  $order;
+					$arr[$k]['order']->allPrice = $all_price;
+					$arr[$k]['products'] = $order_details;
+				}
 			}
 		}
+
 		return response()->json($arr);
 	}
 
 	//订单详情页
-	public function order_details($id){
+	public function order_details($id,Request $request){
 
-		$orders = Order::join('addresses','orders.address_id','=','addresses.id')
-						->where('orders.id','=',$id)
-						->select('addresses.*','orders.status','orders.order_number','orders.created_at')
-						->get();
-
-		$details = OrderDetail::where('order_id','=',$id)->select('product_id')->get();
-
-		foreach ($details as $k=>$detail) {
-			$ids[$k] = $detail->product_id; 
+		$user_id = \Utility::openidUser($request);
+		if ($user_id == 'false') {
+			return response()->json('false');
 		}
 
-		$products = Product::whereIn('id',$ids)->select('id','price','name','description','features')->get();
-		$arr = ['orders'=>$orders,'products'=>$products];
-		return response()->json($arr);
+		$address = Address::where('user_id',$user_id)->where('default',1)->first();
+		$order = Order::where('orders.id','=',$id)
+						->select('orders.status','orders.order_number','orders.created_at')
+						->first();
+
+		$products = OrderDetail::join('products','order_details.product_id','=','products.id')
+				->where('order_id','=',$id)
+				->select('order_details.product_id','products.features','products.name','products.price','order_details.id','order_details.quantity')
+				->get();
+		$all_price = 0;
+		foreach ($products as $k=>$product) {
+			$features = json_decode($product->features);
+			$products[$k]->image = $features ->{'images'}[0];
+			if ($features!='') {
+				$str='';
+				foreach ($features  as $key => $feature) {
+					if ($key!='images') {
+						$str= $str.$key.$feature;
+					}
+				}
+			}
+			$products[$k]->info = $str;
+			$all_price += $product->price;
+		}
+		$order->allPrice = $all_price;
+
+		return response()->json(['order'=>$order,'products'=>$products,'address'=>$address]);
 	}
 
 	//假设微信支付接口
@@ -85,13 +120,15 @@ class OrderController extends Controller
 	public function create(Request $request){
 
 		$product_id = $request->input('product_id');//商品id
-		$user_id = \Auth::user()->id;//买家id
+		$user_id = \Utility::openidUser($request);
+		if ($user_id == 'false') {
+			return response()->json('false');
+		}
 
 		$product = Product::find($product_id);
 		$address = Address::where('user_id',$user_id)->where('default',1)->first();
-		$arr = [$product,$address];
 
-		return response()->json($arr);
+		return response()->json(['product'=>$product,'address'=>$address]);
 	}
 
 	//商品生成订单
@@ -102,8 +139,11 @@ class OrderController extends Controller
 		if ($request->input('pay')=='true') {
 			$status = 'paid';
 		}
+		$user_id = \Utility::openidUser($request);
+		if ($user_id == 'false') {
+			return response()->json('false');
+		}
 
-		$user_id = \Auth::user()->id;//买家id
 		$product_id = $request->input('product_id');//商品id
 		$address_id = $request->input('address_id');//配送地址id
 		$price = $request->input('price');//最终价格
@@ -136,7 +176,8 @@ class OrderController extends Controller
 	}
 
 	//修改订单状态
-	public function update(Request $request,$id){
+	public function update(Request $request){
+		$id = $request->input('orderid');
 		$status = $request->input('status');
 		$arr = ['open','cancelled','close','pending','paid','sent','received'];
 		if (in_array($status,$arr)) {

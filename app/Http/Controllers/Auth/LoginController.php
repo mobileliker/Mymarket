@@ -49,6 +49,10 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+        if (\Auth::user()) {
+            return 'true';
+        }
+
         if ($request->input('newuser')) {
             session()->flash('email', $request->input('email'));
 
@@ -74,15 +78,9 @@ class LoginController extends Controller
 
         if ($this->guard()->attempt($credentials, $request->has('remember'))) {
 
-            if ($wx!='' && $wx=='miniapp') {
-                return response()->json('true');//小程序未登录返回的参数
-            }
             return redirect($this->redirectTo);
         }
 
-        if ($wx!='' && $wx=='miniapp') {
-            return response()->json('false');//小程序未登录返回的参数
-        }
         $this->incrementLoginAttempts($request);
         return $this->sendFailedLoginResponse($request);
     }

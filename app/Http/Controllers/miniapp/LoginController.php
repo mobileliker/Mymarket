@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
+use App\User;
+use Session;
 
 class LoginController extends Controller
 {
@@ -40,10 +42,64 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
+    //判断登录状态
+    public function loginAutoUser(Request $request){
+        $openid = $request->input('openid'); 
+        $result = User::where('open_id',$openid)->first();
+
+        if (!empty($result)) {
+            $arr = ['id'=>$result->id,'name'=>$result->nickname];
+            return response()->json($arr);
+        }
+        return response()->json('false');
+    }
+
+    //获取Openid
+    public function getOpenid(Request $request)
+    {
+
+       $appid = 'wx64f95ab001bb8dd2';
+       $secret = '3fed698a0077fec6b88b4630bb73e38f';
+       $grant_type = 'authorization_code';
+       $js_code = $request->input('js_code');
+
+        $url = 'https://api.weixin.qq.com/sns/jscode2session';  
+        ignore_user_abort(true); // 忽略客户端断开  
+        set_time_limit(0);    // 设置执行不超时 
+
+       $param = array('appid'=>$appid,'secret'=>$secret,'js_code'=>$js_code,'grant_type'=>$grant_type);
+      
+        $urlinfo = parse_url($url);         
+        $host = $urlinfo['host']; 
+        $path = $urlinfo['path'];    
+        $query = isset($param)? http_build_query($param) : '';         
+        $port = 80;
+        $errno = 0;
+        $errstr = '';    
+        $timeout = 10;         
+        $fp = fsockopen('api.weixin.qq.com', 80, $errno, $errstr, 10);         
+        $out = "GET /sns/jscode2session / HTTPS/1.1\r\n";    
+        $out .= "host:api.weixin.qq.com\r\n";    
+        $out .= "content-length:".strlen($query)."\r\n";    
+        $out .= "content-type:application/x-www-form-urlencoded\r\n";   
+        $out .= "connection:close\r\n\r\n";    
+        $out .= $query;         
+        fputs($fp, $out);  
+        fclose($fp);    
+        return response()->json();
+    }
+
     //获取token
-    public function gettoken(){
+    public function gettoken(Request $request){
         $token = csrf_token();
+        // echo "<pre>";
+
+        // print_r(decrypt("SJMSuvOdnJGc0TYNg04XbG0zTY5tAzkJADtI9CBz"));
+        // var_dump($request->cookie());
+        // $encrypter = new Illuminate\Encryption\Encrypter($key);
+        // $session = $encrypter->decrypt($_COOKIE['laravel_session']);
         return response()->json(['token'=>$token]);
+        // return response()->json(['cookie'=>$request->cookie()]);
     }
     /**
      * Process the user login.
@@ -54,9 +110,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        if (\Auth::user()) {
-            return response()->json('true');
-        }
+        // return $request->all();
         return $this->handle($request);
     }
 
@@ -74,12 +128,15 @@ class LoginController extends Controller
         $credentials = $this->credentials($request);
 
         if ($this->guard()->attempt($credentials, $request->has('remember'))) {
+
             //获取openid
             $openid = $request->input('openid');
-            $user = User::find(\Auth::user()->id);
+            $name = $request->input('name');
+            $user = User::where('nickname',$name)->orWhere('email',$name)->first();
             $user->open_id = $openid;
             $user->save();
-            return response()->json('true');//小程序未登录返回的参数
+
+            return response()->json('true');//小程序登录返回的参数
         }
         // $this->incrementLoginAttempts($request);
         return response()->json('false');//小程序未登录返回的参数
@@ -115,11 +172,21 @@ class LoginController extends Controller
     public function credentials(Request $request)
     {
         $name = $request->input('name');
-        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nickname';
+        $field = filter_var($name, FILTER_VALIDATE_EMAIL) ? 'email' : 'nickname';
         return [
             $field => $name,
             'password' => $request->input('pass'),
         ];
     }
 
+    //退出登录 （解除绑定）
+    public function layout(Request $request){
+        $openid = $request->input('openid');
+        $user = User::where('open_id',$openid)->first();
+        $user->open_id = null;
+        if ($user->save()) {
+            return response()->json('true');
+        }
+        return response()->json('false');
+    }
 }

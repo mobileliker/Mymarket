@@ -3,6 +3,7 @@
 namespace app\Helpers;
 
 use App\Order;
+use App\User;
 /**
  * Antvel - Utilities Functions Helper.
  *
@@ -31,6 +32,18 @@ class Utility
         $x_display .= $x_parts[$x_count_parts - 1];
 
         return $x_display;
+    }
+
+    //根据openid 查询用户(微信小程序)
+    public static function openidUser($request){
+        $openid = $request->input('openid');
+        if ($openid!='') {
+            $user = User::where('open_id',$openid)->select('id')->first();
+            if ($user!='') {
+                return $user->id;
+            }
+        }
+        return 'false';
     }
 
     //订单号生成方法

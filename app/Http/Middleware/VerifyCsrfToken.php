@@ -12,6 +12,11 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+        'miniapp/login',
+        'miniapp/order/pay',
+        'miniapp/order',
+        'miniapp/order/update',
+        'miniapp/order/store',
+        'miniapp/order/create',
     ];
 }
