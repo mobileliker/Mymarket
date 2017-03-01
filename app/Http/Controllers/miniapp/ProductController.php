@@ -13,6 +13,7 @@ use App\Http\Requests\ContactFormRequest;
 use App\User;
 use App\OrderDetail;
 use App\Order;
+use App\Category;
 use DB;
 use Illuminate\Http\Request;
 use App\Product;
@@ -37,12 +38,13 @@ class ProductController extends Controller
 		$start_price = !empty($request->input('start_price'))?$request->input('start_price'):'';
 		$brand = !empty($request->input('brand'))?$request->input('brand'):'';
 		$end_price = !empty($request->input('end_price'))?$request->input('end_price'):'';
+		$category = !empty($request->input('category'))?$request->input('category'):'';
 
 
 		$products = Product::where('products.status','=',1)
 			->leftJoin('order_details',function($join){
 				$join->on('products.id','=','order_details.product_id')->whereNotNull('order_details.rate');
-			});
+			})->join('categories','products.category_id','=','categories.id');
 
 
 		if ($field=='sell') {
@@ -52,7 +54,9 @@ class ProductController extends Controller
 		if ($field=='price') {
 			$orderName = 'products.price';
 		}
-
+		if ($category!='') {
+			$products = $products->where('categories.name','=',trim($category));
+		}
 		if ($text!='') {
 			$products = $products->where('products.name','like','%'.$text.'%');
 		}
@@ -69,9 +73,8 @@ class ProductController extends Controller
 				->orderBy($orderName,$order)
                 ->groupBy('products.id')
 				->paginate(10);
-		$products->appends(['field'=>$field,
-										'text'=>$text,'order'=>$order,'brand'=>$brand,'start_price'=>$start_price,'end_price'=>$end_price])
-										->links();
+		$products->appends(['field'=>$field,'text'=>$text,'order'=>$order,
+			'brand'=>$brand,'start_price'=>$start_price,'end_price'=>$end_price])->links();
 		return  response()->json($products);
 	}
 
@@ -166,4 +169,84 @@ class ProductController extends Controller
 		return  response()->json($details);
 	}
 
+	//商品分类查找
+	public function screen_category(Request $request){
+
+		$text = $request->input('text');	
+
+		if ($text!=''&&$text!=null) {
+			$category = $this->categoryTextY($text);
+			if (empty($category) || !count($category)) {
+				$category = $this->categoryTextN($text);
+			}
+		}else{
+			$category = $this->categoryTextN($text);
+		}
+
+		return response()->json($category);
+
+	}
+	//有搜索内容时
+	public function categoryTextY($text){
+		$pcategory = Product::where('products.name','like','%'.$text.'%')
+						->join('categories','products.category_id','=','categories.id')
+						->whereNotNull('categories.category_id')
+						->join('categories as pcategory','categories.category_id','=','pcategory.id')
+						->groupBy('pcategory.name')
+						->select('pcategory.id')
+						->get();
+
+			if (!empty($category)&& isset($category[0])) {
+				foreach ($pcategory as $value) {
+					$ids[] = $value->id;
+				}
+			}else{
+				return null;
+			}
+		return $category = Category::whereIn('category_id',$ids)->select('id','name')->limit(21)->get();
+	}
+	//无搜索内容时
+	public function categoryTextN($text){
+		return $category = Category::orderBy('id','desc')
+			->whereNotNull('category_id')
+			->groupBy('name')
+			->select('id','name')
+			->limit(21)
+			->get();
+	}
+
+	//商品品牌查找
+	public function screen_brand(Request $request){
+
+		$text = $request->input('text');	
+
+		if ($text!=''&&$text!=null) {
+			$brands = $this->brandTextY($text);
+			if (empty($brands)|| !count($brands)) {
+				$brands = $this->brandTextN($text);
+			}
+		}else{
+			$brands = $this->brandTextN($text);
+		}
+
+		return response()->json($brands);
+
+	}
+	//有搜索内容时
+	public function brandTextY($text){
+		return $brands = Product::where('name','like','%'.$text.'%')
+						->whereNotNull('brand')
+						->groupBy('brand')
+						->select('brand')
+						->limit(21)
+						->get();
+	}
+	//无搜索内容时
+	public function brandTextN($text){
+		return $brands = Product::groupBy('brand')
+						->whereNotNull('brand')
+						->select('brand')
+						->limit(21)
+						->get();
+	}
 }
