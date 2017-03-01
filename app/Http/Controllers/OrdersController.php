@@ -1033,8 +1033,8 @@ class OrdersController extends Controller
     {
         $user = \Auth::user();
 
-        $order_ids = $request->input('order_ids');
-        $order_ids = explode(',',$order_ids);
+        $order_id = $request->input('order_ids');
+        $order_ids = explode(',',$order_id);
 
         if (!empty($order_ids)) {
                 $products = DB::table('order_details')
@@ -1083,11 +1083,10 @@ class OrdersController extends Controller
 
             //支付进度
             $payPlan = 1;
-
             // print_r($business_products);die;
             // return view('address.list', compact('user', 'panel', 'cart', 'addresses', 'callBackUrl', 'defaultId'));
 
-            return view('szy.affirm-orders', compact('cart', 'user', 'panel', 'isResume', 'cartAddress', 
+            return view('szy.affirm-orders', compact('cart', 'user', 'panel', 'isResume', 'cartAddress','defaultId','order_id',
                 'totalItems', 'totalAmount','addresses','business_products','payPlan'));
         }
     }
@@ -1100,16 +1099,55 @@ class OrdersController extends Controller
      * @return Response
      */
     public function pay(Request $request){
-
-        $address_id = $request->input('address_id');
-        $paytype = $request->input('paytype');
-        $remarks = $request->input('remarks');
-        $details_ids = explode(',',$request->input('details_ids'));
-
-        //支付进度
-        $payPlan = 2;
-
-        return view('szy.pay',compact('payPlan'));
+        $address_id = $request->input('address_id');   //地址
+        $paytype = $request->input('paytype');   //支付方式
+        $remarks = $request->input('remarks');   //留言
+        $details_ids = explode(',',$request->input('details_ids'));  //详情物品id
+        if(OrderDetail::find($details_ids[0])->status==2) {
+            $payPlan = 1;
+            return redirect('user/orders/getErrorOrder/'.$payPlan); 
+        }
+        $count = $request->input('count');   //总金额
+        $seller_id = $request->input('seller_id');
+        $user_id = \Auth::user()->id;
+        $order_number=\Utility::number();
+        $order = new Order();
+        $order->user_id=$user_id;
+        $order->address_id=$address_id;
+        $order->seller_id=$seller_id;
+        $order->status='open';
+        $order->type='order';
+        $order->order_number=$order_number;
+        if($order->save()) {
+            $id=$order->id;
+            foreach($details_ids as $details_id) {
+                OrderDetail::where('id','=',$details_id)->update(['order_id'=>$id,'status'=>2]);
+            }
+            $addressDefault=Address::find($address_id);
+            $addressDefault->default=1;
+            $addressDefault->save();
+            Address::where('id','!=',$address_id)->update(['default' => 1]);
+        }
+        //微信支付
+        if($paytype=='weixin') {
+            //支付进度
+            $payPlan = 2;
+            return redirect('user/orders/getOrder/'.$payPlan.'/'.$count.'/'.$order_number);      
+        }
+        else
+        {
+            //支付进度
+            $payPlan = 2;
+            return view('szy.pay',compact('payPlan'));
+        }
+    }
+    //展示页面
+    public function getOrder(Request $request,$payPlan,$count,$order_number) {
+        return view('szy.pay.weixin',compact('payPlan','count','order_number'));
+    }
+    //订单重复页面
+    public function getErrorOrder(Request $request,$payPlan) {
+        return view('szy.pay.order-again',compact('payPlan'));
     }
 
     // //订单号生成方法 (改到Utility)

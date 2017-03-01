@@ -12,25 +12,41 @@
     <div class="comfirmOrder"  @if (count($addresses) == 0) address="false" @else address="{{$addresses[0]->id}}" @endif>
         <div class="order_address">
             <h2>选择收货地址</h2>
-            <div class="inner">
+            <div class="inner" id="inner_address">
                 @if (count($addresses) == 0)
                     <h1>没有地址 请添加</h1>
                 @else
                     @foreach ($addresses as $address)
-                    <div class="list" vl="{{$address->id}}">
-                        <div class="addr_hd">
-                            <span class="name">{{ $address->name_contact }}</span>
-                            <span>({{ $address->state}} {{$address->city }})</span>
+                        @if($address->id==$defaultId)
+                        <div class="list" vl="{{$address->id}}">
+                            <div class="addr_hd">
+                                <span class="name">{{ $address->name_contact }}</span>
+                                <span>({{ $address->state}} {{$address->city }})</span>
+                            </div>
+                            <div class="addr_bd">
+                                <span class="street">{{$address->line1}}</span>
+                                <br/>
+                                <span class="phone">{{ $address->phone }}</span>
+                            </div>
                         </div>
-                        <div class="addr_bd">
-                            <span class="street">{{$address->line1}}</span>
-                            <br/>
-                            <span class="phone">{{ $address->phone }}</span>
+                        @endif
+                    @endforeach
+                    @foreach ($addresses as $address)
+                        @if($address->id!=$defaultId)
+                        <div class="list" vl="{{$address->id}}">
+                            <div class="addr_hd">
+                                <span class="name">{{ $address->name_contact }}</span>
+                                <span>({{ $address->state}} {{$address->city }})</span>
+                            </div>
+                            <div class="addr_bd">
+                                <span class="street">{{$address->line1}}</span>
+                                <br/>
+                                <span class="phone">{{ $address->phone }}</span>
+                            </div>
                         </div>
-                    </div>
+                        @endif
                     @endforeach
                 @endif
-
             </div>
             <div class="control">
                 <a href="javascript:void(0);" id="showAddress" state=0>全部地址显示</a>
@@ -42,11 +58,11 @@
                     <ul check="false" id="payType">
                         <li paytype='-1'><a href="javascript:void(0);">线下支付</a></li>
                         {{--<li paytype=''><a href="javascript:void(0);">在线支付</a></li>--}}
-                        <li paytype=''><a href="javascript:void(0);">微信支付</a></li>
+                        <li paytype='weixin' style="background-color:#60B852;border:none;"><a href="javascript:void(0);" style="color:white;">微信支付</a></li>
                         {{--<li paytype=''><a href="javascript:void(0);">支付宝支付</a></li>--}}
                         {{--<li paytype=''><a href="javascript:void(0);">货到付款</a></li>--}}
                     </ul>
-                    <span>线上功能暂时未开通,敬请期待！</span>
+                    <!--<span>线上功能暂时未开通,敬请期待！</span>-->
                 </div>
             </div>
         </div>
@@ -64,7 +80,7 @@
             </div>
             @foreach ($products as $product)
             <div class="order_item">
-                <div class="order_itemInfo">
+                <div class="order_itemInfo" seller_id="{{$product->user_id}}">
                     <div class="info_detail">
                         <div class="info_img">
                             <a href="products/{{ $product->id }}">
@@ -120,7 +136,6 @@
                     <textarea class="text_area_input" placeholder="选填，可填写您和卖家达成一致的要求"></textarea>
                 </div>
             </div>
-
         </div>
         <div class="order_payinfo">
             <div class="order_realPay">
@@ -138,11 +153,13 @@
 
     <form action="user/orders/pay" method="POST" id="orderForm">
         {{ csrf_field() }}
-
         <input type='hidden' name="address_id" value="">
         <input type='hidden' name="paytype" value="">
         <input type='hidden' name="remarks" value="">
         <input type='hidden' name="details_ids" value="">
+        <input type='hidden' name="seller_id" value="">
+        <input type='hidden' name="order_id" value="{{$order_id}}">
+        <input type='hidden' name="count" value="">
     </form>
 
     <form action="user/orders/pay/successful" method="POST" id="fulForm">
@@ -158,7 +175,14 @@
 @section('scripts')
     @parent
     <script type="text/javascript">
-
+        
+        var count = 0;
+        //支付总金额
+        $(".oneProductPrice").each(function(){
+            count = parseInt(count) + parseInt($(this).html());
+        });
+        $("#countPrice").html(count);
+        
         //商品订单id数据加入到Form
         var details = Array();
         $(".details-pro").each(function(i){
@@ -169,29 +193,28 @@
         //订单提交
         $("#orderSubmit").click(function(){
             var pay = $("#payType").attr('check');
-            if ( pay != 'false') {
-                if (pay != -1) {
-                    $("#orderForm input[name='address_id']").val($(".comfirmOrder").attr('address'));
-                    $("#orderForm input[name='paytype']").val(pay);
-                    $("#orderForm input[name='remarks']").val($(".text_area_input").val());
-                    $("#orderForm").submit();
+            var address_id=$("#orderForm input[name='address_id']").val();
+            if(address_id!='') {
+                if ( pay != 'false') {
+                    if (pay != -1) {
+                        $("#orderForm input[name='paytype']").val(pay);
+                        $("#orderForm input[name='remarks']").val($(".text_area_input").val());
+                        $("#orderForm input[name='count']").val(count);
+                        $("#orderForm input[name='seller_id']").val($(".order_itemInfo").attr('seller_id'));
+                        $("#orderForm").submit();
+                    }else{
+                        $("#fulForm input[name='paytype']").val(pay);
+                        $("#fulForm input[name='remarks']").val($(".text_area_input").val());
+                        $("#fulForm").submit();
+                    }
                 }else{
-                    $("#fulForm input[name='address_id']").val($(".comfirmOrder").attr('address'));
-                    $("#fulForm input[name='paytype']").val(pay);
-                    $("#fulForm input[name='remarks']").val($(".text_area_input").val());
-                    $("#fulForm").submit();
+                    alert('请选择支付方式');
                 }
-            }else{
-                alert('请选择支付方式');
+            }
+            else {
+                alert('请选择地址');
             }
         });
-
-        var count = 0;
-        //支付总金额
-        $(".oneProductPrice").each(function(){
-            count = parseInt(count) + parseInt($(this).html());
-        });
-        $("#countPrice").html(count);
 
         //支付方式
         $("#payType li").click(function(){
@@ -224,9 +247,13 @@
 
         //选择地址
         $(".list").click(function(){
-            $(".comfirmOrder").attr('address',$(this).attr('vl'));
+            $("#orderForm input[name='address_id']").val($(this).attr('vl'));
             $(".list").css('background','url(/img/szy/inc/frame1.png) no-repeat');
             $(this).css('background','url(/img/szy/inc/frame.png) no-repeat');
+        });
+        //刷新显示
+        $(function() {
+            $("#orderForm input[name='address_id']").val(<?php echo $defaultId ?>);
         });
     </script>
 @show
