@@ -28,11 +28,14 @@
 	<h6>{{ trans('address.address')}}</h6>
 </div>--}}
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-6">
 		<label class="control-label">{{ trans('address.address')}}:</label>
 		{!! Form::text('address',null,['class'=>'form-control']) !!}
 	</div>
-
+	<div class="col-md-6">
+		<label class="control-label">阿里旺旺:</label>
+		<input name="alww" value="{{$company->alww}}" class="form-control" placeholder="多个旺旺使用‘|’分隔,如222|333">
+	</div>
 	
 	<div class="col-md-4">
 		<label class="control-label">{{ trans('address.city')}}:</label>

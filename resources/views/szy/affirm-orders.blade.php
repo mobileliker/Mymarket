@@ -49,7 +49,7 @@
                 @endif
             </div>
             <div class="control">
-                <a href="javascript:void(0);" id="showAddress" state=0>全部地址显示</a>
+                @if(count($addresses)>4)<a href="javascript:void(0);" id="showAddress" state=0>全部地址显示</a>@endif
                 <a href="user/address"  target="_black">管理收货地址</a>
             </div>
             <div class="pay_way">
@@ -75,7 +75,7 @@
                     <div class="buy_td">数量</div>
                     <div class="buy_td">优惠(元)</div>
                     <div class="buy_td">总计(元)</div>
-                    <div class="buy_td">配送方式</div>
+                    <div class="buy_td">运输(元)</div>
                 </div>
             </div>
             @foreach ($products as $product)
@@ -117,24 +117,26 @@
                     </div>
                 </div>
                 <div class="order_itemPay">
-                    <span class="oneProductPrice">{{$product->quantity * $product->price}}</span>
+                    <span class="oneProductPrice" delivery="{{ $product->delivery_price }}">{{$product->quantity * $product->price}}</span>
                 </div>
                 <div class="delivery_way">
                     <select>
-                        <option value="快递 免邮">快递 免邮</option>
-                        <option value="不满5斤 邮费5元">不满5斤 邮费5元</option>
+                        <option value="{{ $product->delivery_price }}">{{ sprintf("%.2f",$product->delivery_price) }}</option>
                     </select>
                 </div>
             </div>
             @endforeach
         @endforeach
 
-        <div class="order_Ext">
+        <div class="order_Ext" style="padding-top:6px;">
             <div class="order_memo">
-                <label for="" class="memo_name">给卖家留言：</label>
+                <label for="" class="memo_name">订单备注：</label>
                 <div class="memo_detail">
-                    <textarea class="text_area_input" placeholder="选填，可填写您和卖家达成一致的要求"></textarea>
+                    <input class="text_area_input" type="text" placeholder=" 限45个字，请将购买需求做详细说明" maxlength='45'
+                    style="height:25px;width:350px;"
+                    >
                 </div>
+                <div style="color:#ccc;font-size:13px;line-height:25px;padding-left:20px;">&nbsp;&nbsp;提示：请勿填写有关支付、收货、发票方面的信息</div>
             </div>
         </div>
         <div class="order_payinfo">
@@ -179,7 +181,7 @@
         var count = 0;
         //支付总金额
         $(".oneProductPrice").each(function(){
-            count = parseInt(count) + parseInt($(this).html());
+            count = parseInt(count) + parseInt($(this).html())+parseInt($(this).attr('delivery'));
         });
         $("#countPrice").html(count);
         
@@ -226,11 +228,11 @@
         });
 
         //卖家留言
-        $(".text_area_input").focus(function(){
-            $(this).css('height','100px');
-        }).blur(function(){
-            $(this).css('height','20px');
-        });
+        // $(".text_area_input").focus(function(){
+        //     $(this).css('height','100px');
+        // }).blur(function(){
+        //     $(this).css('height','20px');
+        // });
 
         //显示 隐藏 地址
         $("#showAddress").click(function(){

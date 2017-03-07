@@ -19,7 +19,8 @@ class HomeController extends Controller
 {	
 
 	public function index(){
-		// \Auth::loginUsingId(1);
+
+		return \Utility::ipGetAddress();
 		$product = Product::where('status','=',1)
 				->where('condition','=','new')
 				->orderBy('created_at','desc')

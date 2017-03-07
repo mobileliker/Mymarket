@@ -85,7 +85,7 @@
                     <div class="form-group">
                         <div class="col-sm-6">
                             {!! Form::label('name',trans('product.inputs_view.name')) !!}:&nbsp;
-                            {!! Form::text('name',null,['class'=>'form-control',$disabled=>$disabled,'required']) !!}
+                            {!! Form::text('name',null,['class'=>'form-control','required']) !!}
                         </div>
                         <div class="col-sm-6">
                             {!! Form::label('name','从属商品') !!}:&nbsp;
@@ -125,11 +125,11 @@
                         </div>
                         <div class="col-sm-4">
                             {!! Form::label('price_raw','原价') !!}:&nbsp;
-                            {!! Form::number('price_raw',null,['class'=>'form-control','required']) !!}
+                            {!! Form::text('price_raw',null,['class'=>'form-control','required']) !!}
                         </div>
                         <div class="col-sm-4">
                             {!! Form::label('price','现价') !!}:&nbsp;
-                            {!! Form::number('price',null,['class'=>'form-control','step'=>'any','required']) !!}
+                            {!! Form::text('price',null,['class'=>'form-control','required']) !!}
                         </div>
                     </div>
 
@@ -210,6 +210,24 @@
                         </div>
                     </div>
 
+                    <div class="form-group ng-cloak" >
+                       <div class="col-sm-6">
+                            {!! Form::label('delivery_price','邮寄费 | 除港澳台 | 0为包邮') !!}:&nbsp;
+                            @if(isset($product->delivery_price))
+                            {!! Form::text('delivery_price',$product->delivery_price,['class'=>'form-control','required']) !!}
+                            @else 
+                            {!! Form::text('delivery_price',0,['class'=>'form-control','required']) !!}
+                            @endif
+                        </div>
+                        <div class="col-sm-6">
+                            {!! Form::label('delivery_price_except','港澳台邮寄费 | 0为包邮') !!}:&nbsp;
+                            @if(isset($product->delivery_price_except))
+                            {!! Form::text('delivery_price_except',$product->delivery_price_except,['class'=>'form-control','required']) !!}
+                            @else 
+                            {!! Form::text('delivery_price_except',0,['class'=>'form-control','required']) !!}
+                            @endif
+                        </div>
+                    </div>
                     <div class="form-group ng-cloak" ng-show="typeItem=='key'">
                         <div class="col-sm-2 col-sm-offset-4">
                             <div ng-controller="upload" ng-init="file='{{ (Input::old('key')?Input::old('key'):'') }}'">

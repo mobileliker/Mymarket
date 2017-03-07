@@ -10,7 +10,37 @@ use App\User;
  * @author  Gustavo Ocanto <gustavoocanto@gmail.com>
  */
 class Utility
-{
+{   
+    //所查城市是否为国内城市
+    public static function addressIsset($name){
+        $array = ['北京','天津','上海','重庆','河北','山西','内蒙古',
+        '辽宁','吉林','黑龙江','江苏','浙江','安徽','福建','江西','山东',
+        '河南','湖北','湖南','广东','广西',"海南","四川","贵州",
+        "云南","西藏","陕西","甘肃","宁夏","青海","新疆",
+        "香港","澳门","台湾"];
+        if(in_array($name, $array)){
+            return 1;
+        };
+        return 0;
+    }
+    //根据ip获取城市
+    public static function ipGetAddress(){
+
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $res = @file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $ip);  
+            if(empty($res)){ return 'false'; }  
+            $jsonMatches = array();  
+            preg_match('#\{.+?\}#', $res, $jsonMatches);  
+            if(!isset($jsonMatches[0])){ return 'false'; }  
+            $json = json_decode($jsonMatches[0], true);  
+            if(isset($json['ret']) && $json['ret'] == 1){  
+                $json['ip'] = $ip;  
+                unset($json['ret']);  
+            }else{  
+                return 'false';  
+            }  
+            return $json;  
+    }
     /**
      * [Format Currency to Nearest Thousands such as Kilos, Millions, Billions, and Trillions].
      *

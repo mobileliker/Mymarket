@@ -35,6 +35,36 @@ class ArticleController extends Controller
 	public function articleContent($id){
 
 		$article = Article::select('content')->find($id);
-		return  response()->json($article);
+		$str = '';
+		if ($article!='') {
+			$str = $article->content;
+		}else{
+			return $str;
+		}
+
+
+		$str = strip_tags($str);
+		// $str = strip_tags($str,"<img>");
+		$str = str_replace("&nbsp;","", $str);
+		// $del=array(
+		// 	"/name=.+?['|\"]/i",
+		// 	"/id=.+?['|\"]/i",
+		// 	"/width=.+?['|\"]/i",
+		// 	"/height=.+?['|\"]/i",
+		// 	"/usemap=.+?['|\"]/i",
+		// 	"/shape=.+?['|\"]/i",
+		// 	"/coords=.+?['|\"]/i",
+		// 	"/target=.+?['|\"]/i",
+		// 	"/title=.+?['|\"]/i",
+		// 	"/alt=.+?['|\"]/i"
+		// 	);
+		// $str = str_replace('img','image', $str);
+		// $str = preg_replace($del,'',$str);
+		// $str = str_replace("src=\"","str=\"http:\/\/www.caishi360.com", $str);
+		// $str = str_replace(">","></image>", $str);
+
+
+
+		return  response()->json($str);
 	}
 }

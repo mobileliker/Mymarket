@@ -79,12 +79,22 @@
 									</div>
 								</div>
 							</div>
+							{{--
 							<div class="form-group">
 								<div class="col-md-12">
-									客户QQ:
+									客服QQ:
 									<div class="input-group">
 							      		<div class="input-group-addon"><span class="glyphicon glyphicon-heart"></span></div>
-							      		<input class='form-control' type="text" value="{{$user->qq}}" name="qq" placeholder="多个QQ使用 | 隔开">
+							      		<input class='form-control' type="text" value="{{$user->qq}}" name="qq" placeholder="多个QQ使用 | 隔开 , 如 123|234">
+									</div>
+								</div>
+							</div>--}}
+							<div class="form-group">
+								<div class="col-md-12">
+									阿里旺旺:
+									<div class="input-group">
+							      		<div class="input-group-addon"><span class="glyphicon glyphicon-heart"></span></div>
+							      		<input class='form-control' type="text" value="{{$user->alww}}" name="alww" placeholder="多个旺旺使用 | 隔开 , 如 123|234 ">
 									</div>
 								</div>
 							</div>

@@ -156,12 +156,12 @@
 		<div class="order-products">
 			<div class="details-title">订单信息 </div>
 			<div class="info-left">
-				<li>收货地址: {{$address->state}}{{$address->city}}{{$address->line1}}</li>
-				<li>收货人: {{$address->name_contact}}</li>
-				<li>您的电话: {{$address->phone}}</li>
+				<li>收货地址: @if(!empty($address)){{$address->state}}{{$address->city}}{{$address->line1}}@endif</li>
+				<li>收货人: @if(!empty($address)){{$address->name_contact}}@endif</li>
+				<li>您的电话: @if(!empty($address)){{$address->phone}}@endif</li>
 			</div>
 			<div class="info-right">
-				@if($sellerRole!='admin' && $sellerRole!='person')
+				@if($sellerRole!='admin' && $sellerRole!='person' && $business!='')
 					<li>店铺: {{$business->business_name}}</li>
 					<li>负责人: {{$business->person}}</li>
 					<li>商家电话: {{$business->phone}}</li>
