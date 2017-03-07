@@ -1102,14 +1102,18 @@ class OrdersController extends Controller
         $address_id = $request->input('address_id');   //地址
         $paytype = $request->input('paytype');   //支付方式
         $remarks = $request->input('remarks');   //留言
-        $details_ids = explode(',',$request->input('details_ids'));  //详情物品id
-        if(OrderDetail::find($details_ids[0])->status==2) {
-            $payPlan = 1;
-            return redirect('user/orders/getErrorOrder/'.$payPlan); 
-        }
         $count = $request->input('count');   //总金额
+        $details_ids = explode(',',$request->input('details_ids'));  //详情物品id
         $seller_id = $request->input('seller_id');
         $user_id = \Auth::user()->id;
+        $product_detail=Order::join('order_details','orders.id','=','order_details.order_id')->select('orders.order_number')
+                ->whereNotNull('orders.order_number')->where('order_details.id','=',$details_ids[0])->first();
+        if($product_detail!=null&&$product_detail!='') {
+            $payPlan = 2;
+            $order_number=$product_detail->order_number;
+            return view('szy.pay.weixin',compact('payPlan','count','order_number'));
+        }
+
         $order_number=\Utility::number();
         $order = new Order();
         $order->user_id=$user_id;
@@ -1121,33 +1125,22 @@ class OrdersController extends Controller
         if($order->save()) {
             $id=$order->id;
             foreach($details_ids as $details_id) {
-                OrderDetail::where('id','=',$details_id)->update(['order_id'=>$id,'status'=>2]);
+                OrderDetail::where('id','=',$details_id)->update(['order_id'=>$id,'order_state'=>1]);
             }
-            $addressDefault=Address::find($address_id);
-            $addressDefault->default=1;
-            $addressDefault->save();
-            Address::where('id','!=',$address_id)->update(['default' => 1]);
+            Address::where('id','=',$address_id)->update(['default' => 1]);
+            Address::where('id','!=',$address_id)->update(['default' => 0]);
         }
         //微信支付
         if($paytype=='weixin') {
             //支付进度
             $payPlan = 2;
-            return redirect('user/orders/getOrder/'.$payPlan.'/'.$count.'/'.$order_number);      
+            return view('szy.pay.weixin',compact('payPlan','count','order_number'));
         }
-        else
-        {
+        else {
             //支付进度
             $payPlan = 2;
             return view('szy.pay',compact('payPlan'));
         }
-    }
-    //展示页面
-    public function getOrder(Request $request,$payPlan,$count,$order_number) {
-        return view('szy.pay.weixin',compact('payPlan','count','order_number'));
-    }
-    //订单重复页面
-    public function getErrorOrder(Request $request,$payPlan) {
-        return view('szy.pay.order-again',compact('payPlan'));
     }
 
     // //订单号生成方法 (改到Utility)
