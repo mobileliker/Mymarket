@@ -48,7 +48,7 @@
     $timeStamp = time();
     $out_trade_no = WxPayConf_pub::APPID."$timeStamp";
     $unifiedOrder->setParameter("out_trade_no","$order_number");//商户订单号 
-    $unifiedOrder->setParameter("total_fee",$count*100);//总金额
+    $unifiedOrder->setParameter("total_fee",'1');//总金额
     $unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
     $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
     $unifiedOrder->setParameter("sub_mch_id","1444913102");//交易类型
