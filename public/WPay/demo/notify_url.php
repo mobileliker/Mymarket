@@ -9,8 +9,8 @@
 */
 	include_once("./log_.php");
 	include_once("../WxPayPubHelper/WxPayPubHelper.php");
-
-    //使用通用通知接口
+        $pdo = new PDO("mysql:host=119.29.34.160;dbname=szymm","szymm","szymm123456SZYMM"); 
+        //使用通用通知接口
 	$notify = new Notify_pub();
 
 	//存储微信的回调
@@ -63,7 +63,8 @@
             // 如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
             // 如果有做过处理，不执行商户的业务程序
             if (!empty($out_trade_no)) {
-                \app\Order::where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
+//                \app\Order::where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
+                $pdo -> exec("update szymm_orders set status=paid where order_number=".$out_trade_no);
             }
 	}
 ?>
