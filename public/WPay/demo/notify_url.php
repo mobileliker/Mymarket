@@ -39,22 +39,32 @@
 
 	if($notify->checkSign() == TRUE)
 	{
-		if ($notify->data["return_code"] == "FAIL") {
-			//此处应该更新一下订单状态，商户自行增删操作
-			$log_->log_result($log_name,"【通信出错】:\n".$xml."\n");
-		}
-		elseif($notify->data["result_code"] == "FAIL"){
-			//此处应该更新一下订单状态，商户自行增删操作
-			$log_->log_result($log_name,"【业务出错】:\n".$xml."\n");
-		}
-		else{
-			//此处应该更新一下订单状态，商户自行增删操作
-			$log_->log_result($log_name,"【支付成功】:\n".$xml."\n");
-		}
-		
-		//商户自行增加处理流程,
-		//例如：更新订单状态
-		//例如：数据库操作
-		//例如：推送支付完成信息
+            if ($notify->data["return_code"] == "FAIL") {
+                    //此处应该更新一下订单状态，商户自行增删操作
+                    $log_->log_result($log_name,"【通信出错】:\n".$xml."\n");
+            }
+            elseif($notify->data["result_code"] == "FAIL"){
+                    //此处应该更新一下订单状态，商户自行增删操作
+                    $log_->log_result($log_name,"【业务出错】:\n".$xml."\n");
+            }
+            else{
+                //此处应该更新一下订单状态，商户自行增删操作
+                $log_->log_result($log_name,"【支付成功】:\n".$xml."\n");
+            }
+            //商户自行增加处理流程,
+            //例如：更新订单状态
+            //例如：数据库操作
+            //例如：推送支付完成信息
+            $xml = $notify->xmlToArray($xml);
+            // 商户订单号
+            $out_trade_no = $xml ['out_trade_no'];
+            $uid = $xml ['openid'];
+            $log_->log_result($log_name,"【订单号】:\n".$out_trade_no."\n");
+            // 判断该笔订单是否在商户网站中已经做过处理
+            // 如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+            // 如果有做过处理，不执行商户的业务程序
+            if (! empty ( $out_trade_no )) {
+                \app\Order::where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
+            }
 	}
 ?>

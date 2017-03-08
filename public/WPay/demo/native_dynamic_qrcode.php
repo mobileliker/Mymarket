@@ -59,20 +59,28 @@
 </body>
 	<script src="./qrcode.js"></script>
 	<script>
-		if(<?php echo $unifiedOrderResult["code_url"] != NULL; ?>)
-		{
-			var url = "<?php echo $code_url;?>";
-			//参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
-			var qr = qrcode(10, 'M');
-			qr.addData(url);
-			qr.make();
-			var wording=document.createElement('p');
-			wording.innerHTML = "扫我，扫我";
-			var code=document.createElement('DIV');
-			code.innerHTML = qr.createImgTag();
-			var element=document.getElementById("qrcode");
-			element.appendChild(wording);
-			element.appendChild(code);
-		}
+            if(<?php echo $unifiedOrderResult["code_url"] != NULL; ?>)
+            {
+                    var url = "<?php echo $code_url;?>";
+                    //参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
+                    var qr = qrcode(10, 'M');
+                    qr.addData(url);
+                    qr.make();
+                    var wording=document.createElement('p');
+                    wording.innerHTML = "扫我，扫我";
+                    var code=document.createElement('DIV');
+                    code.innerHTML = qr.createImgTag();
+                    var element=document.getElementById("qrcode");
+                    element.appendChild(wording);
+                    element.appendChild(code);
+            }
+            function ajaxstatus() {
+                $.post("http://www.caishi360.com/WPay/demo/notify_url",{orderid:<?php echo $order_id?>},function(data)) {
+                    if(data.status==1) {
+                        window.location.href='';
+                    }
+                }
+            }
+            setInterval('ajaxstatus()',3000);
 	</script>
 </html>

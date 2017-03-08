@@ -43,12 +43,12 @@
     include_once str_replace("\\","/",public_path())."/WPay/WxPayPubHelper/WxPayPubHelper.php";
     //使用统一支付接口
     $unifiedOrder = new UnifiedOrder_pub();
-    $unifiedOrder->setParameter("body","贡献一分钱");//商品描述
+    $unifiedOrder->setParameter("body","贡献一分钱"); //商品描述
     //自定义订单号，此处仅作举例
     $timeStamp = time();
     $out_trade_no = WxPayConf_pub::APPID."$timeStamp";
-    $unifiedOrder->setParameter("out_trade_no","$out_trade_no");//商户订单号 
-    $unifiedOrder->setParameter("total_fee",$count);//总金额
+    $unifiedOrder->setParameter("out_trade_no","$order_number");//商户订单号 
+    $unifiedOrder->setParameter("total_fee",$count*100);//总金额
     $unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
     $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
     $unifiedOrder->setParameter("sub_mch_id","1444913102");//交易类型
@@ -205,8 +205,13 @@
         element.appendChild(wording);
         element.appendChild(code);
     }
-//        function ajaxstatus() {
-//            $.post("http://www.caishi360")
-//        }
+    function ajaxstatus() {
+        $.post("http://www.caishi360.com/",{orderid:<?php echo $order_id?>},function(data)) {
+            if(data.status==1) {
+                window.location.href='';
+            }
+        }
+    }
+    setInterval('ajaxstatus()',3000);
     </script>
 @show

@@ -1142,20 +1142,6 @@ class OrdersController extends Controller
         }
     }
 
-    // //订单号生成方法 (改到Utility)
-    // public function number(){
-
-    //     $countOrder = Order::orderBy('id','desc')->first();
-
-    //     if (empty($countOrder)) {
-    //        $count = 0;
-    //     }else{
-    //         $count = $countOrder->id;
-    //     }
-
-    //     return 'wjcs'.rand(10,99).substr(date("Y"),2).date("m").date('d').$count.rand(10,99);
-    // }
-
     /**
      * 交易完成
      *
