@@ -205,13 +205,6 @@
         element.appendChild(wording);
         element.appendChild(code);
     }
-//    function ajaxstatus() {
-//        $.post("http://www.caishi360.com/",{orderid:<?php echo $order_id?>},function(data)) {
-//            if(data.status==1) {
-//                window.location.href='';
-//            }
-//        }
-//    }
-//    setInterval('ajaxstatus()',3000);
+
     </script>
 @show
