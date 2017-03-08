@@ -57,13 +57,12 @@
             //例如：推送支付完成信息
             $xml = $notify->xmlToArray($xml);
             // 商户订单号
-            $out_trade_no = $xml ['out_trade_no'];
-            $uid = $xml ['openid'];
+            $out_trade_no = $xml['out_trade_no'];
             $log_->log_result($log_name,"【订单号】:\n".$out_trade_no."\n");
             // 判断该笔订单是否在商户网站中已经做过处理
             // 如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
             // 如果有做过处理，不执行商户的业务程序
-            if (! empty ( $out_trade_no )) {
+            if (!empty($out_trade_no)) {
                 \app\Order::where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
             }
 	}

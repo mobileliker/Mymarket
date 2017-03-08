@@ -47,7 +47,7 @@
     //自定义订单号，此处仅作举例
     $timeStamp = time();
     $out_trade_no = WxPayConf_pub::APPID."$timeStamp";
-    $unifiedOrder->setParameter("out_trade_no","$order_number");//商户订单号 
+    $unifiedOrder->setParameter("out_trade_no",$order_number);//商户订单号 
     $unifiedOrder->setParameter("total_fee",'1');//总金额
     $unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
     $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
