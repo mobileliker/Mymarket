@@ -20,7 +20,7 @@
 	$unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
 	$unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
 	//非必填参数，商户可根据实际情况选填
-	
+	$unifiedOrder->setParameter("sub_mch_id","1444913102");//子商户号 
 	//获取统一支付接口结果
 	$unifiedOrderResult = $unifiedOrder->getResult();
 	
