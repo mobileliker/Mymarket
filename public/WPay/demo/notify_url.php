@@ -12,6 +12,7 @@
 //        $pdo = new PDO("mysql:host=119.29.34.160;dbname=szymm","szymm","szymm123456SZYMM"); 
         //使用通用通知接口
 	$notify = new Notify_pub();
+        echo 11;
 	//存储微信的回调
 	$xml = $GLOBALS['HTTP_RAW_POST_DATA'];	
 	$notify->saveData($xml);
