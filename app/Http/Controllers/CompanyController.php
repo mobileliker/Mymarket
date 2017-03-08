@@ -122,7 +122,6 @@ class CompanyController extends Controller
         }
 
         $lbs = $this->uploadPic($request,'lbphoto');
-
         if ($lbs!='false') {
             $lbss = array(0=>'',1=>'',2=>'',3=>'',4=>'');
             if (!empty($company->lbpic)) {
@@ -141,6 +140,7 @@ class CompanyController extends Controller
             $company->lbpic = implode(',',$lbss);
             //$data['lbpic'] = implode(',',$lbss);
         }
+        
         $company->save();
         $company->update($data);
 
@@ -160,13 +160,13 @@ class CompanyController extends Controller
                 foreach($request->file($name) as $k=>$f) {
                     $Extension = $f->getClientOriginalExtension();
                     $filename = 'WEB_LB'.time().rand(1,10000);
-                    $f->move($path, $filename.'.'.$Extension);
+                    $f->resize(20,20)->move($path, $filename.'.'.$Extension);
                     $arr[$k] = $path.$filename.'.'.$Extension; //原图路径加名
                 }  
                 return $arr;
             }else{
                 $Extension = $file->getClientOriginalExtension();
-                $file->move($path, $filename.'.'.$Extension);
+                $file->resize(20,20)->move($path, $filename.'.'.$Extension);
                 return $path.$filename.'.'.$Extension; //原图路径加名称
             }
         }else{

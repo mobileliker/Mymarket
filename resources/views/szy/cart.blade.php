@@ -16,7 +16,7 @@
 <body>
     @include('szy.layouts.celerity')
     @include('szy.layouts.cart-header')
-
+    @include('partial.message')
     <div class="wrap">
         <div class="cart">
             <div class="all_good">

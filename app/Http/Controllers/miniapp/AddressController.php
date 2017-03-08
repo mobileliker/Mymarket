@@ -161,6 +161,7 @@ class AddressController extends Controller
 
 		if ($id==-1) {
 			$address = new Address;
+			$address->default = 0;
 		}else{
 			$address = Address::find($id);
 		}
@@ -168,7 +169,6 @@ class AddressController extends Controller
 		$address->city = $city;
 		$address->user_id = $user_id;
 		$address->name = $name;
-		$address->default = 0;
 		$address->phone = $phone;
 		$address->state = $state;
 		$address->line1 = $line1;

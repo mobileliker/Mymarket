@@ -162,6 +162,7 @@ class MyBusinessController extends Controller
         $business->phone = $request->input('phone');
         $business->fax = $request->input('fax');
         $business->qq = $request->input('qq');
+        $business->alww = $request->input('alww');
         $business->referral = $request->input('referral');
         $business->pay = $request->input('pay');
         $business->delivery = $request->input('delivery');

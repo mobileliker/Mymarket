@@ -45,10 +45,12 @@ class ProductsController extends Controller
         'type'         => 'required',
         'low_stock'    => 'numeric|digits_between:1,11|min:0',
         'name'         => 'required|max:100',
-        'price'        => 'required|numeric|digits_between:1,10|min:1',
+        'price'        => 'required|digits_between:1,10|min:1',
         'software'     => 'required',
         'software_key' => 'required',
         'stock'        => 'required|numeric|digits_between:1,11|min:0',
+        'delivery_price'        => 'required|numeric|digits_between:1,11|min:0',
+        'delivery_price_except'        => 'required|numeric|digits_between:1,11|min:0'
     ];
     private $panel = [
         'left'   => ['width' => '2'],
@@ -385,7 +387,7 @@ class ProductsController extends Controller
         $product->description = $request->input('description');
         $product->bar_code = $request->input('bar_code');
         $product->brand = $request->input('brand');
-        $product->price = $request->input('price');
+        $product->price = sprintf("%.2f",$request->input('price'));
         $product->condition = $request->input('condition');
         $product->features = $features;
         $product->type = $request->input('type');
@@ -394,7 +396,7 @@ class ProductsController extends Controller
         $product->quality_time = $request->input('quality_time');
         $product->pack = $request->input('pack');
         $product->import = $request->input('import');
-        $product->price_raw = $request->input('price_raw');
+        $product->price_raw = sprintf("%.2f",$request->input('price_raw'));
         $product->desc_img = $request->input('desc_img');
         $products_group = $request->input('products_group');
         if ($products_group!='false') {
@@ -780,18 +782,21 @@ class ProductsController extends Controller
             return redirect()->back()
             ->withErrors(['induced_error' => [trans('globals.error').' '.trans('globals.induced_error')]])->withInput();
         }
+
         $rules = $this->rulesByTypes($request, true);
         $order = OrderDetail::where('product_id', $id)->join('orders', 'order_details.order_id', '=', 'orders.id')->first();
         if ($order) {
-            unset($rules['name']);
+            // unset($rules['name']);
             unset($rules['category_id']);
             unset($rules['condition']);
         }
+
         $v = Validator::make($request->all(), $rules);
         if ($v->fails()) {
             return redirect()->back()
             ->withErrors($v->errors())->withInput();
         }
+
         $features = $this->validateFeatures($request->all());
         if (!is_string($features)) {
             return redirect()->back()
@@ -810,17 +815,21 @@ class ProductsController extends Controller
         if ($request->input('products_group')!='false') {
             $product->products_group = $request->input('products_group');
         }
+        $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->bar_code = $request->input('bar_code');
         $product->brand = $request->input('brand');
-        $product->price = $request->input('price');
+        $product->price = sprintf("%.2f",$request->input('price'));
         $product->origin = $request->input('origin');
         $product->plan_date = $request->input('plan_date');
         $product->quality_time = $request->input('quality_time');
         $product->pack = $request->input('pack');
         $product->import = $request->input('import');
-        $product->price_raw = $request->input('price_raw');
+        $product->price_raw = sprintf("%.2f",$request->input('price_raw'));
         $product->desc_img = $request->input('desc_img');
+        $product->delivery_price = $request->input('delivery_price');
+        $product->delivery_price_except = $request->input('delivery_price_except');
+
         $code = $this->uploadPic($request,'code');
         if ($code !='false') {
             if(file_exists($product->code)){

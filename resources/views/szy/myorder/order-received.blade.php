@@ -62,7 +62,12 @@
             <a href="user/orders/show/{{$openOrder->id}},{{$orderType}}">订单详情</a>
         </div>
         <div class="user">
-            <?php echo App\Address::where('id',$openOrder->address_id)->first()->name_contact; ?>
+            <?php 
+                $addresses = App\Address::where('id',$openOrder->address_id)->first();
+                if ($addresses!='') {
+                   echo $addresses->name_contact;
+                }
+            ?>
             <span class="glyphicon glyphicon-user"></span>
         </div>
             

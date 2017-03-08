@@ -53,7 +53,7 @@ class Company extends Model
         'refund_policy',
         'privacy_policy',
         'terms_of_service',
-
+        'alww'
     ];
 
     public function features()

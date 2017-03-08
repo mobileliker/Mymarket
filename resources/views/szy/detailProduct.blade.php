@@ -87,11 +87,11 @@
 						<div class="left">
 							<div class="pre">
 								<div class="l">价格</div>
-								<div class="r">￥{{$product->price_raw}}</div>
+								<div class="r">￥{{ sprintf("%.2f",$product->price_raw)}}</div>
 							</div>
 							<div class="next">
 								<div class="l">促销价</div>
-								<div class="r">￥{{$product->price}}</div>
+								<div class="r">￥{{  sprintf("%.2f",$product->price)}}</div>
 							</div>
 						</div>
 						<div class="right">
@@ -99,30 +99,62 @@
 							<div class="next">累计评价 <b>{{ $allCommentAmount}}</b></div>
 						</div>
 					</div>
+					{{--查询卖家地址--}}
+					<?php 
+
+					 ?>
 					<div class="delivery">
 						<div class="ps">
 							配送至:
-							@if(isset(auth()->user()->id))
-							<select>
-								<option>@if(!empty($addresDefault)){{$addresDefault->state}}{{$addresDefault->city}}@endif</option>
-								@if(!empty($address))
-									@foreach($address as $addres)
-									<option>{{$addres->state}}{{$addres->city}}</option>
-									@endforeach
-								@endif
-							</select>
+
+							<?php 
+								$ipGetAddress = \Utility::ipGetAddress();
+								$addressIsset = 0;
+								if ($ipGetAddress!='false') {
+									$addressIsset = \Utility::addressIsset($ipGetAddress['city']);
+								}
+							?>
+						 	@if($ipGetAddress!='false' && $addressIsset)
+							 	<select>
+							 		<option>{{$ipGetAddress['city']}}</option>
+							 	<select>
 							@else
-							<span><a href="login">请登录</a></span>
+							 	<select>
+							 		<option>北京</option>
+							 	<select>
 							@endif
-							有货 &nbsp; 免邮费
-						</div>
-						<div class="fw">
-							服 务:由<a href="shop/{{$business->user_id}}"  target="_blank">{{$business->business_name}}</a>从{{$business->address}}提供发货,并提供售后服务
+
+
 							@if ($product->stock <= $product->low_stock)
 								<span class = "label label-warning">{{ trans('store.lowStock') }}</span>
 							@else
 								<span class = "label label-success">{{ trans('store.inStock') }}</span>
 							@endif
+							&nbsp; 
+							@if($ipGetAddress!='false' && $addressIsset)
+								@if($ipGetAddress['city']=='香港' || $ipGetAddress['city']=='澳门' || $ipGetAddress['city']=='台湾')
+									@if($product->delivery_price_except>0)
+									<span class = "label label-success">{{$product->delivery_price_except}}</span>
+									@else
+									<span class = "label label-warning">免邮费</span>
+									@endif
+								@else
+									@if($product->delivery_price>0)
+									<span class = "label label-success">{{$product->delivery_price}}</span>
+									@else
+									<span class = "label label-warning">免邮费</span>
+									@endif
+								@endif
+							@else
+								@if($product->delivery_price>0)
+								<span class = "label label-success">{{$product->delivery_price}}</span>
+								@else
+								<span class = "label label-warning">免邮费</span>
+								@endif
+							@endif
+						</div>
+						<div class="fw">
+							服 务:由<a href="shop/{{$business->user_id}}"  target="_blank">{{$business->business_name}}</a>从{{$business->address}}提供发货,并提供售后服务
 						</div>
 					</div>
 					<div class="cs">
@@ -156,6 +188,7 @@
 								<li class="num-minus" style="border-top:1px solid #4D4D4D;" >-</li>
 							</div>
 							@endif
+							<div style="margin-left:50px;float:left;height:40px;line-height:40px;color:#FFBCBC;font-size:15px;">*商品库存:{{$product->stock}}</div>
 						</div>
 						<form action="user/orders/addTo/cart/{{$product->id}}" method="POST">
 		                    <input name="_method" type="hidden" value="PUT">
@@ -183,7 +216,40 @@
 							<img src="/img/szy/inc/phone.png"> 联系卖家</a>
 							<div class="tel">{{$business->phone}}</div>
 						</li>
-						<li><a href="" {{$business->qq}}><img src="/img/szy/inc/consult.png"> 咨询客服</a></li>
+						<li id="alww">
+							<?php 
+								$alwws = '';
+								$qqs = '';
+								if ($business->alww!='') {
+									$alwws = explode('|', $business->alww);
+								}
+								if ($business->qq!='') {
+									$qqs = explode('|', $business->qq);
+								}
+							 ?>
+							<a href="javascript:void(0);">
+							<img src="/img/szy/inc/consult.png"> 咨询客服</a>
+							<div id="kfinfo" style="display:none;position:absolute;top:-1px;left:76px;width:100px;min-height:50px;border-top:1px solid #ccc;text-align:left;padding:5px;background:white;z-index:999;">
+							@if($alwws!='')
+								@foreach($alwws as $alww)
+								<a target="_blank" href="https://amos.alicdn.com/getcid.aw?spm=a220o.1000855.1997427721.2.gESGpA&amp;v=3&amp;groupid=0&amp;s=1&amp;charset=utf-8&amp;uid={{$alww}}&amp;site=cntaobao&amp;groupid=0">
+								{{$alww}}
+								<img border="0" src="http://amos.alicdn.com/online.aw?v=2&uid={{$alww}}&site=cntaobao&s=2&charset=utf-8"  alt="点这里给我发消息" />
+								</a><br>
+								@endforeach
+							@else
+								<span>该商铺无客服</span>
+							@endif
+							</div>
+							<script type="text/javascript">
+								$("#alww").mouseover(function(){
+									$("#kfinfo").show();
+								}).mouseout(function(){
+									$("#kfinfo").hide();
+								})
+
+							</script>
+						</li>
 						<li><a href="shop/{{$business->user_id}}" ><img src="/img/szy/inc/shop.png"> 进店逛逛</a></li>
 							<?php 
 								$result = false;
