@@ -21,14 +21,11 @@
 	//微信会通过一定的策略（如30分钟共8次）定期重新发起通知，
 	//尽可能提高通知的成功率，但微信不保证通知最终能成功。
 	if($notify->checkSign() == FALSE){
-                echo 00;
 		$notify->setReturnParameter("return_code","FAIL");//返回状态码
 		$notify->setReturnParameter("return_msg","签名失败");//返回信息
 	}else{
-                echo 11;
 		$notify->setReturnParameter("return_code","SUCCESS");//设置返回码
 	}
-        echo 22;
 	$returnXml = $notify->returnXml();
 	echo $returnXml;
 	
