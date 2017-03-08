@@ -1085,7 +1085,6 @@ class OrdersController extends Controller
             $payPlan = 1;
             // print_r($business_products);die;
             // return view('address.list', compact('user', 'panel', 'cart', 'addresses', 'callBackUrl', 'defaultId'));
-
             return view('szy.affirm-orders', compact('cart', 'user', 'panel', 'isResume', 'cartAddress','defaultId','order_id',
                 'totalItems', 'totalAmount','addresses','business_products','payPlan'));
         }
@@ -1125,7 +1124,7 @@ class OrdersController extends Controller
         if($order->save()) {
             $id=$order->id;
             foreach($details_ids as $details_id) {
-                OrderDetail::where('id','=',$details_id)->update(['order_id'=>$id,'order_state'=>1]);
+                OrderDetail::where('id','=',$details_id)->update(['order_id'=>$id]);
             }
             Address::where('id','=',$address_id)->update(['default' => 1]);
             Address::where('id','!=',$address_id)->update(['default' => 0]);
