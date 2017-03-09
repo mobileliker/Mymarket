@@ -70,7 +70,7 @@ Route::group(['prefix' => 'user', 'roles' => array_keys(trans('globals.roles')),
 
     Route::post('orders/pay', 'OrdersController@pay');//支付
     Route::get('orders/getOrder/{payPlan}/{count}/{order_number}', 'OrdersController@getOrder');//支付
-    Route::get('orders/getErrorOrder/{payPlan}', 'OrdersController@getErrorOrder');//支付
+    Route::get('orders/getNumberState', 'OrdersController@getNumberState');//支付订单状态改变
     Route::post('orders/pay/successful', 'OrdersController@orderSuccessful');//支付成功
 
     Route::get('orders/delete/{id}','OrdersController@orderDelete');//删除订单

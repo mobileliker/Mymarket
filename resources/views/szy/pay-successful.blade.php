@@ -38,7 +38,7 @@
                 </p>
                 <p>
                     <em>支付方式:</em>
-                    <span>@if($paytype == -1) 线下支付 @endif</span>
+                    <span>@if($paytype == -1) 线下支付 @elseif($paytype=='weixin')微信支付 @endif</span>
                 </p>
                 <p>
                     <em>数量:</em>

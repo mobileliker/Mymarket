@@ -1133,13 +1133,22 @@ class OrdersController extends Controller
         if($paytype=='weixin') {
             //支付进度
             $payPlan = 2;
-            return view('szy.pay.weixin',compact('payPlan','count','order_number'));
+            return view('szy.pay.weixin',compact('payPlan','count','order_number','address_id','paytype','remarks','details_ids'));
         }
         else {
             //支付进度
             $payPlan = 2;
             return view('szy.pay',compact('payPlan'));
         }
+    }
+    
+    /*
+     * 检查订单状态是否改变
+     */
+    public function getNumberState(Request $request) {
+        $order_number=$request->input('order_number');
+        $order=\app\Order::where('order_number','=',$order_number)->first();
+        return response()->json($order);
     }
 
     /**
