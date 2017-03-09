@@ -108,10 +108,9 @@
                 },
                 dataType: "json",//json等等
                 success: function (data) {
-                    console.log(data);
-//                    if(data.status=='paid') {
-//                        window.location.href="http://www.caishi360.com/user/orders/pay/successful">;
-//                    }
+                    if(data=='paid') {
+                        window.location.href="http://www.caishi360.com/user/orders/pay/successful">;
+                    }
                 }
             });
         } 
