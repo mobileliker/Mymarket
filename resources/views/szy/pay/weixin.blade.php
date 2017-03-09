@@ -95,11 +95,10 @@
         element.appendChild(code);
     }
     </script>
-    <script>
+<!--    <script>
         setInterval("ajaxstatus()",3000);//1000为1秒钟
         function ajaxstatus() {
             alert('aaa');
-        }
-        
-    </script>
+        } 
+    </script>-->
 @show
