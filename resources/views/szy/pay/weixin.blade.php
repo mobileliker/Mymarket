@@ -103,7 +103,7 @@
                 type: "get",
                 url: "http://www.caishi360.com/user/orders/getNumberState",//文件路由
                 data: {
-                    "order_number":"<?php echo $order_number?>"
+                    "order_number":"<?php echo $order_number;?>"
                 },
                 dataType: "json",//json等等
                 success: function (data) {
