@@ -97,7 +97,7 @@
     }
     </script>
     <script>
-        var order_number="<?php echo $order_number;?>";
+        
         setInterval("ajaxstatus()",3000);//1000为1秒钟
         function ajaxstatus() {
             $.ajax({
