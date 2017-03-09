@@ -50,15 +50,7 @@
 	$unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
 	$unifiedOrder->setParameter("trade_type","JSAPI");//交易类型
 	//非必填参数，商户可根据实际情况选填
-	//$unifiedOrder->setParameter("sub_appid","wx86fd95a1de52c079");//子商户号 
-	$unifiedOrder->setParameter("sub_mch_id","1444913102");//子商户号  
-	//$unifiedOrder->setParameter("device_info","XXXX");//设备号 
-	//$unifiedOrder->setParameter("attach","XXXX");//附加数据 
-	//$unifiedOrder->setParameter("time_start","XXXX");//交易起始时间
-	//$unifiedOrder->setParameter("time_expire","XXXX");//交易结束时间 
-	//$unifiedOrder->setParameter("goods_tag","XXXX");//商品标记 
-	//$unifiedOrder->setParameter("openid","XXXX");//用户标识
-	//$unifiedOrder->setParameter("product_id","XXXX");//商品ID
+	$unifiedOrder->setParameter("sub_mch_id","1444913102");//子商户号 
 
 	$prepay_id = $unifiedOrder->getPrepayId();
 	//=========步骤3：使用jsapi调起支付============

@@ -26,7 +26,7 @@
 		// $refundQuery->setParameter("refund_id","XXXX");//微信退款单号
 		// $refundQuery->setParameter("transaction_id","XXXX");//微信退款单号
 		//非必填参数，商户可根据实际情况选填
-		//$refundQuery->setParameter("sub_mch_id","XXXX");//子商户号 
+		$refundQuery->setParameter("sub_mch_id","1444913102");//子商户号 
 		//$refundQuery->setParameter("device_info","XXXX");//设备号 
 		
 		//退款查询接口结果

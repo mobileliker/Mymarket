@@ -1105,12 +1105,17 @@ class OrdersController extends Controller
         $details_ids = explode(',',$request->input('details_ids'));  //详情物品id
         $seller_id = $request->input('seller_id');
         $user_id = \Auth::user()->id;
-        $product_detail=Order::join('order_details','orders.id','=','order_details.order_id')->select('orders.order_number')
+        $product=Order::join('order_details','orders.id','=','order_details.order_id')->select('orders.status','orders.order_number')
                 ->whereNotNull('orders.order_number')->where('order_details.id','=',$details_ids[0])->first();
-        if($product_detail!=null&&$product_detail!='') {
+        if($product!=null&&$product!='') {
             $payPlan = 2;
             $order_number=$product_detail->order_number;
-            return view('szy.pay.weixin',compact('payPlan','count','order_number','address_id','paytype','remarks','details_ids'));
+            if($product->status=='open') {
+                return view('szy.pay.weixin',compact('payPlan','count','order_number','address_id','paytype','remarks','details_ids'));
+            }
+            else {
+                return redirect('/');
+            }
         }
 
         $order_number=\Utility::number();
