@@ -44,12 +44,11 @@
             else{
                 //此处应该更新一下订单状态，商户自行增删操作
                 $xml = $notify->xmlToArray($xml);
+                setlog('./aa.txt',"【支付成功】:\n".$xml."\n");
                 $out_trade_no = $xml['out_trade_no'];
-                setlog('./aa.txt',"【支付成功】:\n".$xml."\n".$out_trade_no."\n");
-                if (!empty($out_trade_no)) {
-                    //修改订单号
-                    \app\Order::where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
-                }
+                //修改订单号
+//                \app\Order::where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
+                Illuminate\Support\Facades\DB::table('orders')->where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
             }
 	}
         
