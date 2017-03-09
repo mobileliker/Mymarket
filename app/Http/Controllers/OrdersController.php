@@ -1225,7 +1225,7 @@ class OrdersController extends Controller
 
         //支付进度
         $payPlan = 3;
-        return view('szy.pay.success', compact('payPlan'));
+        return view('szy.pay.order-success', compact('payPlan'));
     }
 
     /**
