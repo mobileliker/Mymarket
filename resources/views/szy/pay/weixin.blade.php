@@ -46,9 +46,7 @@
     $unifiedOrder->setParameter("body","贡献一分钱"); //商品描述
     //自定义订单号，此处仅作举例
     $timeStamp = time();
-    $out_trade_no = WxPayConf_pub::APPID."$timeStamp";
-    echo $out_trade_no;
-    echo WxPayConf_pub::NOTIFY_URL;   
+    $out_trade_no = WxPayConf_pub::APPID."$timeStamp"; 
     $unifiedOrder->setParameter("out_trade_no",$order_number);//商户订单号 
     $unifiedOrder->setParameter("total_fee",'1');//总金额
     $unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
@@ -207,16 +205,14 @@
         element.appendChild(wording);
         element.appendChild(code);
     }
-    function ajaxstatus() {
-        $.get("http://www.caishi360.com/user/orders/getNumberState",{order_number:<?php echo $order_number?>},function(data)) {
-            if(data.status=='paid') {
-                //支付成功跳转
-//                var params
-                window.location.href="http://www.caishi360.com/user/orders/pay/successful?address_id="+<?php echo $address_id;?>+"&paytype="+<?php echo $paytype;?>
-                +"&remarks="+<?php echo $remarks;?>+"&details_ids="+<?php  print_r($details_ids);?>;
-            }
-        }
-    }
-    setInterval('ajaxstatus()',3000);
+//    function ajaxstatus() {
+//        $.get("http://www.caishi360.com/user/orders/getNumberState",{order_number:<?php echo $order_number?>},function(data)) {
+//            if(data.status=='paid') {
+//                //支付成功跳转
+//                alert(支付成功);
+//            }
+//        }
+//    }
+//    setInterval('ajaxstatus()',3000);
     </script>
 @show
