@@ -1147,7 +1147,7 @@ class OrdersController extends Controller
      */
     public function getNumberState(Request $request) {
         $order_number=$request->input('order_number');
-        $order=\app\Order::where('order_number','=',$order_number)->first();
+        $order=DB::table('orders')->where('order_number','=',$order_number)->first();
         return response()->json($order);
     }
 
