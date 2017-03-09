@@ -43,9 +43,9 @@
             }
             else{
                 //此处应该更新一下订单状态，商户自行增删操作
-                setlog('./aa.txt',"【支付成功】:\n".$xml."\n");
                 $xml = $notify->xmlToArray($xml);
                 $out_trade_no = $xml['out_trade_no'];
+                setlog('./aa.txt',"【支付成功】:\n".$xml."\n".$out_trade_no."\n");
                 if (!empty($out_trade_no)) {
                     //修改订单号
                     \app\Order::where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
@@ -55,7 +55,9 @@
         
         function setlog($file,$word) {
             $handle=fopen($file,"a+");
-            $str=fwrite($handle,$word."\n");
+            flock($handle, LOCK_EX);
+            $str=fwrite($handle,"执行日期：".strftime("%Y-%m-%d-%H：%M：%S",time())."\n".$word."\n");
+            flock($handle, LOCK_UN);
             fclose($handle); 
         }
 ?>
