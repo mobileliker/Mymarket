@@ -13,7 +13,7 @@
 	//存储微信的回调
         $xml = file_get_contents("php://input");
 	$notify->saveData($xml);
-        
+        $pdo = new PDO("mysql:host=119.29.34.160;dbname=szymm","szymm","szymm123456SZYMM"); 
 	//验证签名，并回应微信。
 	//对后台通知交互时，如果微信收到商户的应答不是成功或超时，微信认为通知失败，
 	//微信会通过一定的策略（如30分钟共8次）定期重新发起通知，
@@ -47,8 +47,9 @@
                 setlog('./aa.txt',"【支付成功】:\n".$xml."\n");
                 $out_trade_no = $xml['out_trade_no'];
                 //修改订单号
+                $pdo->exec("update szymm_orders set status=paid where order_number=".$out_trade_no);
 //                \app\Order::where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
-                Illuminate\Support\Facades\DB::table('orders')->where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
+//                Illuminate\Support\Facades\DB::table('orders')->where('order_number','=',$out_trade_no)->update(['status' => 'paid']);
             }
 	}
         
