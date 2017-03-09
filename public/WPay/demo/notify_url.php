@@ -11,12 +11,6 @@
 	include_once("../WxPayPubHelper/WxPayPubHelper.php");
         //使用通用通知接口
 	$notify = new Notify_pub();
-        $log_ = new Log_();
-        $filename="./aa.txt";
-        $handle=fopen($filename,"a+");
-        $str=fwrite($handle,"test\n");
-        fclose($handle);
-        exit;
 	//存储微信的回调
 	$xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         
