@@ -1110,7 +1110,7 @@ class OrdersController extends Controller
         if($product_detail!=null&&$product_detail!='') {
             $payPlan = 2;
             $order_number=$product_detail->order_number;
-            return view('szy.pay.weixin',compact('payPlan','count','order_number'));
+            return view('szy.pay.weixin',compact('payPlan','count','order_number','address_id','paytype','remarks','details_ids'));
         }
 
         $order_number=\Utility::number();
