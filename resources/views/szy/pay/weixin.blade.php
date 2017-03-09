@@ -205,4 +205,18 @@
         element.appendChild(code);
     }
     </script>
+    <script>
+        $(function() {
+            setInterval('ajaxstatus()',3000);
+        });
+        function ajaxstatus() {
+            $.get("http://www.caishi360.com/user/orders/getNumberState",{order_number:<?php echo $order_number?>},function(data)) {
+                if(data.status=='paid') {
+                    //支付成功跳转
+                    window.location.href="http://www.caishi360.com/user/orders/pay/successful?address_id="+<?php echo $address_id;?>+"&paytype="+<?php echo $paytype;?>
+                    +"&remarks="+<?php echo $remarks;?>+"&details_ids="+<?php  print_r($details_ids);?>;
+                }
+            }
+        }
+    </script>
 @show
