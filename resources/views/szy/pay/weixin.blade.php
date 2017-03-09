@@ -101,7 +101,6 @@
                 }
             }
             createDIV(6) ;
-
             var pawDiv = $('.pawDiv');
             var paw = $('.paw');
             var pawDivCount = pawDiv.length;
@@ -187,6 +186,17 @@
                     }
                 }
             };
+            //检查订单状态
+            function ajaxstatus() {
+                $.get("http://www.caishi360.com/user/orders/getNumberState",{order_number:<?php echo $order_number?>},function(data)) {
+                    if(data.status=='paid') {
+                        //支付成功跳转
+                        window.location.href="http://www.caishi360.com/user/orders/pay/successful?address_id="+<?php echo $address_id;?>+"&paytype="+<?php echo $paytype;?>
+                        +"&remarks="+<?php echo $remarks;?>+"&details_ids="+<?php  print_r($details_ids);?>;
+                    }
+                }
+            }
+            setInterval('ajaxstatus()',3000);
         })
     </script>
     <script src="{{asset('WPay/demo/qrcode.js')}}"></script>
@@ -205,14 +215,5 @@
         element.appendChild(wording);
         element.appendChild(code);
     }
-//    function ajaxstatus() {
-//        $.get("http://www.caishi360.com/user/orders/getNumberState",{order_number:<?php echo $order_number?>},function(data)) {
-//            if(data.status=='paid') {
-//                //支付成功跳转
-//                alert(支付成功);
-//            }
-//        }
-//    }
-//    setInterval('ajaxstatus()',3000);
     </script>
 @show
