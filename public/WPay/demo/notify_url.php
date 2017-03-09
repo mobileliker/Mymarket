@@ -12,11 +12,10 @@
         //使用通用通知接口
 	$notify = new Notify_pub();
         $log_ = new Log_();
-        var_dump($notify);
-        var_dump($log_);
-        $log_name=$_SERVER['DOCUMENT_ROOT']."/WPay/demo/notify_url.log";//log文件路径
-        $log_->log_result($log_name,"【通信出错】:\n8888\n");
-        echo 11;
+        $filename="./aa.txt";
+        $handle=fopen($filename,"a+");
+        $str=fwrite($handle,"test\n");
+        fclose($handle);
         exit;
 	//存储微信的回调
 	$xml = $GLOBALS['HTTP_RAW_POST_DATA'];
