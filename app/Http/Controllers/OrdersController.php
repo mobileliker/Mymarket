@@ -1109,7 +1109,7 @@ class OrdersController extends Controller
                 ->whereNotNull('orders.order_number')->where('order_details.id','=',$details_ids[0])->first();
         if($product!=null&&$product!='') {
             $payPlan = 2;
-            $order_number=$product_detail->order_number;
+            $order_number=$product->order_number;
             if($product->status=='open') {
                 return view('szy.pay.weixin',compact('payPlan','count','order_number','address_id','paytype','remarks','details_ids'));
             }
