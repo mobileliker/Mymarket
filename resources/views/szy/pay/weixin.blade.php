@@ -79,6 +79,7 @@
 @section('scripts')
     @parent
     <script src="{{asset('WPay/demo/qrcode.js')}}"></script>
+    <script src='/js/szy/jquery1.42.min.js'></script>
     <script>
     if(<?php echo $unifiedOrderResult["code_url"] != NULL; ?>)
     {
