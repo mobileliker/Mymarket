@@ -7,13 +7,12 @@
  * 
  * 这里举例使用log文件形式记录回调信息。
 */
-//	include_once("./log_.php");
 	include_once("../WxPayPubHelper/WxPayPubHelper.php");
         //使用通用通知接口
 	$notify = new Notify_pub();
 	//存储微信的回调
-	$xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        
+//	$xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml = file_get_contents("php://input");
 	$notify->saveData($xml);
         
 	//验证签名，并回应微信。
@@ -32,25 +31,19 @@
 	//==商户根据实际情况设置相应的处理流程，此处仅作举例=======
 	
 	//以log文件形式记录回调信息
-//	$log_ = new Log_();
-//	$log_name="./notify_url.log";//log文件路径
-//	$log_->log_result($log_name,"【接收到的notify通知】:\n".$xml."\n");
         setlog('./aa.txt',"【接收到的notify通知】:\n".$xml."\n");
 	if($notify->checkSign() == TRUE)
 	{
             if ($notify->data["return_code"] == "FAIL") {
                     //此处应该更新一下订单状态，商户自行增删操作
-//                    $log_->log_result($log_name,"【通信出错】:\n".$xml."\n");
                     setlog('./aa.txt',"【通信出错】:\n".$xml."\n");
             }
             elseif($notify->data["result_code"] == "FAIL"){
                     //此处应该更新一下订单状态，商户自行增删操作
-//                    $log_->log_result($log_name,"【业务出错】:\n".$xml."\n");
                     setlog('./aa.txt',"【业务出错】:\n".$xml."\n");
             }
             else{
                 //此处应该更新一下订单状态，商户自行增删操作
-//                $log_->log_result($log_name,"【支付成功】:\n".$xml."\n");
                 setlog('./aa.txt',"【支付成功】:\n".$xml."\n");
             }
             //商户自行增加处理流程,
