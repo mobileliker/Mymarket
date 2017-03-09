@@ -29,7 +29,7 @@
             </div>  
         </div>
     </div>
-    <div class="pay-main" style="height:100px;">
+    <div class="pay-main" style="height:550px;">
         <center>
         <div style="width:70%;height:60%;background-color:#FFFFFF;margin-top:50px;">
             <div style="width:100%;height:70px;border-bottom: 1px solid #ccc;margin-bottom:20px;"><img src="img/szy/inc/wx_pay.png"></div>
@@ -95,10 +95,15 @@
         element.appendChild(code);
     }
     </script>
-<!--    <script>
+    <script>
         setInterval("ajaxstatus()",3000);//1000为1秒钟
         function ajaxstatus() {
-            alert('aaa');
+            $.get("http://www.caishi360.com/user/orders/getNumberState",{order_number:"<?php echo $order_number?>"},function(data)) {
+//                if(data.status=='paid') {
+                    //支付成功跳转
+                    alert(22);
+//                }
+            }
         } 
-    </script>-->
+    </script>
 @show
