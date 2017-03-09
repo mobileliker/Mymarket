@@ -13,7 +13,7 @@
 	$notify = new Notify_pub();
 	//存储微信的回调
 	$xml = $GLOBALS['HTTP_RAW_POST_DATA'];
-        
+        setlog('./aa.txt','test');
 	$notify->saveData($xml);
         
 	//验证签名，并回应微信。
@@ -66,4 +66,10 @@
 ////                $pdo -> exec("update szymm_orders set status=paid where order_number=".$out_trade_no);
 //            }
 	}
+        
+        function setlog($file,$word) {
+            $handle=fopen($file,"a+");
+            $str=fwrite($handle,$word."\n");
+            fclose($handle); 
+        }
 ?>
