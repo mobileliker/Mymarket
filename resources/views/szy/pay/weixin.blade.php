@@ -103,15 +103,11 @@
                 type: "get",
                 url: "http://www.caishi360.com/user/orders/getNumberState",//文件路由
                 data: {
-                    "order_number":"wjcs711703095137"
+                    "order_number":"<?php echo $order_number?>"
                 },
                 dataType: "json",//json等等
                 success: function (data) {
                     console.log(data);
-                    if(data.status=='paid') {
-                        window.location.href="http://www.caishi360.com/user/orders/pay/successful?address_id="+<?php echo $address_id;?>+"&paytype="+<?php echo $paytype;?>
-                            +"&remarks="+<?php echo $remarks;?>+"&details_ids="+<?php  print_r($details_ids);?>;
-                    }
                 }
             });
         } 
