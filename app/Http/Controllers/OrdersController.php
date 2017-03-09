@@ -1160,73 +1160,72 @@ class OrdersController extends Controller
      */
     public function orderSuccessful(Request $request){
 
-        $address_id = $request->input('address_id');
-        $paytype = $request->input('paytype');
-        $remarks = $request->input('remarks');
-        $details_ids = explode(',',$request->input('details_ids'));
-        $checkSubmit = 0;
-
-        //查询user id
-        $data = DB::table('products')->join('order_details','products.id','=','order_details.product_id')
-                ->whereIn('order_details.id',$details_ids)
-                ->select('order_details.id','products.user_id','order_details.order_id')
-                ->get();
-
-        //根据卖家id 分类
-        foreach ($data as $value) {
-            $products[$value->user_id][] = $value->id;
-        }       
-
-        //查询第一个订单状态
-        $firstOrder = OrderDetail::find($details_ids[0]);
-        if ($firstOrder!="") {
-            $sellerCheck = Order::where('type','order')->where('status','paid')->find($firstOrder->order_id);
-
-            //判断是否为第一次提交
-            if (empty($sellerCheck)) {
-                //操作订单 
-                foreach ($products as $sellerid => $product) {
-                    $orders = new Order;
-                    $orders->address_id = $address_id;
-                    $orders->description = $remarks;
-                    $orders->status = 'paid';
-                    $orders->order_number = \Utility::number();
-                    $orders->type = 'order';
-                    $orders->seller_id = $sellerid;
-                    $orders->user_id = auth()->user()->id;
-                    if ($orders->save()) {
-                        foreach ($product as $id) {
-                            $order_details = OrderDetail::find($id);
-                            $order_details->order_id = $orders->id;
-                            $order_details->save();
-                        }
-                    }
-                }
-            }else{
-                $checkSubmit = 1;
-            }
-        }else{
-            abort(404);
-        }
-
-        //查询订单信息
-        foreach ($products as $sellerid => $product) {
-
-            $orderinfos[$sellerid] = DB::table('businesses')
-                            ->join('orders','businesses.user_id','=','orders.seller_id')
-                            ->join('order_details','orders.id','=','order_details.order_id')
-                            ->join('addresses','orders.address_id','=','addresses.id')
-                            ->where('order_details.id','=',$product[0])
-                            ->where('businesses.user_id','=',$sellerid)
-                            ->groupBy('orders.id')
-                            ->select('businesses.*','orders.id as order_id','addresses.state','addresses.city','addresses.line1','orders.order_number')
-                            ->first();
-        }
+//        $address_id = $request->input('address_id');
+//        $paytype = $request->input('paytype');
+//        $remarks = $request->input('remarks');
+//        $details_ids = explode(',',$request->input('details_ids'));
+//        $checkSubmit = 0;
+//
+//        //查询user id
+//        $data = DB::table('products')->join('order_details','products.id','=','order_details.product_id')
+//                ->whereIn('order_details.id',$details_ids)
+//                ->select('order_details.id','products.user_id','order_details.order_id')
+//                ->get();
+//
+//        //根据卖家id 分类
+//        foreach ($data as $value) {
+//            $products[$value->user_id][] = $value->id;
+//        }       
+//
+//        //查询第一个订单状态
+//        $firstOrder = OrderDetail::find($details_ids[0]);
+//        if ($firstOrder!="") {
+//            $sellerCheck = Order::where('type','order')->where('status','paid')->find($firstOrder->order_id);
+//
+//            //判断是否为第一次提交
+//            if (empty($sellerCheck)) {
+//                //操作订单 
+//                foreach ($products as $sellerid => $product) {
+//                    $orders = new Order;
+//                    $orders->address_id = $address_id;
+//                    $orders->description = $remarks;
+//                    $orders->status = 'paid';
+//                    $orders->order_number = \Utility::number();
+//                    $orders->type = 'order';
+//                    $orders->seller_id = $sellerid;
+//                    $orders->user_id = auth()->user()->id;
+//                    if ($orders->save()) {
+//                        foreach ($product as $id) {
+//                            $order_details = OrderDetail::find($id);
+//                            $order_details->order_id = $orders->id;
+//                            $order_details->save();
+//                        }
+//                    }
+//                }
+//            }else{
+//                $checkSubmit = 1;
+//            }
+//        }else{
+//            abort(404);
+//        }
+//
+//        //查询订单信息
+//        foreach ($products as $sellerid => $product) {
+//
+//            $orderinfos[$sellerid] = DB::table('businesses')
+//                            ->join('orders','businesses.user_id','=','orders.seller_id')
+//                            ->join('order_details','orders.id','=','order_details.order_id')
+//                            ->join('addresses','orders.address_id','=','addresses.id')
+//                            ->where('order_details.id','=',$product[0])
+//                            ->where('businesses.user_id','=',$sellerid)
+//                            ->groupBy('orders.id')
+//                            ->select('businesses.*','orders.id as order_id','addresses.state','addresses.city','addresses.line1','orders.order_number')
+//                            ->first();
+//        }
 
         //支付进度
         $payPlan = 3;
-
-        return view('szy.pay-successful', compact('orderinfos','paytype','payPlan','checkSubmit'));
+        return view('szy.pay.success', compact('payPlan'));
     }
 
     /**
