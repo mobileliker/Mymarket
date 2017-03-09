@@ -109,7 +109,7 @@
                 dataType: "json",//json等等
                 success: function (data) {
                     if(data=='paid') {
-                        window.location.href="http://www.caishi360.com/user/orders/pay/successful">;
+                        window.location.href="http://www.caishi360.com/user/orders/pay/successful";
                     }
                 }
             });
