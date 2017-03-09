@@ -43,12 +43,12 @@
     include_once str_replace("\\","/",public_path())."/WPay/WxPayPubHelper/WxPayPubHelper.php";
     //使用统一支付接口
     $unifiedOrder = new UnifiedOrder_pub();
-    $unifiedOrder->setParameter("body","贡献一分钱"); //商品描述
+    $unifiedOrder->setParameter("body",'微信购买'); //商品描述
     //自定义订单号，此处仅作举例
     $timeStamp = time();
     $out_trade_no = WxPayConf_pub::APPID."$timeStamp"; 
     $unifiedOrder->setParameter("out_trade_no",$order_number);//商户订单号 
-    $unifiedOrder->setParameter("total_fee",'1');//总金额
+    $unifiedOrder->setParameter("total_fee",$count*100);//总金额
     $unifiedOrder->setParameter("notify_url",WxPayConf_pub::NOTIFY_URL);//通知地址 
     $unifiedOrder->setParameter("trade_type","NATIVE");//交易类型
     $unifiedOrder->setParameter("sub_mch_id","1444913102");//交易类型
