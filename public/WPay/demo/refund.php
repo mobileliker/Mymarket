@@ -36,7 +36,7 @@
 		$refund->setParameter("refund_fee","$refund_fee");//退款金额
 		$refund->setParameter("op_user_id",WxPayConf_pub::MCHID);//操作员
 		//非必填参数，商户可根据实际情况选填
-		//$refund->setParameter("sub_mch_id","XXXX");//子商户号 
+		$refund->setParameter("sub_mch_id","1444913102");//子商户号 
 		//$refund->setParameter("device_info","XXXX");//设备号 
 		//$refund->setParameter("transaction_id","XXXX");//微信订单号
 		
