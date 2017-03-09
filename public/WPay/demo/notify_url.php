@@ -14,8 +14,8 @@
         $log_ = new Log_();
         var_dump($notify);
         var_dump($log_);
-        $log_name="./notify_url.log";//log文件路径
-        $log_->log_result($log_name,"【通信出错】:\n5555\n");
+        $log_name=$_SERVER['DOCUMENT_ROOT']."/WPay/demo/notify_url.log";//log文件路径
+        $log_->log_result($log_name,"【通信出错】:\n8888\n");
         exit;
 	//存储微信的回调
 	$xml = $GLOBALS['HTTP_RAW_POST_DATA'];
