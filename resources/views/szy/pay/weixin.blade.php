@@ -78,116 +78,6 @@
 
 @section('scripts')
     @parent
-    <script type="text/javascript">
-
-        $(function () {
-            var totalHeight = $(window).height();
-            colHeight = totalHeight-241;
-            payMainHeight = colHeight+"px";
-            console.log(payMainHeight);
-
-            var payMain = $('.pay-main');
-            payMain.css("height",payMainHeight);
-
-            var box = $('.box');
-            function createDIV(num){
-                for(var i = 0;i < num;i++){
-                    var pawDiv = $('<div class="pawDiv"></div>');
-                    box.append(pawDiv);
-                    var bod = $('<div class="bod"></div>');
-                    pawDiv.append(bod);
-                    var paw = $('<input class="paw" type="password" maxLength="1" readOnly="readonly"/>');
-                    bod.append(paw);
-                }
-            }
-            createDIV(6) ;
-            var pawDiv = $('.pawDiv');
-            var paw = $('.paw');
-            var pawDivCount = pawDiv.length;
-
-            /*设置第一个输入框默认选中*/
-            pawDiv[0].setAttribute("style","border: 2px solid #17adec;");
-            paw[0].readOnly = false;
-            paw[0].focus();
-
-            var errorPoint = $('.errorPoint')[0];
-
-            /*绑定pawDiv点击事件*/
-            function func () {
-                for (var i = 0;i < pawDivCount;i++) {
-                    pawDiv[i].addEventListener("click",function(){
-                        pawDivClick(this);
-                    });
-                    paw[i].onkeyup = function(event){
-                        console.log(event.keyCode);
-                        if(event.keyCode >= 48&&event.keyCode <= 57 || event.keyCode >= 96 && event.keyCode <= 105){
-                            /*输入0-9*/
-                            changeDiv();
-
-                        }else if(event.keyCode == "8") {
-                            /*退格回删事件*/
-                            firstDiv();
-
-                        }else if(event.keyCode == "13"){
-                            /*回车事件*/
-                            getPassword();
-
-                        }else{
-                            /*输入非0-9*/
-                            errorPoint.setAttribute("style","display:block;")
-                        }
-
-                    };
-
-                }
-            }
-            func();
-
-
-            /*定义pawDiv点击事件*/
-            var pawDivClick = function (e) {
-                for(var i = 0;i < pawDivCount;i++){
-                    pawDiv[i].setAttribute("style","border:none");
-                }
-                e.setAttribute("style","border: 2px solid deepskyblue;");
-            };
-
-            /*定义自动选中下一个输入框事件*/
-            var changeDiv = function () {
-                // console.log('in');
-                for(var i = 0;i < pawDivCount-1;i++){
-                    if(paw[i].value.length == "1"){
-                        /*处理当前输入框*/
-                        paw[i].blur();
-
-                        /*处理上一个输入框*/
-                        paw[i+1].focus();
-                        paw[i+1].readOnly = false;
-                        pawDivClick(pawDiv[i+1]);
-                    }
-                }
-            };
-
-            /*回删时选中上一个输入框事件*/
-            var firstDiv = function () {
-                for(var i = 0;i < pawDivCount;i++){
-                    // console.log(i);
-                    if(paw[i].value.length == "0"){
-                        /*处理当前输入框*/
-                        // console.log(i);
-                        paw[i].blur();
-
-                        /*处理上一个输入框*/
-                        paw[i-1].focus();
-                        paw[i-1].readOnly = false;
-                        paw[i-1].value = "";
-                        pawDivClick(pawDiv[i-1]);
-                        break;
-                    }
-                }
-            };
-        })
-    </script>
     <script src="{{asset('WPay/demo/qrcode.js')}}"></script>
     <script>
     if(<?php echo $unifiedOrderResult["code_url"] != NULL; ?>)
@@ -206,18 +96,26 @@
     }
     </script>
     <script>
-        $(function() {
+        window.onload = function () {
             setInterval('ajaxstatus()',3000);
-        });
+        } 
         function ajaxstatus() {
-            $.get("http://www.caishi360.com/user/orders/getNumberState",{order_number:<?php echo $order_number?>},function(data)) {
-                if(data.status=='paid') {
-                    //支付成功跳转
-                    alert(11);
-                    window.location.href="http://www.caishi360.com/user/orders/pay/successful?address_id="+<?php echo $address_id;?>+"&paytype="+<?php echo $paytype;?>
-                    +"&remarks="+<?php echo $remarks;?>+"&details_ids="+<?php  print_r($details_ids);?>;
+            $.ajax({
+                type: "get",
+                url: "http://www.caishi360.com/user/orders/getNumberState",//文件路由
+                data: {
+                    order_number:<?php echo $order_number?>
                 }
-            }
+                dataType: "json",//json等等
+                success: function (data) {
+                    if(data.status=='paid') {
+                        //支付成功跳转
+                        alert(11);
+                        window.location.href="http://www.caishi360.com/user/orders/pay/successful?address_id="+<?php echo $address_id;?>+"&paytype="+<?php echo $paytype;?>
+                        +"&remarks="+<?php echo $remarks;?>+"&details_ids="+<?php  print_r($details_ids);?>;
+                    }
+                }
+            });
         }
     </script>
 @show
