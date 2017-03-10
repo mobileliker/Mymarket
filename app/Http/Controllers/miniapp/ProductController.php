@@ -89,7 +89,7 @@ class ProductController extends Controller
 					->orderBy('order_details.created_at','desc')
 					->select('order_details.*','users.nickname as user_name');
 		$ratecount = count($comments->get());//评论总数
-		$commentfirst = $comments->first();//第一条最新评论
+		return$commentfirst = $comments->first();//第一条最新评论
 		$goodrate = ($product->product_rate*10).'%';//好评率		
 
 		$pre = '/<img.*?src="(.*?)".*?>/';

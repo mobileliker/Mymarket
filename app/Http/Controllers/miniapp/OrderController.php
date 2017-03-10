@@ -212,4 +212,140 @@ class OrderController extends Controller
 		}
 		return response()->json('false');
 	}
+
+	public function payInfo(Request $request){
+
+		$id = $request->input('id');//商品id
+		$aid = $request->input('aid');//地址id
+		$num = $request->input('num');//数量
+
+		/******* Y(必填字段) *******/
+		// mch_id 商户号（32）
+		//appid 小程序的id（32）
+		//body 商品简单描述（128）
+		//nonce_str 随机字符串（32）
+		//sign  签名（32）
+		//out_trade_no 商户订单号(32)
+		//total_fee 总金额、单位分（INT）
+		//spbill_create_ip 终端ip (16)
+		//notify_url 消息通知地址、不能携带参数(256)
+		//trade_type 交易类型、小程序为JSAPI （16）
+		//openid 用户标识、小程序必传（128）
+
+		/******* N(可选字段) *******/
+		//attach 附加信息（127）
+		//device_info 终端设备号（32）
+		//sign_type 签名类型、默认MD5（32）
+		//detail  商品详情、json格式（6000）
+		//fee_type 货币类型 默认人民币（16）
+		//time_start 交易开始时间、如20091225091010（14）
+		//time_expire 交易结束时间（14）
+		//goods_tag 交易标记 、如代金券（32）
+		//limit_pay 指定支付方式、no_credit--指定不能使用信用卡支付（32）
+
+		$key = '18523976023wojiacaishi1436923502';//商家API密匙 
+
+		// $appid = $request->input('appid');
+		$appid = 'wx51196f271bc7480b';
+		$attach = '支付测试附加信息';
+		$body = '小程序支付';
+		$mch_id = 1436923502;
+		$nonce_str = $this->generate_string();
+		$notify_url = 'http://www.caishi360.com/miniapp/list';
+		// $openid = $request->input('openid');
+		$openid = 'oFDbs0EpHtmUbLoqt_1HHktq0pLg';
+		$out_trade_no = 'wjcs2343434';
+		$spbill_create_ip = $_SERVER["REMOTE_ADDR"]; 
+		$total_fee = 1;
+		$trade_type = 'JSAPI';
+
+		$stringA = "appid=".$appid."&attach=".$attach.'&body='.$body.'&mch_id='.$mch_id.'&nonce_str='.$nonce_str.'&notify_url='.$notify_url.
+		'&openid='.$openid.'&out_trade_no='.$out_trade_no.'&spbill_create_ip='.$spbill_create_ip.'&total_fee='.$total_fee.'&trade_type='.$trade_type;
+		$sign = strtoupper(MD5($stringA.'&key='.$key));
+		
+		// return $sign;
+
+		$xml = "<xml>
+		   <appid>".$appid ."</appid>
+		   <attach>".$attach ."</attach>
+		   <body>".$body."</body>
+		   <mch_id>".$mch_id."</mch_id>
+		   <nonce_str>".$nonce_str."</nonce_str>
+		   <notify_url>".$notify_url."</notify_url>
+		   <openid>".$openid."</openid>
+		   <out_trade_no>".$out_trade_no."</out_trade_no>
+		   <spbill_create_ip>".$spbill_create_ip."</spbill_create_ip>
+		   <total_fee>".$total_fee."</total_fee>
+		   <trade_type>".$trade_type."</trade_type>
+		   <sign>".$sign."</sign>
+		</xml>" ;
+		// echo "<pre>";
+		// var_dump($xml);die;
+		// return $this->url($xml);
+
+		return response()->json();
+	}
+
+	//随机生成32位字符串
+	public function generate_string($length = 32) {  
+		// 密码字符集，可任意添加你需要的字符  
+		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; 
+	 	$string = '';  
+	 	for ( $i = 0; $i < $length; $i++ )  { 
+	   		// $string .= substr($chars, mt_rand(0, strlen($chars) – 1), 1);  // 第一种是使用 substr 截取$chars中的任意一位字符； 
+	 		$string .= $chars[ mt_rand(0, strlen($chars) - 1) ];  // 第二种是取字符数组 $chars 的任意元素  
+	 	}  
+	 	return $string;  
+	} 
+
+	public function url($xml){
+        $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
+        // $xml = http_build_query($xml);  
+        $options = array(  
+            'http' => array(  
+              'method' => 'POST',  
+              // 'method' => 'GET',  
+              'header' => 'Content-type:application/x-www-form-urlencoded',
+              // 'header' => 'Content-type:application/json',  
+              'content' => $xml,  
+              'timeout' => 15 * 60 // 超时时间（单位:s）  
+            )  
+        );  
+
+	    $context = stream_context_create($options);  
+	    $result = file_get_contents($url);  
+	    
+	    return $result;
+	}
+
+	public function url2($xml){
+		$second = 300;
+		$url="https://api.mch.weixin.qq.com/pay/unifiedorder";
+		//初始化curl        
+       	$ch = curl_init();
+
+		//设置超时
+		curl_setopt($ch, CURLOPT_TIMEOUT, $second);
+        //这里设置代理，如果有的话
+        //curl_setopt($ch,CURLOPT_PROXY, '8.8.8.8');
+        //curl_setopt($ch,CURLOPT_PROXYPORT, 8080);
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,FALSE);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,FALSE);
+		//设置header
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		//要求结果为字符串且输出到屏幕上
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		//post提交方式
+		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+		$error = curl_errno($ch);
+		//运行curl
+        $data = curl_exec($ch);
+        var_dump($data);
+        // var_dump($error);
+		//curl_close($ch);
+		//返回结果
+	}
+
 }

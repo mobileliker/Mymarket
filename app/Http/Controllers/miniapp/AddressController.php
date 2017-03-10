@@ -32,10 +32,14 @@ class AddressController extends Controller
 			return response()->json('false');
 		}
 
-		$addressAll = Address::where('user_id',$user_id)->where('default',1)->first();
-		if (!empty($addressAll)) {
-			$addressAll->default = 0;
-			$addressAll->save();
+		$addressAlls = Address::where('user_id',$user_id)->select('id')->get();
+
+		if (!empty($addressAlls)) {
+			foreach ($addressAlls as $addressAll) {
+				$new = Address::find($addressAll->id);
+				$new->default = 0;
+				$new->save();
+			}
 		}
 
 		$address = Address::find($id);

@@ -58,48 +58,37 @@ class LoginController extends Controller
     public function getOpenid(Request $request)
     {
 
-       $appid = 'wx64f95ab001bb8dd2';
-       $secret = '3fed698a0077fec6b88b4630bb73e38f';
-       $grant_type = 'authorization_code';
-       $js_code = $request->input('js_code');
+        $appid = 'wx64f95ab001bb8dd2';
+        $secret = '3fed698a0077fec6b88b4630bb73e38f';
+        $grant_type = 'authorization_code';
+        $js_code = $request->input('js_code');
 
-        $url = 'https://api.weixin.qq.com/sns/jscode2session';  
-        ignore_user_abort(true); // 忽略客户端断开  
-        set_time_limit(0);    // 设置执行不超时 
+        $post_data=array();
 
-       $param = array('appid'=>$appid,'secret'=>$secret,'js_code'=>$js_code,'grant_type'=>$grant_type);
-      
-        $urlinfo = parse_url($url);         
-        $host = $urlinfo['host']; 
-        $path = $urlinfo['path'];    
-        $query = isset($param)? http_build_query($param) : '';         
-        $port = 80;
-        $errno = 0;
-        $errstr = '';    
-        $timeout = 10;         
-        $fp = fsockopen('api.weixin.qq.com', 80, $errno, $errstr, 10);         
-        $out = "GET /sns/jscode2session / HTTPS/1.1\r\n";    
-        $out .= "host:api.weixin.qq.com\r\n";    
-        $out .= "content-length:".strlen($query)."\r\n";    
-        $out .= "content-type:application/x-www-form-urlencoded\r\n";   
-        $out .= "connection:close\r\n\r\n";    
-        $out .= $query;         
-        fputs($fp, $out);  
-        fclose($fp);    
-        return response()->json();
+        $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$appid.'&secret='.$secret.'&js_code='.$js_code.'&grant_type='.$grant_type;
+        // $url = 'http://www.caishi360.com/miniapp/list';
+        $postdata = http_build_query($post_data);  
+        $options = array(  
+            'http' => array(  
+              // 'method' => 'POST',  
+              'method' => 'GET',  
+              // 'header' => 'Content-type:application/x-www-form-urlencoded',
+              'header' => 'Content-type:application/json',  
+              'content' => $postdata,  
+              'timeout' => 15 * 60 // 超时时间（单位:s）  
+            )  
+        );  
+
+    $context = stream_context_create($options);  
+    $result = file_get_contents($url, false, $context);  
+    
+    return response()->json(json_decode($result));
     }
 
     //获取token
     public function gettoken(Request $request){
         $token = csrf_token();
-        // echo "<pre>";
-
-        // print_r(decrypt("SJMSuvOdnJGc0TYNg04XbG0zTY5tAzkJADtI9CBz"));
-        // var_dump($request->cookie());
-        // $encrypter = new Illuminate\Encryption\Encrypter($key);
-        // $session = $encrypter->decrypt($_COOKIE['laravel_session']);
         return response()->json(['token'=>$token]);
-        // return response()->json(['cookie'=>$request->cookie()]);
     }
     /**
      * Process the user login.

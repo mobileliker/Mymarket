@@ -27,6 +27,7 @@ Route::group(['prefix' => 'miniapp','namespace' => 'miniapp'], function () {
 	//登录后可访问的接口
 
 	Route::post('/order/pay', 'OrderController@pay');//商品支付接口
+	Route::get('/order/getpayinfo', 'OrderController@payInfo');//获取预支付信息
 
 	Route::post('/order/create', 'OrderController@create');//create商品生成订单
 	Route::post('/order/store', 'OrderController@store');//store保存订单

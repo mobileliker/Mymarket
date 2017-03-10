@@ -20,7 +20,6 @@ class HomeController extends Controller
 
 	public function index(){
 
-		return \Utility::ipGetAddress();
 		$product = Product::where('status','=',1)
 				->where('condition','=','new')
 				->orderBy('created_at','desc')
