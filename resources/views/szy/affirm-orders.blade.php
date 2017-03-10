@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="order_itemPay">
-                    <span class="oneProductPrice" delivery="{{ $product->delivery_price }}">{{$product->quantity * $product->price}}</span>
+                    <span class="oneProductPrice" delivery="{{$product->delivery_price }}">{{$product->quantity * $product->price}}</span>
                 </div>
                 <div class="delivery_way">
                     <select>

@@ -38,6 +38,7 @@ $input->SetGoods_tag("test");
 $input->SetNotify_url("http://www.caishi360.com/demo/example/native_notify.php");
 $input->SetTrade_type("NATIVE");
 $input->SetProduct_id("123456789");
+$input->SetSub_mch_id("1444913102");
 $result = $notify->GetPayUrl($input);
 $url2 = $result["return_code"];
 echo $result['return_msg'];

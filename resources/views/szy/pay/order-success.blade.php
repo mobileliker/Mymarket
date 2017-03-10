@@ -11,7 +11,7 @@
 @section('content')
     <div class="success-tips">
         <div class="top">
-            <p style="font-size:18px;text-align: center;">你已提交过订单，请勿重复提交订单</p>
+            <p style="font-size:18px;text-align: center;">购买成功，请耐心等候发货</p>
         </div>
     </div>
 @stop {{-- end content --}}

@@ -13,7 +13,6 @@
 		$out_trade_no = " ";
 	}else{
 	    $out_trade_no = $_POST["out_trade_no"];
-		
 		//使用退款查询接口
 		$refundQuery = new RefundQuery_pub();
 		//设置必填参数
@@ -21,12 +20,12 @@
 		//mch_id已填,商户无需重复填写
 		//noncestr已填,商户无需重复填写
 		//sign已填,商户无需重复填写
-		$refundQuery->setParameter("out_trade_no","$out_trade_no");//商户订单号
+		$refundQuery->setParameter("out_trade_no","222222");//商户订单号
 		// $refundQuery->setParameter("out_refund_no","XXXX");//商户退款单号
 		// $refundQuery->setParameter("refund_id","XXXX");//微信退款单号
 		// $refundQuery->setParameter("transaction_id","XXXX");//微信退款单号
 		//非必填参数，商户可根据实际情况选填
-		//$refundQuery->setParameter("sub_mch_id","XXXX");//子商户号 
+		$refundQuery->setParameter("sub_mch_id","1444913102");//子商户号 
 		//$refundQuery->setParameter("device_info","XXXX");//设备号 
 		
 		//退款查询接口结果
