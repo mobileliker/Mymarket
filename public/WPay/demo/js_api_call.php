@@ -99,7 +99,7 @@
 			    jsApiCall();
 			}
 		}
-                window.load=function() {
+                window.onload = function() {
                     callpay();
                 }
 	</script>
