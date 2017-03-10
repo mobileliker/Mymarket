@@ -99,12 +99,9 @@
 			    jsApiCall();
 			}
 		}
+                window.load=function() {
+                    callpay();
+                }
 	</script>
 </head>
-<body>
-	</br></br></br></br>
-	<div align="center">
-		<button style="width:210px; height:30px; background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >贡献一下</button>
-	</div>
-</body>
 </html>
