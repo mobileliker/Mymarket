@@ -17,6 +17,7 @@
 
 
 Auth::routes();
+Route::get('/ceshi/{id}', 'HomeController@ceshi');//测试路由
 
 //小程序测试路由
 Route::group(['namespace' => 'wxapp'], function () {

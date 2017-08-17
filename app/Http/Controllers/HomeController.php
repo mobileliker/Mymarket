@@ -15,8 +15,48 @@ use App\Order;
 use App\Company;
 use App\Product, App\Article;
 use DB, Cache;
+
 class HomeController extends Controller
 {
+    public function ceshi($id=3){
+
+        $code = DB::table('code')->where('code.id','=',$id)->select('code.id','code.pid')->first();
+        if (!empty($code) && !empty($code->pid)) {
+            $info = $this->self($id);
+        }
+        echo "<pre>";
+        print_r($info);
+        die;
+    } 
+
+    public function self($id){
+        $m = 0;
+        $infos = array();
+        while($m<3 && $id){
+            $info = DB::table('code')->join('company','code.company_id','=','company.id')
+            ->leftjoin('code as pcode','code.pid','=','pcode.id')
+            ->leftjoin('company as pcompany','pcode.company_id','=','pcompany.id')
+            ->where('code.id','=',$id)
+            ->select('code.id','code.pid','code.number','code.state','pcode.id as pid','pcode.pid as ppid','pcode.number as pnumber',
+                'company.name','company.id as cid',
+                'pcompany.name as pname','pcompany.id as pcid'
+                )
+            ->get();
+            if ($info[0]->state) {
+                $k = $info[0]->name;
+                $infos[$k] = $info; 
+            }
+            if ($info[0]->ppid==null) {
+               $id = 0;
+            }else{
+                $id = $info[0]->pid;
+            }
+            $m++; 
+        }
+
+        return $infos; 
+    }
+
     public function index()
     {
         $panel = [

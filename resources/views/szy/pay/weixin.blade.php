@@ -95,24 +95,22 @@
         element.appendChild(wording);
         element.appendChild(code);
     }
-    </script>
-    <script>
         
-        setInterval("ajaxstatus()",3000);//1000为1秒钟
-        function ajaxstatus() {
-            $.ajax({
-                type: "get",
-                url: "http://www.caishi360.com/user/orders/getNumberState",//文件路由
-                data: {
-                    "order_number":"<?php echo $order_number?>"
-                },
-                dataType: "json",//json等等
-                success: function (data) {
-                    if(data=='paid') {
-                        window.location.href="http://www.caishi360.com/user/orders/pay/successful";
-                    }
+    setInterval("ajaxstatus()",3000);//1000为1秒钟
+    function ajaxstatus() {
+        $.ajax({
+            type: "get",
+            url: "http://www.caishi360.com/user/orders/getNumberState",//文件路由
+            data: {
+                "order_number":"<?php echo $order_number?>"
+            },
+            dataType: "json",//json等等
+            success: function (data) {
+                if(data=='paid') {
+                    window.location.href="http://www.caishi360.com/user/orders/pay/successful";
                 }
-            });
-        } 
+            }
+        });
+    } 
     </script>
 @show
